@@ -5,7 +5,7 @@ export interface Inmobiliaria {
     correo: string;
     password: string;
     nombre: string;
-    estado: string;
+    estados: string[];
     direccion: Direccion;
     notarios: Notario[];
     agentes: string[]; 

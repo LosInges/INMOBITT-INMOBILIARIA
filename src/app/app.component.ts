@@ -8,7 +8,7 @@ import { SessionService } from './services/session.service';
 export class AppComponent {
   public appPages = [
     { title: 'Iniciar Sesion', url: 'login', icon: 'mail' },
-    { title: 'Outbox', url: '/folder/Outbox', icon: 'paper-plane' },
+    { title: 'Perfil', url: '/perfil', icon: 'paper-plane' },
     { title: 'Favorites', url: '/folder/Favorites', icon: 'heart' },
     { title: 'Archived', url: '/folder/Archived', icon: 'archive' },
     { title: 'Trash', url: '/folder/Trash', icon: 'trash' },

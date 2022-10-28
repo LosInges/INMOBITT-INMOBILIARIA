@@ -17,7 +17,7 @@ export class SignupComponent implements OnInit {
     correo: '',
     password: '',
     nombre: '',
-    estado: '',
+    estados: [],
     direccion: {
       calle: '',
       codigopostal: '',
@@ -46,9 +46,9 @@ export class SignupComponent implements OnInit {
   onSubmit() {
     if (
       this.inmobiliaria.correo.trim() !== "" &&
-      this.inmobiliaria.estado.trim() !== "" &&
       this.inmobiliaria.nombre.trim() !== "" &&
-      this.inmobiliaria.password.trim() !== ""
+      this.inmobiliaria.password.trim() !== "" &&
+      this.confirmPassword.trim() !== ""
     ) {
       if (this.confirmPassword === this.inmobiliaria.password)
         this.inmobiliariaService.postInmobiliaria(this.inmobiliaria).subscribe(res => console.log(res))

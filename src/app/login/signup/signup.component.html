@@ -57,7 +57,8 @@
     <ion-select
       interface="popover"
       placeholder="Estado"
-      [(ngModel)]="inmobiliaria.estado"
+      [multiple]="true"
+      [(ngModel)]="inmobiliaria.estados"
     >
       <ion-select-option *ngFor="let estado of estados" [value]="estado.nombre"
         >{{estado.nombre}}</ion-select-option

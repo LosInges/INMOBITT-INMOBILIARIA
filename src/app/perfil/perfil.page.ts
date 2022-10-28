@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { Router, RouterLink } from '@angular/router';
 import { Inmobiliaria } from '../interfaces/inmobiliaria';
+import { EstadosService } from '../services/estados.service';
 import { InmobiliariaService } from '../services/inmobiliaria.service';
+import { SessionService } from '../services/session.service';
 
 @Component({
   selector: 'app-perfil',
@@ -14,7 +16,7 @@ export class PerfilPage implements OnInit {
     correo: '',
     password: '',
     nombre: '',
-    estado: '',
+    estados: [],
     direccion: {
       calle: '',
       codigopostal: '',
@@ -26,20 +28,44 @@ export class PerfilPage implements OnInit {
     notarios: [],
     agentes: []
   };
+  confirmPassword = '';
 
+  estados = this.estadosService.getEstados();
   constructor(
-    private modalController: ModalController,
-    private inmobiliariaService: InmobiliariaService
+    private estadosService: EstadosService,
+    private sessionService: SessionService,
+    private inmobiliariaService: InmobiliariaService,
+    private router:  Router
   ) { }
 
   ngOnInit() {
-
+    this.sessionService.get('correo')?.then(correo => {
+      if(correo) this.inmobiliariaService.getInmobiliaria(correo).subscribe(inmobiliaria => {
+        this.inmobiliaria = inmobiliaria
+      })
+    })
   }
 
-  actualizarPerfil(){}
+  actualizarPerfil() { 
+    if (
+      this.inmobiliaria.correo.trim() !== "" &&
+      this.inmobiliaria.nombre.trim() !== "" &&
+      this.inmobiliaria.password.trim() !== "" &&
+      this.confirmPassword.trim() !== ""
+    ) {
+      if (this.confirmPassword === this.inmobiliaria.password)
+      this.inmobiliariaService.postInmobiliaria(this.inmobiliaria).subscribe(res => console.log(res))
+    }
+  }
 
-  cerrar() {
-    return this.modalController.dismiss();
+  eliminarPerfil(){
+    if (this.confirmPassword === this.inmobiliaria.password)
+    this.inmobiliariaService.deleteInmobiliaria(this.inmobiliaria.correo).subscribe(res => {
+      if(res.results)
+      this.sessionService.clear().then(()=>this.router.navigate([""]))
+      else console.log(res)
+    })
+
   }
 
 }

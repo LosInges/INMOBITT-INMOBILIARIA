@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
         }
         const promesas: Promise<any>[] = [
           this.sessionService.clear(),
-          this.sessionService.set('email', res.session.email),
+          this.sessionService.set('correo', res.session.email),
           this.sessionService.set('tipo', res.session.tipo),
         ];
 
