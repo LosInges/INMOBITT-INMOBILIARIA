@@ -44,9 +44,9 @@ export class LoginComponent implements OnInit {
       },
       (err) => console.log(err)
     );
+    this.modalController.dismiss();
   }
-
-
+ 
   cerrar() {
     this.modalController.dismiss();
   }

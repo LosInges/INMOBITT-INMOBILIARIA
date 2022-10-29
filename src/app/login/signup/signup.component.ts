@@ -52,6 +52,7 @@ export class SignupComponent implements OnInit {
     ) {
       if (this.confirmPassword === this.inmobiliaria.password)
         this.inmobiliariaService.postInmobiliaria(this.inmobiliaria).subscribe(res => console.log(res))
+        this.modalController.dismiss()
 
     }
   }
