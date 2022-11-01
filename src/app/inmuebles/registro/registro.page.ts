@@ -1,9 +1,14 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 import { Estado } from 'src/app/interfaces/estado';
-import { inmueble } from 'src/app/interfaces/inmueble';
+import { Inmueble } from 'src/app/interfaces/inmueble';
+import { Servicio } from 'src/app/interfaces/servicio';
 import { EstadosService } from 'src/app/services/estados.service';
-import { InmuebleRegistroService } from 'src/app/services/inmueble.service';
+import { InmuebleService } from 'src/app/services/inmueble.service';
+import { ServiciosService } from 'src/app/services/servicios.service';
 import { SessionService } from 'src/app/services/session.service';
+import { ServicioComponent } from '../servicio/servicio.component';
 
 @Component({
   selector: 'app-registro',
@@ -11,60 +16,76 @@ import { SessionService } from 'src/app/services/session.service';
   styleUrls: ['./registro.page.scss'],
 })
 export class RegistroPage implements OnInit {
-  estados: Estado[]=this.estadosService.getEstados()
-  correo: string = ''
-  inmobiliaria: string = ''
- inmueble : inmueble = {
-  titulo: '',
-  estado: '', 
-  cuartos: 0, 
-  descripcion: '', 
- 
-  direccion: {
-    calle: '',
-    codigopostal: '',
-    colonia: '',
-    numeroexterior: '',
-    numerointerior: '',
+  estados: Estado[] = this.estadosService.getEstados();
+  correo = '';
+  inmobiliaria = '';
+  servicios: Servicio[] = [];
+
+  inmueble: Inmueble = {
+    titulo: '',
     estado: '',
-  },
-  
-  foto: '',
-  metros_cuadrados: '',
-  
-  notarios: {
-    nombre: '',
-    apellido: '',
-    correo: '',
-    foto: ''
-  },
-  pisos: 0,
-  precio_renta: 0,
-  precio_venta: 0, 
-  servicios: '', 
-  agente: '',
-  borrado: false,
-  visible: true
- }
+    cuartos: 0,
+    descripcion: '',
+    direccion: {
+      calle: '',
+      codigopostal: '',
+      colonia: '',
+      numeroexterior: '',
+      numerointerior: '',
+      estado: '',
+    },
+    foto: '',
+    metros_cuadrados: '',
+    notarios: {
+      nombre: '',
+      apellido: '',
+      correo: '',
+      foto: '',
+    },
+    pisos: 0,
+    precio_renta: 0,
+    precio_venta: 0,
+    servicios: [],
+    agente: '',
+    borrado: false,
+    visible: true,
+  };
 
   constructor(
-    private inmuebleRegistroService : InmuebleRegistroService,
-    private sessionService : SessionService,
-    private estadosService : EstadosService
-  ) { }
+    private inmuebleService: InmuebleService,
+    private sessionService: SessionService,
+    private estadosService: EstadosService,
+    private serviciosService: ServiciosService,
+    private modalController: ModalController
+  ) {}
 
   ngOnInit() {
-    this.sessionService.get('correo')?.then(correo => {
-     this.correo = correo
-    })
+    this.sessionService.get('correo')?.then((correo) => {
+      this.correo = correo;
+    });
+
+    this.serviciosService.getServicios().subscribe((servicios) => {
+      this.servicios = servicios;
+    });
   }
 
   registrarInmueble() {
     // this.inmuebleRegistroService.postInmueble(this.inmueble).subscribe((val)=>{
     //   console.log(val)
     // });
-    console.log(this.inmueble)
+    console.log(this.inmueble);
   }
 
-  
+  async nuevoServicio() {
+    const modal = await this.modalController.create({
+      component: ServicioComponent,
+      componentProps: { servicios: this.servicios },
+    });
+    modal.onDidDismiss().then(() => {
+      this.serviciosService.getServicios().subscribe((servicios) => {
+        this.servicios = servicios;
+      });
+    });
+    return await modal.present();
+  }
 }

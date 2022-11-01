@@ -1,6 +1,12 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/inmuebles"></ion-back-button>
+    </ion-buttons>
     <ion-title color="secondary">INMUEBLE</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="nuevoServicio()">Agregar Servicio</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -123,7 +129,17 @@
               <ion-col>
                 <ion-item>
                   <ion-label position="floating"> SERVICIOS </ion-label>
-                  <ion-input> </ion-input>
+                  <ion-select
+                    interface="popover"
+                    [multiple]="true"
+                    [(ngModel)]="inmueble.servicios"
+                  >
+                    <ion-select-option
+                      *ngFor="let servicio of servicios"
+                      [value]="servicio.nombre"
+                      >{{servicio.nombre}}</ion-select-option
+                    >
+                  </ion-select>
                 </ion-item>
               </ion-col>
             </ion-row>
