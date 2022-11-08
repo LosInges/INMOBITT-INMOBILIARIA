@@ -29,22 +29,23 @@ export class LoginComponent implements OnInit {
   login() {
     this.loginService.login(this.email, this.password).subscribe(
       (res) => {
-        if (res.session.tipo !== 'inmobiliaria') {
+        if (res.session.tipo !== 'agente') {
           return
         }
         const promesas: Promise<any>[] = [
           this.sessionService.clear(),
-          this.sessionService.set('correo', res.session.email),
+          this.sessionService.set('rfc', res.session.email),
           this.sessionService.set('tipo', res.session.tipo),
         ];
 
-        Promise.all(promesas).then(() => {
+        Promise.all(promesas).then((res) => {
           console.log("Bienvenido Guapo")
+          if(res[1] && res[2]) this.modalController.dismiss()
         });
       },
       (err) => console.log(err)
     );
-    this.modalController.dismiss();
+    
   }
  
   cerrar() {

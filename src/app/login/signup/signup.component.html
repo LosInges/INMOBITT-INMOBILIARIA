@@ -6,58 +6,31 @@
 
   <ion-item color="dark">
     <ion-input
-      [(ngModel)]="inmobiliaria.nombre"
+      [(ngModel)]="agente.rfc"
       type="text"
       required
-      placeholder="Nombre"
+      placeholder="RFC"
     ></ion-input>
     <ion-label>
-      <ion-icon name="person"></ion-icon>
+      <ion-icon name=""></ion-icon>
     </ion-label>
   </ion-item>
 
   <ion-item color="dark">
-    <ion-icon style="padding: 0 15px" name="map"></ion-icon>
-    <ion-select
-      interface="popover"
-      placeholder="Estado"
-      [multiple]="true"
-      [(ngModel)]="inmobiliaria.estados"
-    >
-      <ion-select-option *ngFor="let estado of estados" [value]="estado.nombre"
-        >{{estado.nombre}}</ion-select-option
-      >
-    </ion-select>
-  </ion-item>
-
-  <ion-item color="dark">
     <ion-input
-      type="text"
-      required
-      placeholder="Dirección"
-    ></ion-input>
-    <ion-label>
-      <ion-icon name="call"></ion-icon>
-    </ion-label>
-  </ion-item>
-
-  
-
-  <ion-item color="dark">
-    <ion-input
-      [(ngModel)]="inmobiliaria.correo"
+      [(ngModel)]="agente.correo"
       type="text"
       required
       placeholder="Correo"
     ></ion-input>
     <ion-label>
-      <ion-icon name="mail"></ion-icon>
+      <ion-icon name="mail-outline"></ion-icon>
     </ion-label>
   </ion-item>
 
   <ion-item color="dark">
     <ion-input
-      [(ngModel)]="inmobiliaria.password"
+      [(ngModel)]="agente.password"
       type="text"
       required
       placeholder="Contraseña"
@@ -77,6 +50,67 @@
     <ion-label>
       <ion-icon name="lock-closed"></ion-icon>
     </ion-label>
+  </ion-item>
+  
+
+  <ion-item color="dark">
+    <ion-input
+      [(ngModel)]="agente.nombre"
+      type="text"
+      required
+      placeholder="Nombre"
+    ></ion-input>
+    <ion-label>
+      <ion-icon name="text"></ion-icon>
+    </ion-label>
+  </ion-item>
+
+  <ion-item color="dark">
+    <ion-input
+      [(ngModel)]="apellidoPat"
+      type="text"
+      required
+      placeholder="Apellido Paterno"
+    ></ion-input>
+    <ion-label>
+      <ion-icon name="text"></ion-icon>
+    </ion-label>
+  </ion-item>
+
+  <ion-item color="dark">
+    <ion-input
+      [(ngModel)]="apellidoMat"
+      type="text"
+      required
+      placeholder="Apellido Materno"
+    ></ion-input>
+    <ion-label>
+      <ion-icon name="text"></ion-icon>
+    </ion-label>
+  </ion-item>
+
+  <ion-item color="dark">
+    <ion-input
+      [(ngModel)]="agente.telefono"
+      type="text"
+      required
+      placeholder="Telefono"
+    ></ion-input>
+    <ion-label>
+      <ion-icon name="call"></ion-icon>
+    </ion-label>
+  </ion-item>
+
+  <ion-item color="dark">
+    <ion-icon style="padding: 0 15px" name="business-outline"></ion-icon>
+    <ion-select
+      placeholder="inmobiliaria"
+      [(ngModel)]="agente.inmobiliaria"
+    >
+      <ion-select-option *ngFor="let inmobiliaria of inmobiliarias" [value]="inmobiliaria.correo"
+        >{{inmobiliaria.nombre}}</ion-select-option
+      >
+    </ion-select>
   </ion-item>
 
   <ion-button
