@@ -16,14 +16,16 @@ export class LoginPage implements OnInit {
 
   async abrirRegistro(){
     const modal = await this.modalController.create({
-      component: SignupComponent
+      component: SignupComponent,
+      cssClass: 'modalRegistrar'
     });
     return await modal.present();
   }
 
   async abrirIngresar(){
     const modal = await this.modalController.create({
-      component: LoginComponent
+      component: LoginComponent,
+      cssClass: 'modalIngresar'
     });
     return await modal.present();
   }

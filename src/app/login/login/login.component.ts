@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
 
         Promise.all(promesas).then((res) => {
           console.log("Bienvenido Guapo")
-          if(res[1] && res[2]) this.modalController.dismiss()
+          this.router.navigate(['/', 'perfil'])
         });
       },
       (err) => console.log(err)

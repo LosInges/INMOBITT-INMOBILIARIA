@@ -99,47 +99,12 @@
                 </ion-item>
               </ion-col>
 
-              <ion-col>
-                <ion-item color="dark">
-                  <ion-input
-                    [(ngModel)]="apellidoMat"
-                    type="text"
-                    required
-                    placeholder="Apellido Materno"
-                  ></ion-input>
-                  <ion-label>
-                    <ion-icon name="text"></ion-icon>
-                  </ion-label>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col>
-                <ion-item color="dark">
-                  <ion-input
-                    [(ngModel)]="agente.correo"
-                    type="text"
-                    required
-                    placeholder="Correo"
-                  ></ion-input>
-                  <ion-label>
-                    <ion-icon name="mail-outline"> </ion-icon>
-                  </ion-label>
-                </ion-item>
-              </ion-col>
-
-              <ion-col>
-                <ion-item color="dark">
-                  <ion-input
-                    [(ngModel)]="agente.telefono"
-                    type="text"
-                    required
-                    placeholder="Telefono"
-                  ></ion-input>
-                  <ion-label>
-                    <ion-icon name="call"></ion-icon>
-                  </ion-label>
+              <ion-col class="ion-margin-top ion-margin-bottom">
+                <ion-item>
+                  <ion-select  placeholder="ESTADO" [(ngModel)]="inmobiliaria.estado">
+                    <ion-select-option *ngFor="let estado of estados" [value]="estado.nombre">{{estado.nombre}}
+                    </ion-select-option>
+                  </ion-select>
                 </ion-item>
               </ion-col>
 
@@ -166,20 +131,11 @@
         </ion-card-content>
 
         <ion-card-content>
-          <ion-button
-            class="ion-float-right ion-margin-top"
-            fill="solid"
-            (click)="actualizarPerfil()"
-          >
+          <ion-button class="ion-float-right ion-margin-top ion-margin-bottom" fill="solid" (click)="actualizarPerfil()">
             ACTUALIZAR
           </ion-button>
 
-          <ion-button
-            class="ion-float-left ion-margin-top"
-            fill="solid"
-            color="danger"
-            (click)="eliminarPerfil()"
-          >
+          <ion-button class="ion-float-left ion-margin-top ion-margin-bottom" fill="solid" color="danger" (click)="eliminarPerfil()">
             ELIMINAR
           </ion-button>
         </ion-card-content>
