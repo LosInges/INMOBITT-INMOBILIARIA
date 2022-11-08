@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { Agente } from 'src/app/interfaces/agente';
 import { Inmobiliaria } from '../interfaces/inmobiliaria';
-import { AgenteService } from '../services/agente.service';
+import { EstadosService } from '../services/estados.service';
 import { InmobiliariaService } from '../services/inmobiliaria.service';
 import { SessionService } from '../services/session.service';
 
@@ -13,14 +12,7 @@ import { SessionService } from '../services/session.service';
 })
 export class PerfilPage implements OnInit {
 
-  apellidoPat: string = ''
-  apellidoMat: string = ''
-  inmobiliarias: Inmobiliaria[]
-
-  agente: Agente = {
-    rfc: '',
-    inmobiliaria: '',
-    nombre: '',
+  inmobiliaria: Inmobiliaria = {
     correo: '',
     password: '',
     nombre: '',
@@ -38,50 +30,37 @@ export class PerfilPage implements OnInit {
   };
   confirmPassword = '';
 
+  estados = this.estadosService.getEstados();
   constructor(
+    private estadosService: EstadosService,
     private sessionService: SessionService,
     private inmobiliariaService: InmobiliariaService,
-    private agenteService: AgenteService,
     private router:  Router
   ) { }
 
   ngOnInit() {
-    this.sessionService.get('rfc')?.then(rfc => {
-      if(rfc) this.agenteService.getAgente(rfc).subscribe(agente => {
-        this.agente = agente
-        this.apellidoPat = agente.apellido.split(" ")[0]
-        this.apellidoMat = agente.apellido.split(" ")[1]
+    this.sessionService.get('correo')?.then(correo => {
+      if(correo) this.inmobiliariaService.getInmobiliaria(correo).subscribe(inmobiliaria => {
+        this.inmobiliaria = inmobiliaria
       })
-    })
-    this.inmobiliariaService.getInmobiliarias()?.subscribe(inmobiliarias => {
-      this.inmobiliarias = inmobiliarias
     })
   }
 
   actualizarPerfil() { 
-    // if (
-    //   this.agente.rfc.trim() !== "" &&
-    //   this.agente.inmobiliaria.trim() !== "" &&
-    //   this.agente.nombre.trim() !== "" &&
-    //   this.agente.correo.trim() !== "" &&
-    //   this.agente.password.trim() !== "" &&
-    //   this.agente.apellido.trim() !== "" &&
-    //   this.agente.foto.trim() !== "" &&
-    //   this.agente.telefono.trim() !== "" &&
-    //   this.confirmPassword.trim() !== ""
-    // ) 
-    //{
-      if (this.confirmPassword === this.agente.password)
-      {
-        this.agente.apellido = this.apellidoPat +' '+ this.apellidoMat;  
-        this.agenteService.postAgente(this.agente).subscribe(res => console.log(res))
-      }
-    //}
+    if (
+      this.inmobiliaria.correo.trim() !== "" &&
+      this.inmobiliaria.nombre.trim() !== "" &&
+      this.inmobiliaria.password.trim() !== "" &&
+      this.confirmPassword.trim() !== ""
+    ) {
+      if (this.confirmPassword === this.inmobiliaria.password)
+      this.inmobiliariaService.postInmobiliaria(this.inmobiliaria).subscribe(res => console.log(res))
+    }
   }
 
   eliminarPerfil(){
-    if (this.confirmPassword === this.agente.password)
-    this.agenteService.deleteAgente(this.agente.rfc).subscribe(res => {
+    if (this.confirmPassword === this.inmobiliaria.password)
+    this.inmobiliariaService.deleteInmobiliaria(this.inmobiliaria.correo).subscribe(res => {
       if(res.results)
       this.sessionService.clear().then(()=>this.router.navigate([""]))
       else console.log(res)
