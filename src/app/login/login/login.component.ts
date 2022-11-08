@@ -40,6 +40,7 @@ export class LoginComponent implements OnInit {
 
         Promise.all(promesas).then(() => {
           console.log("Bienvenido Guapo")
+          this.router.navigate(['/', 'perfil'])
         });
       },
       (err) => console.log(err)

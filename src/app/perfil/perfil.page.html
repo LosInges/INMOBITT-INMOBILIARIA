@@ -67,7 +67,7 @@
 
               <ion-col class="ion-margin-top ion-margin-bottom">
                 <ion-item>
-                  <ion-select interface="popover" placeholder="ESTADO" [multiple]="true" [(ngModel)]="inmobiliaria.estados">
+                  <ion-select  placeholder="ESTADO" [(ngModel)]="inmobiliaria.estado">
                     <ion-select-option *ngFor="let estado of estados" [value]="estado.nombre">{{estado.nombre}}
                     </ion-select-option>
                   </ion-select>
@@ -81,11 +81,11 @@
 
 
         <ion-card-content>
-          <ion-button class="ion-float-right ion-margin-top" fill="solid" (click)="actualizarPerfil()">
+          <ion-button class="ion-float-right ion-margin-top ion-margin-bottom" fill="solid" (click)="actualizarPerfil()">
             ACTUALIZAR
           </ion-button>
 
-          <ion-button class="ion-float-left ion-margin-top" fill="solid" color="danger" (click)="eliminarPerfil()">
+          <ion-button class="ion-float-left ion-margin-top ion-margin-bottom" fill="solid" color="danger" (click)="eliminarPerfil()">
             ELIMINAR
           </ion-button>
 

@@ -1,11 +1,14 @@
-<ion-content class="background-image ion-padding">
-  <ion-item>
-    <ion-img [src]="'../../assets/img/LogoIC.png'" width="32"></ion-img>
-  </ion-item>
-  <ion-button fill="solid" color="dark" (click)="abrirRegistro()">
-    registrar inmobiliaria
-  </ion-button>
-<ion-button fill="solid" color="light"  (click)="abrirIngresar()">
-  ingresar
-</ion-button>
+<ion-content class="background-image ">
+  <ion-img class="logo" [src]="'../../assets/img/LogoIC.png'"></ion-img>
+  <ion-img class="logoT" [src]="'../../assets/LogoText.png'"></ion-img>
+
+  <div class="centrado">
+    <ion-button style="width: 280px;" fill="solid" color="light" (click)="abrirIngresar()">
+      ingresar
+    </ion-button>
+
+    <ion-button style="margin-right: 10px;" fill="solid" color="dark" (click)="abrirRegistro()">
+      registrar inmobiliaria
+    </ion-button>
+  </div>
 </ion-content>

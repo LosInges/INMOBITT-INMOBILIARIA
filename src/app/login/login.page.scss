@@ -2,3 +2,22 @@ ion-content.background-image {
   --background: url("../../assets/fondo.jpeg") 0 0/100% 100% no-repeat;
 }
 
+ion-img.logo{
+  width: 300px; 
+  height: 600x; 
+  padding-top: 40px; 
+  margin: auto;
+}
+
+ion-img.logoT{
+  width: 400px; 
+  height: 100px; 
+  margin: auto;
+}
+
+div.centrado {
+  width: 80%;
+  margin: auto;
+  text-align: center;
+} 
+

@@ -16,7 +16,7 @@ export class PerfilPage implements OnInit {
     correo: '',
     password: '',
     nombre: '',
-    estados: [],
+    estado: '',
     direccion: {
       calle: '',
       codigopostal: '',
