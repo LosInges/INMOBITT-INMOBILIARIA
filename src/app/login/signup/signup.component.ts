@@ -1,9 +1,6 @@
-
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { Empresa } from 'src/app/interfaces/empresa';
 import { Inmobiliaria } from 'src/app/interfaces/inmobiliaria';
-import { EmpresaService } from 'src/app/services/empresa.service';
 import { EstadosService } from 'src/app/services/estados.service';
 import { InmobiliariaService } from 'src/app/services/inmobiliaria.service';
 
@@ -27,7 +24,7 @@ export class SignupComponent implements OnInit {
       estado: '',
     },
     notarios: [],
-    agentes: []
+    agentes: [],
   };
   confirmPassword = '';
 
@@ -37,7 +34,7 @@ export class SignupComponent implements OnInit {
     private estadosService: EstadosService,
     private inmobiliariaService: InmobiliariaService,
     private modalController: ModalController
-  ) { }
+  ) {}
 
   ngOnInit() {
     console.log(this.estados);
@@ -45,18 +42,20 @@ export class SignupComponent implements OnInit {
 
   onSubmit() {
     if (
-      this.inmobiliaria.correo.trim() !== "" &&
-      this.inmobiliaria.nombre.trim() !== "" &&
-      this.inmobiliaria.password.trim() !== "" &&
-      this.confirmPassword.trim() !== ""
+      this.inmobiliaria.correo.trim() !== '' &&
+      this.inmobiliaria.nombre.trim() !== '' &&
+      this.inmobiliaria.password.trim() !== '' &&
+      this.confirmPassword.trim() !== ''
     ) {
-      if (this.confirmPassword === this.inmobiliaria.password)
-        this.inmobiliariaService.postInmobiliaria(this.inmobiliaria).subscribe(res => console.log(res))
-        this.modalController.dismiss()
-
+      if (this.confirmPassword === this.inmobiliaria.password) {
+        this.inmobiliariaService
+          .postInmobiliaria(this.inmobiliaria)
+          .subscribe((res) => console.log(res));
+      }
+      this.modalController.dismiss();
     }
   }
   cerrar() {
-    this.modalController.dismiss()
+    this.modalController.dismiss();
   }
 }
