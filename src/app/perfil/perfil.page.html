@@ -1,13 +1,13 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title color="secondary">INMOBILIARIA</ion-title>
+    <ion-title color="secondary">AGENTES</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-card>
     <ion-card-header>
-      <ion-card-title color="secondary"> INMOBILIARIAS </ion-card-title>
+      <ion-card-title color="secondary"> AGENTE </ion-card-title>
     </ion-card-header>
 
     <ion-card-content>
@@ -18,27 +18,47 @@
         <ion-card-content>
           <ion-grid>
             <ion-row>
-              <ion-col class="ion-margin-top ion-margin-bottom">
-                <ion-item>
-                  <ion-label position="floating"> CORREO </ion-label>
-                  <ion-input [(ngModel)]="inmobiliaria.correo"> </ion-input>
-                </ion-item>
-              </ion-col>
-             
-              <ion-col class="ion-margin-top ion-margin-bottom">
-                <ion-item>
-                  <ion-label position="floating"> CONTRASEÑA </ion-label>
-                  <ion-input [(ngModel)]="inmobiliaria.password"> </ion-input>
-                </ion-item>
-              </ion-col>
-
-              <ion-col class="ion-margin-top ion-margin-bottom">
-                <ion-item>
-                  <ion-label position="floating"> CONFIRMAR CONTRASEÑA </ion-label>
-                  <ion-input [(ngModel)]="confirmPassword"> </ion-input>
+              <ion-col>
+                <ion-item color="dark">
+                  <ion-input
+                    [(ngModel)]="agente.rfc"
+                    type="text"
+                    required
+                    placeholder="RFC"
+                  ></ion-input>
+                  <ion-label>
+                    <ion-icon name=""></ion-icon>
+                  </ion-label>
                 </ion-item>
               </ion-col>
 
+              <ion-col>
+                <ion-item color="dark">
+                  <ion-input
+                    [(ngModel)]="agente.password"
+                    type="text"
+                    required
+                    placeholder="Contraseña"
+                  ></ion-input>
+                  <ion-label>
+                    <ion-icon name="lock-closed"></ion-icon>
+                  </ion-label>
+                </ion-item>
+              </ion-col>
+
+              <ion-col>
+                <ion-item color="dark">
+                  <ion-input
+                    [(ngModel)]="confirmPassword"
+                    type="text"
+                    required
+                    placeholder="Confirmar Contraseña"
+                  ></ion-input>
+                  <ion-label>
+                    <ion-icon name="lock-closed"></ion-icon>
+                  </ion-label>
+                </ion-item>
+              </ion-col>
             </ion-row>
           </ion-grid>
         </ion-card-content>
@@ -52,45 +72,117 @@
           <ion-grid>
             <ion-row>
               <ion-col>
-                <ion-item>
-                  <ion-label position="floating"> NOMBRE </ion-label>
-                  <ion-input [(ngModel)]="inmobiliaria.nombre"> </ion-input>
+                <ion-item color="dark">
+                  <ion-input
+                    [(ngModel)]="agente.nombre"
+                    type="text"
+                    required
+                    placeholder="Nombre"
+                  ></ion-input>
+                  <ion-label>
+                    <ion-icon name="text"></ion-icon>
+                  </ion-label>
                 </ion-item>
               </ion-col>
 
               <ion-col>
-                <ion-item>
-                  <ion-label position="floating"> DIRECCIÓN </ion-label>
-                  <ion-input> </ion-input>
+                <ion-item color="dark">
+                  <ion-input
+                    [(ngModel)]="apellidoPat"
+                    type="text"
+                    required
+                    placeholder="Apellido Paterno"
+                  ></ion-input>
+                  <ion-label>
+                    <ion-icon name="text"></ion-icon>
+                  </ion-label>
                 </ion-item>
               </ion-col>
 
-              <ion-col class="ion-margin-top ion-margin-bottom">
-                <ion-item>
-                  <ion-select interface="popover" placeholder="ESTADO" [multiple]="true" [(ngModel)]="inmobiliaria.estados">
-                    <ion-select-option *ngFor="let estado of estados" [value]="estado.nombre">{{estado.nombre}}
-                    </ion-select-option>
+              <ion-col>
+                <ion-item color="dark">
+                  <ion-input
+                    [(ngModel)]="apellidoMat"
+                    type="text"
+                    required
+                    placeholder="Apellido Materno"
+                  ></ion-input>
+                  <ion-label>
+                    <ion-icon name="text"></ion-icon>
+                  </ion-label>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col>
+                <ion-item color="dark">
+                  <ion-input
+                    [(ngModel)]="agente.correo"
+                    type="text"
+                    required
+                    placeholder="Correo"
+                  ></ion-input>
+                  <ion-label>
+                    <ion-icon name="mail-outline"> </ion-icon>
+                  </ion-label>
+                </ion-item>
+              </ion-col>
+
+              <ion-col>
+                <ion-item color="dark">
+                  <ion-input
+                    [(ngModel)]="agente.telefono"
+                    type="text"
+                    required
+                    placeholder="Telefono"
+                  ></ion-input>
+                  <ion-label>
+                    <ion-icon name="call"></ion-icon>
+                  </ion-label>
+                </ion-item>
+              </ion-col>
+
+              <ion-col>
+                <ion-item color="dark">
+                  <ion-icon
+                    style="padding: 0 15px"
+                    name="business-outline"
+                  ></ion-icon>
+                  <ion-select
+                    placeholder="Inmobiliaria"
+                    [(ngModel)]="agente.inmobiliaria"
+                  >
+                    <ion-select-option
+                      *ngFor="let inmobiliaria of inmobiliarias"
+                      [value]="inmobiliaria.correo"
+                      >{{inmobiliaria.nombre}}</ion-select-option
+                    >
                   </ion-select>
                 </ion-item>
               </ion-col>
-              
-
             </ion-row>
           </ion-grid>
         </ion-card-content>
 
-
         <ion-card-content>
-          <ion-button class="ion-float-right ion-margin-top" fill="solid" (click)="actualizarPerfil()">
+          <ion-button
+            class="ion-float-right ion-margin-top"
+            fill="solid"
+            (click)="actualizarPerfil()"
+          >
             ACTUALIZAR
           </ion-button>
 
-          <ion-button class="ion-float-left ion-margin-top" fill="solid" color="danger" (click)="eliminarPerfil()">
+          <ion-button
+            class="ion-float-left ion-margin-top"
+            fill="solid"
+            color="danger"
+            (click)="eliminarPerfil()"
+          >
             ELIMINAR
           </ion-button>
-
         </ion-card-content>
-
       </ion-card>
     </ion-card-content>
   </ion-card>
