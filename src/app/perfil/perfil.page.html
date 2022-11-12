@@ -1,13 +1,14 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title color="secondary">AGENTES</ion-title>
+    <ion-title color="secondary">INMOBILIARIAS</ion-title>
   </ion-toolbar>
+
 </ion-header>
 
 <ion-content>
   <ion-card>
     <ion-card-header>
-      <ion-card-title color="secondary"> AGENTE </ion-card-title>
+      <ion-card-title color="secondary"> INMOBILIARIA </ion-card-title>
     </ion-card-header>
 
     <ion-card-content>
@@ -21,10 +22,10 @@
               <ion-col>
                 <ion-item color="dark">
                   <ion-input
-                    [(ngModel)]="agente.rfc"
+                    [(ngModel)]="inmobiliaria.correo"
                     type="text"
                     required
-                    placeholder="RFC"
+                    placeholder="Correo"
                   ></ion-input>
                   <ion-label>
                     <ion-icon name=""></ion-icon>
@@ -35,7 +36,7 @@
               <ion-col>
                 <ion-item color="dark">
                   <ion-input
-                    [(ngModel)]="agente.password"
+                    [(ngModel)]="inmobiliaria.password"
                     type="text"
                     required
                     placeholder="Contraseña"
@@ -69,12 +70,13 @@
           <ion-card-title color="secondary"> DETALLES </ion-card-title>
         </ion-card-header>
         <ion-card-content>
+          
           <ion-grid>
             <ion-row>
               <ion-col>
                 <ion-item color="dark">
                   <ion-input
-                    [(ngModel)]="agente.nombre"
+                    [(ngModel)]="inmobiliaria.nombre"
                     type="text"
                     required
                     placeholder="Nombre"
@@ -88,10 +90,10 @@
               <ion-col>
                 <ion-item color="dark">
                   <ion-input
-                    [(ngModel)]="apellidoPat"
+                    [(ngModel)]="inmobiliaria.direccion"
                     type="text"
                     required
-                    placeholder="Apellido Paterno"
+                    placeholder="Direccion"
                   ></ion-input>
                   <ion-label>
                     <ion-icon name="text"></ion-icon>
@@ -102,26 +104,27 @@
               <ion-col>
                 <ion-item color="dark">
                   <ion-input
-                    [(ngModel)]="apellidoMat"
+                    [(ngModel)]="inmobiliaria.estados"
                     type="text"
                     required
-                    placeholder="Apellido Materno"
+                    placeholder="Estados"
                   ></ion-input>
                   <ion-label>
                     <ion-icon name="text"></ion-icon>
                   </ion-label>
                 </ion-item>
               </ion-col>
-            </ion-row>
+
+             </ion-row>
 
             <ion-row>
               <ion-col>
                 <ion-item color="dark">
                   <ion-input
-                    [(ngModel)]="agente.correo"
+                    [(ngModel)]="inmobiliaria.agentes"
                     type="text"
                     required
-                    placeholder="Correo"
+                    placeholder="Agentes"
                   ></ion-input>
                   <ion-label>
                     <ion-icon name="mail-outline"> </ion-icon>
@@ -131,36 +134,35 @@
 
               <ion-col>
                 <ion-item color="dark">
-                  <ion-input
-                    [(ngModel)]="agente.telefono"
-                    type="text"
-                    required
-                    placeholder="Telefono"
-                  ></ion-input>
-                  <ion-label>
-                    <ion-icon name="call"></ion-icon>
-                  </ion-label>
-                </ion-item>
+               <ion-input [(ngModel)]="inmobiliaria.foto"> </ion-input>
+                
+                  <ion-button (click)="tomarFotografia()" expand="block"> Tomar Foto </ion-button>
+                
+              </ion-item>
+                    <ion-row>
+                      <img *ngIf="inmobiliaria.foto" src="{{ api }}/{{ inmobiliaria.foto }}" />
+                    </ion-row>              
+                
               </ion-col>
 
               <ion-col>
                 <ion-item color="dark">
-                  <ion-icon
-                    style="padding: 0 15px"
-                    name="business-outline"
-                  ></ion-icon>
-                  <ion-select
-                    placeholder="Inmobiliaria"
-                    [(ngModel)]="agente.inmobiliaria"
-                  >
-                    <ion-select-option
-                      *ngFor="let inmobiliaria of inmobiliarias"
-                      [value]="inmobiliaria.correo"
-                      >{{inmobiliaria.nombre}}</ion-select-option
-                    >
-                  </ion-select>
+                  <ion-input
+                    [(ngModel)]="inmobiliaria.notarios"
+                    type="text"
+                    required
+                    placeholder="Notarios"
+                  ></ion-input>
+                  <ion-label>
+                    <ion-icon name="text"></ion-icon>
+                  </ion-label>
                 </ion-item>
               </ion-col>
+         
+
+             
+
+
             </ion-row>
           </ion-grid>
         </ion-card-content>

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { Agente } from 'src/app/interfaces/agente';
+import { environment } from 'src/environments/environment';
 import { Inmobiliaria } from '../interfaces/inmobiliaria';
-import { AgenteService } from '../services/agente.service';
+import { FotoService } from '../services/foto.service';
 import { InmobiliariaService } from '../services/inmobiliaria.service';
 import { SessionService } from '../services/session.service';
 
@@ -12,40 +12,41 @@ import { SessionService } from '../services/session.service';
   styleUrls: ['./perfil.page.scss'],
 })
 export class PerfilPage implements OnInit {
-
-  apellidoPat: string = ''
-  apellidoMat: string = ''
+  api = environment.api
   inmobiliarias: Inmobiliaria[]
 
-  agente: Agente = {
-    rfc: '',
-    inmobiliaria: '',
-    nombre: '',
+  inmobiliaria: Inmobiliaria = {
     correo: '',
     password: '',
-    apellido: '',
-    telefono: '',
-    foto: ''
+    nombre: '',
+    estados: [],
+    foto: '',
+    direccion: {
+      calle: '',
+      codigopostal: '',
+      colonia: '',
+      numeroexterior: '',
+      numerointerior: '',
+      estado: '',
+    },
+    notarios: [],
+    agentes: [], 
+   
   };
   confirmPassword = '';
 
   constructor(
     private sessionService: SessionService,
     private inmobiliariaService: InmobiliariaService,
-    private agenteService: AgenteService,
+    private fotoService: FotoService,
     private router:  Router
   ) { }
 
   ngOnInit() {
-    this.sessionService.get('rfc')?.then(rfc => {
-      if(rfc) this.agenteService.getAgente(rfc).subscribe(agente => {
-        this.agente = agente
-        this.apellidoPat = agente.apellido.split(" ")[0]
-        this.apellidoMat = agente.apellido.split(" ")[1]
+    this.sessionService.get('correo')?.then(correo => {
+      if(correo) this.inmobiliariaService.getInmobiliaria(correo).subscribe(inmobiliaria => {
+        this.inmobiliaria = inmobiliaria
       })
-    })
-    this.inmobiliariaService.getInmobiliarias()?.subscribe(inmobiliarias => {
-      this.inmobiliarias = inmobiliarias
     })
   }
 
@@ -62,22 +63,46 @@ export class PerfilPage implements OnInit {
     //   this.confirmPassword.trim() !== ""
     // ) 
     //{
-      if (this.confirmPassword === this.agente.password)
+      if (this.confirmPassword === this.inmobiliaria.password)
       {
-        this.agente.apellido = this.apellidoPat +' '+ this.apellidoMat;  
-        this.agenteService.postAgente(this.agente).subscribe(res => console.log(res))
+        this.inmobiliariaService.postInmobiliaria(this.inmobiliaria).subscribe(res => console.log(res))
       }
     //}
   }
 
   eliminarPerfil(){
-    if (this.confirmPassword === this.agente.password)
-    this.agenteService.deleteAgente(this.agente.rfc).subscribe(res => {
+    if (this.confirmPassword === this.inmobiliaria.password)
+    this.inmobiliariaService.deleteInmobiliaria(this.inmobiliaria.correo).subscribe(res => {
       if(res.results)
       this.sessionService.clear().then(()=>this.router.navigate([""]))
       else console.log(res)
     })
 
+  }
+
+  tomarFotografia() {
+    this.fotoService.tomarFoto().then((photo) => {
+      // this.fotoService.subirMiniatura(photo.webPath).subscribe((data) => {
+      //   console.log(data);
+      // });
+      console.log(photo);
+      const reader = new FileReader();
+      const datos = new FormData();
+      reader.onload = () => {
+        const imgBlob = new Blob([reader.result], {
+          type: `image/${photo.format}`,
+        });
+        datos.append('img', imgBlob, `imagen.${photo.format}`);
+        this.fotoService
+          .subirMiniatura(datos)
+          .subscribe((res) =>
+          this.inmobiliaria.foto = res.path
+          );
+      };
+      const consulta = fetch(photo.webPath).then((v) =>
+        v.blob().then((imagen) => reader.readAsArrayBuffer(imagen))
+      );
+    });
   }
 
 }
