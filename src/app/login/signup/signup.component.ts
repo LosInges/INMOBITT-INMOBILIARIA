@@ -15,6 +15,7 @@ export class SignupComponent implements OnInit {
     password: '',
     nombre: '',
     estado: '',
+    foto:'',
     direccion: {
       calle: '',
       codigopostal: '',
@@ -23,8 +24,10 @@ export class SignupComponent implements OnInit {
       numerointerior: '',
       estado: '',
     },
+    sedes: [],
     notarios: [],
     agentes: [],
+    
   };
   confirmPassword = '';
 

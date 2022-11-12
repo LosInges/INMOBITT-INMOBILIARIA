@@ -19,6 +19,13 @@
   </ion-item>
 
   <ion-item color="dark">
+    <ion-icon style="padding: 0 15px" name="map"></ion-icon>
+    <ion-select  placeholder="Sedes" [(ngModel)]="inmobiliaria.sedes" [multiple]="true">
+      <ion-select-option *ngFor="let sede of estados" [value]="sede.nombre">{{sede.nombre}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item color="dark">
     <ion-input type="text" required placeholder="Dirección"></ion-input>
     <ion-label>
       <ion-icon name="call"></ion-icon>
