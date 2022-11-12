@@ -9,6 +9,7 @@ export interface Inmobiliaria {
     direccion: Direccion;
     notarios: Notario[];
     agentes: string[]; 
+    sedes: string[];
     foto: string; 
   }
   

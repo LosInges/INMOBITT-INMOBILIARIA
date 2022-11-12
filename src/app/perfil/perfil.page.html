@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title color="secondary">INMOBILIARIA</ion-title>
+    <ion-title color="secondary">INMOBILIARIAS</ion-title>
   </ion-toolbar>
 
 </ion-header>
@@ -75,10 +75,51 @@
                   </ion-select>
                 </ion-item>
               </ion-col>
+
+              <ion-item color="dark">
+                <ion-icon style="padding: 0 15px" name="map"></ion-icon>
+                <ion-select  placeholder="Sedes" [(ngModel)]="inmobiliaria.sedes" [multiple]="true">
+                  <ion-select-option *ngFor="let sede of estados" [value]="sede.nombre">{{sede.nombre}}</ion-select-option>
+                </ion-select>
+              </ion-item>
               
 
             </ion-row>
           </ion-grid>
+
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <ion-item>
+                  <ion-label position="floating"> NOTARIO </ion-label>
+                  <ion-input> </ion-input>
+                </ion-item>
+              
+              </ion-col>
+
+
+                <ion-col>
+                  <ion-item>
+                    <ion-label position="floating"> AGENTE </ion-label>
+                    <ion-input> </ion-input>
+                  </ion-item>
+                </ion-col>
+
+                <ion-col>
+                  <ion-item>
+                    <ion-row>
+                      <img *ngIf="inmobiliaria.foto" src="{{ api }}/{{ inmobiliaria.foto }}" />
+                      <ion-buttons>
+                        <ion-button (click)="tomarFotografia()"> TOMAR FOTO </ion-button>
+                      </ion-buttons>
+                    </ion-row>
+                  </ion-item>
+                </ion-col>
+
+            </ion-row>
+          </ion-grid>
+            
+
         </ion-card-content>
 
 

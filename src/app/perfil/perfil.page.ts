@@ -30,6 +30,7 @@ export class PerfilPage implements OnInit {
       numerointerior: '',
       estado: '',
     },
+    sedes: [],
     notarios: [],
     agentes: [], 
   };
@@ -48,6 +49,7 @@ export class PerfilPage implements OnInit {
     this.sessionService.get('correo')?.then(correo => {
       if(correo) this.inmobiliariaService.getInmobiliaria(correo).subscribe(inmobiliaria => {
         this.inmobiliaria = inmobiliaria
+        console.log(inmobiliaria)
       })
     })
   }
@@ -87,7 +89,6 @@ export class PerfilPage implements OnInit {
       // this.fotoService.subirMiniatura(photo.webPath).subscribe((data) => {
       //   console.log(data);
       // });
-      console.log(photo);
       const reader = new FileReader();
       const datos = new FormData();
       reader.onload = () => {
