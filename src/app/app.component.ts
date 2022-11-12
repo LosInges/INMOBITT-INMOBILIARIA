@@ -10,9 +10,6 @@ export class AppComponent {
     { title: 'Iniciar Sesion', url: 'login', icon: 'mail' },
     { title: 'Perfil', url: '/perfil', icon: 'paper-plane' },
     { title: 'Inmuebles', url: '/inmuebles', icon: 'heart' },
-    { title: 'Archived', url: '/folder/Archived', icon: 'archive' },
-    { title: 'Trash', url: '/folder/Trash', icon: 'trash' },
-    { title: 'Spam', url: '/folder/Spam', icon: 'warning' },
     {
       title: 'Cerrar Sesion',
       url: '',
@@ -20,7 +17,6 @@ export class AppComponent {
       icon: 'log-out-outline',
     }
   ];
-  public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
   constructor(private sessionService: SessionService) {}
 
   click(funcion: any) {

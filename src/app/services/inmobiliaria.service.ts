@@ -19,10 +19,6 @@ export class InmobiliariaService {
     return this.httpClient.get<Inmobiliaria>(`${environment.api}/inmobiliaria/${correo}`)
   }
 
-  getInmobiliarias():Observable<Inmobiliaria[]>{
-    return this.httpClient.get<Inmobiliaria[]>(`${environment.api}/inmobiliarias`)  
-  }
-
   deleteInmobiliaria(correo: string):Observable<any>{
     return this.httpClient.delete<any>(`${environment.api}/inmobiliaria`,{body:{correo}})
   }

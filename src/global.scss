@@ -24,3 +24,30 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+.modalRegistrar {
+    align-items: center;
+    justify-content: center; 
+    &::part(content){
+      width: 110%;
+      height: 110%; 
+    }
+  }
+
+.modalIngresar {
+    align-items: center;
+    justify-content: center; 
+    &::part(content){
+      width: 110%;
+      height: 110%; 
+    }
+  }
+
+.modalGeneral{ 
+  align-items: center;
+    justify-content: center; 
+    &::part(content){
+      width: 100%;
+      height: 100%; 
+    }
+}

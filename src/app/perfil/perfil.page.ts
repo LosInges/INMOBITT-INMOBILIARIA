@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { Inmobiliaria } from '../interfaces/inmobiliaria';
 import { FotoService } from '../services/foto.service';
+import { Inmobiliaria } from '../interfaces/inmobiliaria';
+import { EstadosService } from '../services/estados.service';
 import { InmobiliariaService } from '../services/inmobiliaria.service';
 import { SessionService } from '../services/session.service';
 
@@ -19,8 +20,8 @@ export class PerfilPage implements OnInit {
     correo: '',
     password: '',
     nombre: '',
-    estados: [],
     foto: '',
+    estado: '',
     direccion: {
       calle: '',
       codigopostal: '',
@@ -31,11 +32,12 @@ export class PerfilPage implements OnInit {
     },
     notarios: [],
     agentes: [], 
-   
   };
   confirmPassword = '';
 
+  estados = this.estadosService.getEstados();
   constructor(
+    private estadosService: EstadosService,
     private sessionService: SessionService,
     private inmobiliariaService: InmobiliariaService,
     private fotoService: FotoService,
