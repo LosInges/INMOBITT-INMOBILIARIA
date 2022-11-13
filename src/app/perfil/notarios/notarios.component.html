@@ -1,0 +1,16 @@
+<ion-list>
+  <ion-item-sliding *ngFor="let notario of notarios" #itemSliding>
+    <ion-item>
+      <ion-avatar item-start>
+        <img src="{{ api }}/{{ notario.foto }}" />
+      </ion-avatar>
+      <ion-label class="centrado">{{ notario.nombre }}</ion-label>
+      <ion-label class="centrado">{{ notario.correo }}</ion-label>
+    </ion-item>
+    <ion-item-options side="end" (ionSwipe)="eliminarNotario(notario.correo)">
+      <ion-item-option expandable color="danger">
+        <ion-icon name="trash-outline"> </ion-icon>
+      </ion-item-option>
+    </ion-item-options>
+  </ion-item-sliding>
+</ion-list>

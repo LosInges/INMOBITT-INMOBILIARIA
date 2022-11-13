@@ -15,7 +15,7 @@ export class SignupComponent implements OnInit {
     password: '',
     nombre: '',
     estado: '',
-    foto:'',
+    foto: '',
     direccion: {
       calle: '',
       codigopostal: '',
@@ -26,8 +26,6 @@ export class SignupComponent implements OnInit {
     },
     sedes: [],
     notarios: [],
-    agentes: [],
-    
   };
   confirmPassword = '';
 
@@ -53,9 +51,14 @@ export class SignupComponent implements OnInit {
       if (this.confirmPassword === this.inmobiliaria.password) {
         this.inmobiliariaService
           .postInmobiliaria(this.inmobiliaria)
-          .subscribe((res) => console.log(res));
+          .subscribe((res) => {
+            if (res.results) {
+              this.modalController.dismiss();
+            } else {
+              console.log(res);
+            }
+          });
       }
-      this.modalController.dismiss();
     }
   }
   cerrar() {

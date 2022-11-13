@@ -5,29 +5,29 @@ const routes: Routes = [
   {
     path: '',
     redirectTo: 'login',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'login',
     loadChildren: () =>
       import('./login/login.module').then((m) => m.LoginPageModule),
-  },  {
+  },
+  {
     path: 'perfil',
-    loadChildren: () => import('./perfil/perfil.module').then( m => m.PerfilPageModule)
+    loadChildren: () =>
+      import('./perfil/perfil.module').then((m) => m.PerfilPageModule),
   },
   {
     path: 'inmuebles',
-    loadChildren: () => import('./inmuebles/inmuebles.module').then( m => m.InmueblesPageModule)
-  }
-
-  
-  
+    loadChildren: () =>
+      import('./inmuebles/inmuebles.module').then((m) => m.InmueblesPageModule),
+  },
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

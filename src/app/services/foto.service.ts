@@ -27,13 +27,14 @@ export class FotoService {
     });
   }
 
-  subirMiniatura(datos: FormData): Observable<Fotografia> {
-    return this.httpClient.post<Fotografia>(`${environment.api}/miniatura`, datos);
+  subirImgMiniatura(datos: FormData): Observable<Fotografia> {
+    return this.httpClient.post<Fotografia>(`${environment.api}/img/miniatura`, datos);
   }
 }
 
 export interface Fotografia{
   ok: boolean;
   path: string;
+  miniatura?: string;
   err?: object;
 }

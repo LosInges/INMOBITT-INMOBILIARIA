@@ -4,24 +4,31 @@ import { Agente } from '../interfaces/agente';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AgenteService {
+  constructor(private httpClient: HttpClient) {}
 
-  constructor(private httpClient:HttpClient) { }
-  
-  postAgente(agente: Agente):Observable<any>{
-    return this.httpClient.post<any>(`${environment.api}/agente`,agente)
+  postAgente(agente: Agente): Observable<any> {
+    return this.httpClient.post<any>(`${environment.api}/agente`, agente);
   }
 
-  getAgente(rfc: string):Observable<Agente>{
-    return this.httpClient.get<Agente>(`${environment.api}/agente/${rfc}`)
+  getAgente(inmobiliaria: string, rfc: string): Observable<Agente> {
+    return this.httpClient.get<Agente>(
+      `${environment.api}/agente/${inmobiliaria}/${rfc}`
+    );
   }
 
-  deleteAgente(rfc: string):Observable<any>{
-    return this.httpClient.delete<any>(`${environment.api}/agente`,{body:{rfc}})
+  getAgentes(inmobiliaria: string): Observable<Agente[]> {
+    return this.httpClient.get<Agente[]>(
+      `${environment.api}/agentes/${inmobiliaria}`
+    );
   }
 
+  deleteAgente(inmobiliaria: string, rfc: string): Observable<any> {
+    return this.httpClient.delete<any>(`${environment.api}/agente`, {
+      body: { rfc, inmobiliaria },
+    });
+  }
 }
