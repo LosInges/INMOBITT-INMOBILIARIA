@@ -46,7 +46,7 @@ export class RegistroAgenteComponent implements OnInit {
       this.agenteService.postAgente(this.agente).subscribe((res) => {
         console.log(res);
         if (res.results) {
-          this.modalController.dismiss();
+          this.modalController.dismiss({ registrado: true });
         } else {
           console.log(res);
         }

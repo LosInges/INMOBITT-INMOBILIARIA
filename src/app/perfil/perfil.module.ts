@@ -13,12 +13,13 @@ import { RegistroAgenteComponent } from './registro-agente/registro-agente.compo
 import { RegistroNotarioComponent } from './registro-notario/registro-notario.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    PerfilPageRoutingModule
+  imports: [CommonModule, FormsModule, IonicModule, PerfilPageRoutingModule],
+  declarations: [
+    PerfilPage,
+    AgentesComponent,
+    NotariosComponent,
+    RegistroAgenteComponent,
+    RegistroNotarioComponent,
   ],
-  declarations: [PerfilPage, AgentesComponent, NotariosComponent, RegistroAgenteComponent, RegistroNotarioComponent]
 })
 export class PerfilPageModule {}

@@ -7,7 +7,17 @@ const routes: Routes = [
   {
     path: '',
     component: PerfilPage
+  },
+  {
+    path: 'agente/:rfc',
+    loadChildren: () => import('./agente/agente.module').then( m => m.AgentePageModule)
+  },
+  {
+    path: 'notario/:rfc',
+    loadChildren: () => import('./notario/notario.module').then( m => m.NotarioPageModule)
   }
+
+
 ];
 
 @NgModule({

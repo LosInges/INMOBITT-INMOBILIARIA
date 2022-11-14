@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Agente } from 'src/app/interfaces/agente';
 
 @Component({
@@ -9,10 +10,14 @@ import { Agente } from 'src/app/interfaces/agente';
 export class AgentesComponent implements OnInit {
   @Input() agentes: Agente[] = [];
   @Input() api = '';
-  constructor() {}
+  constructor(private router: Router) {}
 
   @Input() eliminarAgente(rfc: string) {
     console.log('No se recibio funcion eliminar agente');
+  }
+
+  editarAgente(rfc: string) {
+    this.router.navigate(['perfil', 'agente', rfc]);
   }
 
   ngOnInit() {}

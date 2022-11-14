@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Notario } from 'src/app/interfaces/notario';
 import { FotoService } from 'src/app/services/foto.service';
+import { NotarioService } from 'src/app/services/notario.service';
 
 @Component({
   selector: 'app-registro-notario',
@@ -10,11 +11,14 @@ import { FotoService } from 'src/app/services/foto.service';
 })
 export class RegistroNotarioComponent implements OnInit {
   @Input() api: string;
+  @Input() inmobiliaria: string;
 
   apellidoPat = '';
   apellidoMat = '';
 
   notario: Notario = {
+    inmobiliaria: '',
+    rfc: '',
     nombre: '',
     apellido: '',
     correo: '',
@@ -23,13 +27,23 @@ export class RegistroNotarioComponent implements OnInit {
 
   constructor(
     private fotoService: FotoService,
+    private notarioService: NotarioService,
     private modalController: ModalController
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.notario.inmobiliaria = this.inmobiliaria;
+  }
 
   onSubmit() {
-    this.modalController.dismiss(this.notario);
+    this.notario.apellido = this.apellidoPat + ' ' + this.apellidoMat;
+    this.notarioService.postNotario(this.notario).subscribe((res) => {
+      if (res.results) {
+        this.modalController.dismiss({ registrado: true });
+      } else {
+        console.log(res);
+      }
+    });
   }
 
   cerrar() {

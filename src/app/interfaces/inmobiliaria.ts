@@ -1,5 +1,4 @@
 import { Direccion } from './direccion';
-import { Notario } from './notario';
 
 export interface Inmobiliaria {
   correo: string;
@@ -7,7 +6,6 @@ export interface Inmobiliaria {
   nombre: string;
   estado: string;
   direccion: Direccion;
-  notarios: Notario[];
   sedes: string[];
   foto: string;
 }

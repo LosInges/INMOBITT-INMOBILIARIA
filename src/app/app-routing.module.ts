@@ -22,6 +22,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./inmuebles/inmuebles.module').then((m) => m.InmueblesPageModule),
   },
+
 ];
 
 @NgModule({

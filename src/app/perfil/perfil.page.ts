@@ -11,6 +11,8 @@ import { RegistroAgenteComponent } from './registro-agente/registro-agente.compo
 import { AgenteService } from '../services/agente.service';
 import { RegistroNotarioComponent } from './registro-notario/registro-notario.component';
 import { Agente } from '../interfaces/agente';
+import { Notario } from '../interfaces/notario';
+import { NotarioService } from '../services/notario.service';
 
 @Component({
   selector: 'app-perfil',
@@ -19,6 +21,7 @@ import { Agente } from '../interfaces/agente';
 })
 export class PerfilPage implements OnInit {
   agentes: Agente[] = [];
+  notarios: Notario[] = [];
 
   api = environment.api;
   confirmPassword = '';
@@ -41,7 +44,6 @@ export class PerfilPage implements OnInit {
       estado: '',
     },
     sedes: [],
-    notarios: [],
   };
 
   constructor(
@@ -50,6 +52,7 @@ export class PerfilPage implements OnInit {
     private inmobiliariaService: InmobiliariaService,
     private fotoService: FotoService,
     private agenteService: AgenteService,
+    private notarioService: NotarioService,
     private modalController: ModalController,
     private router: Router
   ) {}
@@ -62,6 +65,7 @@ export class PerfilPage implements OnInit {
           .subscribe((inmobiliaria) => {
             this.inmobiliaria = inmobiliaria;
             this.consultarAgentes();
+            this.consultarNotarios();
           });
       }
     });
@@ -153,30 +157,26 @@ export class PerfilPage implements OnInit {
   async registroNotario() {
     const modal = await this.modalController.create({
       component: RegistroNotarioComponent,
-      componentProps: { api: this.api },
+      componentProps: { api: this.api, inmobiliaria: this.inmobiliaria.correo },
     });
     modal.onDidDismiss().then((res) => {
       if (res.data) {
-        if (this.inmobiliaria.notarios) {
-          this.inmobiliaria.notarios.push(res.data);
-        } else {
-          this.inmobiliaria.notarios = [res.data];
-        }
-        this.inmobiliariaService
-          .postInmobiliaria(this.inmobiliaria)
-          .subscribe((result) => {
-            console.log(result);
-          });
+        this.consultarNotarios();
       }
     });
     modal.present();
   }
 
-  eliminarNotario(correo: string) {
-    this.inmobiliaria.notarios = this.inmobiliaria.notarios.filter(
-      (notario) => notario.correo !== correo
-    );
-    this.inmobiliariaService.postInmobiliaria(this.inmobiliaria).subscribe();
+  eliminarNotario(rfc: string) {
+    this.notarioService
+      .deleteNotario(this.inmobiliaria.correo, rfc)
+      .subscribe((res) => {
+        if (res.results) {
+          this.consultarNotarios();
+        } else {
+          console.log(res);
+        }
+      });
   }
 
   private consultarAgentes() {
@@ -184,6 +184,16 @@ export class PerfilPage implements OnInit {
       .getAgentes(this.inmobiliaria.correo)
       .subscribe((agentes) => {
         this.agentes = agentes;
+        console.log(this.agentes);
+      });
+  }
+
+  private consultarNotarios() {
+    this.notarioService
+      .getNotarios(this.inmobiliaria.correo)
+      .subscribe((notarios) => {
+        this.notarios = notarios;
+        console.log(this.notarios);
       });
   }
 }

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Agente } from '../interfaces/agente';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Inmueble } from '../interfaces/inmueble';
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +24,12 @@ export class AgenteService {
   getAgentes(inmobiliaria: string): Observable<Agente[]> {
     return this.httpClient.get<Agente[]>(
       `${environment.api}/agentes/${inmobiliaria}`
+    );
+  }
+
+  getInmueblesAgente(agente: string): Observable<Inmueble[]> {
+    return this.httpClient.get<Inmueble[]>(
+      `${environment.api}/inmuebles/agente/${agente}`
     );
   }
 

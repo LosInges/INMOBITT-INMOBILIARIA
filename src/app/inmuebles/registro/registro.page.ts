@@ -36,12 +36,7 @@ export class RegistroPage implements OnInit {
     },
     foto: '',
     metros_cuadrados: '',
-    notarios: {
-      nombre: '',
-      apellido: '',
-      correo: '',
-      foto: '',
-    },
+    notario: '',
     pisos: 0,
     precio_renta: 0,
     precio_venta: 0,

@@ -4,10 +4,17 @@
       <ion-avatar item-start>
         <img src="{{ api }}/{{ agente.foto }}" />
       </ion-avatar>
-      <ion-label class="centrado">{{ agente.nombre }}</ion-label>
+      <ion-label class="centrado"
+        >{{ agente.nombre }} {{ agente.apellido }}</ion-label
+      >
       <ion-label class="centrado">{{ agente.telefono }}</ion-label>
     </ion-item>
-    <ion-item-options side="end" (ionSwipe)="eliminarAgente(agente.rfc)">
+    <ion-item-options side="start" (ionSwipe)="editarAgente(agente.rfc); itemSliding.close()">
+      <ion-item-option expandable color="success">
+        <ion-icon name="trash-outline"> </ion-icon>
+      </ion-item-option>
+    </ion-item-options>
+    <ion-item-options side="end" (ionSwipe)="eliminarAgente(agente.rfc); itemSliding.close()">
       <ion-item-option expandable color="danger">
         <ion-icon name="trash-outline"> </ion-icon>
       </ion-item-option>

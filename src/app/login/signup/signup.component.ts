@@ -25,7 +25,6 @@ export class SignupComponent implements OnInit {
       estado: '',
     },
     sedes: [],
-    notarios: [],
   };
   confirmPassword = '';
 

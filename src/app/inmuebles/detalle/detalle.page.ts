@@ -16,7 +16,6 @@ export class DetallePage implements OnInit {
     estado: '',
     cuartos: 0,
     descripcion: '',
-
     direccion: {
       calle: '',
       codigopostal: '',
@@ -25,16 +24,9 @@ export class DetallePage implements OnInit {
       numerointerior: '',
       estado: '',
     },
-
+    notario: '',
     foto: '',
     metros_cuadrados: '',
-
-    notarios: {
-      nombre: '',
-      apellido: '',
-      correo: '',
-      foto: '',
-    },
     pisos: 0,
     precio_renta: 0,
     precio_venta: 0,

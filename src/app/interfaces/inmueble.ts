@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Direccion } from './direccion';
-import { Notario } from './notario';
 
 export interface Inmueble {
   titulo: string;
@@ -10,7 +9,7 @@ export interface Inmueble {
   direccion: Direccion;
   foto: string;
   metros_cuadrados: string;
-  notarios: Notario;
+  notario: string;
   pisos: number;
   precio_renta: number;
   precio_venta: number;
@@ -18,4 +17,5 @@ export interface Inmueble {
   agente: string;
   borrado: false;
   visible: true;
+  cliente?: string;
 }
