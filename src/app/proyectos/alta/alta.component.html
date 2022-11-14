@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title color="secondary">PROYECTOS</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title color="secondary">PROYECTOS</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-card>
+        <ion-card-content>
+          <ion-card-header>
+            <ion-card-title color="secondary"> LOCALIZACIÓN </ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            <ion-grid>
+              <ion-row>
+                <ion-col class="ion-margin-top ion-margin-bottom">
+                  <ion-item>
+                    <ion-label position="floating"> INMOBILIARIA </ion-label>
+                    <ion-input disabled >
+                  </ion-input>
+                  </ion-item>
+                </ion-col>
+
+                <ion-col class="ion-margin-top ion-margin-bottom">
+                  <ion-item>
+                    <ion-label position="floating"> NOMBRE </ion-label>
+                    <ion-input disabled >
+                  </ion-input>
+                  </ion-item>
+                </ion-col>
+
+                <ion-col class="ion-margin-top ion-margin-bottom">
+                  <ion-item>
+                    <ion-label position="floating"> CIUDAD </ion-label>
+                    <ion-input > </ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+
+              <ion-grid>
+
+                <ion-col class="ion-margin-top ion-margin-bottom">
+                  <ion-item>
+                    <ion-label position="floating"> INICIO </ion-label>
+                    <ion-input
+                    [(ngModel)]="correo"
+                    disabled
+                    >
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+
+              </ion-grid>
+            </ion-grid>
+            <ion-card-content>
+              <ion-button class="ion-float-right ion-margin-top ion-margin-bottom" fill="solid" (click)="actualizarProyecto()">
+                ACTUALIZAR
+              </ion-button>
+              <ion-button class="ion-float-left ion-margin-top ion-margin-bottom" fill="solid" color="danger">
+                ELIMINAR
+              </ion-button>
+            </ion-card-content>
+          </ion-card-content>
+        </ion-card-content>
+      </ion-card>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

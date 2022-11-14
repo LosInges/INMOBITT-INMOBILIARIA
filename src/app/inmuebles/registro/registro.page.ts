@@ -1,14 +1,16 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+
 import { Estado } from 'src/app/interfaces/estado';
-import { Inmueble } from 'src/app/interfaces/inmueble';
-import { Servicio } from 'src/app/interfaces/servicio';
 import { EstadosService } from 'src/app/services/estados.service';
+import { Inmueble } from 'src/app/interfaces/inmueble';
 import { InmuebleService } from 'src/app/services/inmueble.service';
+import { ModalController } from '@ionic/angular';
+import { Servicio } from 'src/app/interfaces/servicio';
+import { ServicioComponent } from '../servicio/servicio.component';
 import { ServiciosService } from 'src/app/services/servicios.service';
 import { SessionService } from 'src/app/services/session.service';
-import { ServicioComponent } from '../servicio/servicio.component';
 
 @Component({
   selector: 'app-registro',
@@ -69,6 +71,10 @@ export class RegistroPage implements OnInit {
     //   console.log(val)
     // });
     console.log(this.inmueble);
+  }
+
+  cerrar() {
+
   }
 
   async nuevoServicio() {
