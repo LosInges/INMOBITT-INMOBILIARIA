@@ -1,3 +1,207 @@
-<p>
-  alta works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-title color="secondary">INMUEBLE</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-content>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title color="secondary"> LOCALIZACIÓN </ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <ion-item>
+                  <ion-label position="floating"> TITULO </ion-label>
+                  <ion-input [(ngModel)]="inmueble.titulo"> </ion-input>
+                </ion-item>
+              </ion-col>
+
+              <ion-col>
+                <ion-item class="ion-margin-top ion-margin-bottom">
+                  <ion-label position="floating">Estado</ion-label>
+                  <ion-input [(ngModel)]="inmueble.estado" disabled></ion-input>
+                </ion-item>
+              </ion-col>
+
+              <ion-col>
+                <ion-item>
+                  <ion-button>Tomar foto</ion-button>
+                  <ion-img
+                    *ngIf="inmueble.foto"
+                    [src]="inmueble.foto"
+                  ></ion-img>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col>
+                <ion-item>
+                  <ion-label position="floating"> INMOBILIARIA </ion-label>
+                  <ion-input [(ngModel)]="inmueble.inmobiliaria" disabled>
+                  </ion-input>
+                </ion-item>
+              </ion-col>
+
+              <ion-col>
+                <ion-item>
+                  <ion-label position="floating"> AGENTE </ion-label>
+                  <ion-select [(ngModel)]="inmueble.agente" interface="popover">
+                    <ion-select-option
+                      *ngFor="let agente of agentes"
+                      [value]="agente.rfc"
+                      >{{ agente.nombre }}
+                      {{ agente.apellido }}</ion-select-option
+                    >
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+
+              <ion-col>
+                <ion-item>
+                  <ion-label position="floating"> NOTARIO </ion-label>
+                  <ion-select [(ngModel)]="inmueble.notario" interface="popover">
+                    <ion-select-option
+                      *ngFor="let notario of notarios"
+                      [value]="notario.rfc"
+                      >{{ notario.nombre }}
+                      {{ notario.apellido }}</ion-select-option
+                    >
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title color="secondary"> DETALLES </ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <ion-item>
+                  <ion-label position="floating"> DIRECCIÓN </ion-label>
+                  <ion-input> </ion-input>
+                </ion-item>
+              </ion-col>
+
+              <ion-col>
+                <ion-item>
+                  <ion-label position="floating"> PISOS </ion-label>
+                  <ion-input type="number" [(ngModel)]="inmueble.pisos">
+                  </ion-input>
+                </ion-item>
+              </ion-col>
+
+              <ion-col>
+                <ion-item>
+                  <ion-label position="floating"> CUARTOS </ion-label>
+                  <ion-input type="number" [(ngModel)]="inmueble.cuartos">
+                  </ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col>
+                <ion-item>
+                  <ion-label position="floating"> METROS CUADRADOS </ion-label>
+                  <ion-input
+                    type="number"
+                    [(ngModel)]="inmueble.metros_cuadrados"
+                  >
+                  </ion-input>
+                </ion-item>
+              </ion-col>
+
+              <ion-col>
+                <ion-item>
+                  <ion-label position="floating"> DESCRIPCION </ion-label>
+                  <ion-textarea
+                    placeholder="Descripcion del inmueble"
+                    [autoGrow]="true"
+                    [(ngModel)]="inmueble.descripcion"
+                  ></ion-textarea>
+                </ion-item>
+              </ion-col>
+
+              <ion-col>
+                <ion-item>
+                  <ion-label position="floating"> SERVICIOS </ion-label>
+                  <ion-select
+                    [multiple]="true"
+                    [(ngModel)]="inmueble.servicios"
+                  >
+                    <ion-select-option
+                      *ngFor="let servicio of servicios"
+                      [value]="servicio"
+                      >{{ servicio }}</ion-select-option
+                    >
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col class="ion-margin-top ion-margin-bottom">
+                <ion-item>
+                  <ion-checkbox
+                    slot="start"
+                    [(ngModel)]="inmueble.visible"
+                  ></ion-checkbox>
+                  <ion-label>MOSTRAR</ion-label>
+                </ion-item>
+              </ion-col>
+
+              <ion-col>
+                <ion-item>
+                  <ion-label position="floating"> PRECIO RENTA </ion-label>
+                  <ion-input type="number" [(ngModel)]="inmueble.precio_renta">
+                  </ion-input>
+                </ion-item>
+              </ion-col>
+
+              <ion-col>
+                <ion-item>
+                  <ion-label position="floating"> PRECIO VENTA </ion-label>
+                  <ion-input type="number" [(ngModel)]="inmueble.precio_venta">
+                  </ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+
+        <ion-card-content>
+          <ion-button
+            class="ion-margin-top"
+            type="submit"
+            color="light"
+            (click)="cerrar()"
+          >
+            CERRAR
+          </ion-button>
+
+          <ion-button
+            class="ion-float-right ion-margin-top ion-margin-bottom"
+            fill="solid"
+            (click)="registrarInmueble()"
+          >
+            REGISTRAR
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

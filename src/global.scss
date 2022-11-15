@@ -16,7 +16,7 @@
 @import "~@ionic/angular/css/normalize.css";
 @import "~@ionic/angular/css/structure.css";
 @import "~@ionic/angular/css/typography.css";
-@import '~@ionic/angular/css/display.css';
+@import "~@ionic/angular/css/display.css";
 
 /* Optional CSS utils that can be commented out */
 @import "~@ionic/angular/css/padding.css";
@@ -26,28 +26,28 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 .modalRegistrar {
-    align-items: center;
-    justify-content: center; 
-    &::part(content){
-      width: 110%;
-      height: 110%; 
-    }
+  align-items: center;
+  justify-content: center;
+  &::part(content) {
+    width: 110%;
+    height: 110%;
   }
+}
 
 .modalIngresar {
-    align-items: center;
-    justify-content: center; 
-    &::part(content){
-      width: 110%;
-      height: 110%; 
-    }
-  }
-
-.modalGeneral{ 
   align-items: center;
-    justify-content: center; 
-    &::part(content){
-      width: 100%;
-      height: 100%; 
-    }
+  justify-content: center;
+  &::part(content) {
+    width: 110%;
+    height: 110%;
+  }
+}
+
+.modalGeneral {
+  align-items: center;
+  justify-content: center;
+  &::part(content) {
+    width: 100%;
+    height: 100%;
+  }
 }

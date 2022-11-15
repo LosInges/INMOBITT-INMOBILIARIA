@@ -9,7 +9,7 @@ const routes: Routes = [
     component: ProyectosPage
   },
   {
-    path: 'inmuebles/:proyecto',
+    path: ':proyecto/inmuebles',
     loadChildren: () => import('./inmuebles/inmuebles.module').then( m => m.InmueblesPageModule)
   }
 ];

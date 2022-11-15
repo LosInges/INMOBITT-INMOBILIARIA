@@ -1,15 +1,35 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>PROYECTOS</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="registrarProyecto()">Agregar Proyecto</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
-    <ion-item-sliding>
+    <ion-item-sliding *ngFor="let proyecto of proyectos" #itemSliding>
       <ion-item>
-
+        <ion-label>{{proyecto.nombre}}</ion-label>
+        <ion-label>{{proyecto.inicio | date:'shortDate'}}</ion-label>
       </ion-item>
+      <ion-item-options
+        side="start"
+        (ionSwipe)="verProyecto(proyecto.nombre); itemSliding.close()"
+      >
+        <ion-item-option color="success" expandable>
+          <ion-icon name="trash"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+      <ion-item-options
+        side="end"
+        (ionSwipe)="eliminarProyecto(proyecto.nombre); itemSliding.close()"
+      >
+        <ion-item-option color="danger" expandable>
+          <ion-icon name="trash"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
     </ion-item-sliding>
   </ion-list>
 </ion-content>
