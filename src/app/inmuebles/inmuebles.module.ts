@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { InmueblesPageRoutingModule } from './inmuebles-routing.module';
 
 import { InmueblesPage } from './inmuebles.page';
-import { ServicioComponent } from './servicio/servicio.component';
 
 @NgModule({
   imports: [
@@ -16,6 +15,6 @@ import { ServicioComponent } from './servicio/servicio.component';
     IonicModule,
     InmueblesPageRoutingModule
   ],
-  declarations: [InmueblesPage, ServicioComponent]
+  declarations: [InmueblesPage]
 })
 export class InmueblesPageModule {}

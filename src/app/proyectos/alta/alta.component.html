@@ -1,70 +1,74 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title color="secondary">PROYECTOS</ion-title>
+    <ion-title color="secondary">PROYECTO</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-card>
-    <ion-card-header>
-      <ion-card-title color="secondary">PROYECTOS</ion-card-title>
-    </ion-card-header>
-
     <ion-card-content>
       <ion-card>
         <ion-card-content>
           <ion-card-header>
             <ion-card-title color="secondary"> LOCALIZACIÓN </ion-card-title>
           </ion-card-header>
-
           <ion-card-content>
             <ion-grid>
               <ion-row>
                 <ion-col class="ion-margin-top ion-margin-bottom">
                   <ion-item>
                     <ion-label position="floating"> INMOBILIARIA </ion-label>
-                    <ion-input disabled >
-                  </ion-input>
+                    <ion-input [(ngModel)]="proyecto.inmobiliaria" disabled>
+                    </ion-input>
                   </ion-item>
                 </ion-col>
 
                 <ion-col class="ion-margin-top ion-margin-bottom">
                   <ion-item>
                     <ion-label position="floating"> NOMBRE </ion-label>
-                    <ion-input disabled >
-                  </ion-input>
-                  </ion-item>
-                </ion-col>
-
-                <ion-col class="ion-margin-top ion-margin-bottom">
-                  <ion-item>
-                    <ion-label position="floating"> CIUDAD </ion-label>
-                    <ion-input > </ion-input>
+                    <ion-input [(ngModel)]="proyecto.nombre"> </ion-input>
                   </ion-item>
                 </ion-col>
               </ion-row>
-
-              <ion-grid>
-
+              <ion-row>
                 <ion-col class="ion-margin-top ion-margin-bottom">
                   <ion-item>
-                    <ion-label position="floating"> INICIO </ion-label>
-                    <ion-input
-                    [(ngModel)]="correo"
-                    disabled
-                    >
-                    </ion-input>
+                    <ion-label position="floating"> CIUDAD </ion-label>
+                    <ion-select [(ngModel)]="proyecto.ciudad">
+                      <ion-select-option
+                        *ngFor="let estado of estados"
+                        [value]="estado"
+                        >{{ estado }}</ion-select-option
+                      >
+                    </ion-select>
                   </ion-item>
                 </ion-col>
-
-              </ion-grid>
+                <ion-col class="ion-margin-top ion-margin-bottom">
+                  <ion-item>
+                    <ion-label>Fecha de inicio</ion-label>
+                    <ion-datetime
+                      [(ngModel)]="proyecto.inicio"
+                      presentation="date"
+                      locale="es-MX"
+                    ></ion-datetime>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
             </ion-grid>
             <ion-card-content>
-              <ion-button class="ion-float-right ion-margin-top ion-margin-bottom" fill="solid" (click)="actualizarProyecto()">
-                ACTUALIZAR
+              <ion-button
+                class="ion-float-right ion-margin-top ion-margin-bottom"
+                fill="solid"
+                (click)="registrarProyecto()"
+              >
+                REGISTRAR
               </ion-button>
-              <ion-button class="ion-float-left ion-margin-top ion-margin-bottom" fill="solid" color="danger">
-                ELIMINAR
+              <ion-button
+                class="ion-float-left ion-margin-top ion-margin-bottom"
+                fill="solid"
+                (click)="cerrar()"
+              >
+                CERRAR
               </ion-button>
             </ion-card-content>
           </ion-card-content>

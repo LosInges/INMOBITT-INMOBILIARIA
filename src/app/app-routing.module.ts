@@ -18,10 +18,6 @@ const routes: Routes = [
       import('./perfil/perfil.module').then((m) => m.PerfilPageModule),
   },
   {
-    path: 'inmuebles',
-    loadChildren: () =>
-      import('./inmuebles/inmuebles.module').then((m) => m.InmueblesPageModule),
-  },  {
     path: 'proyectos',
     loadChildren: () => import('./proyectos/proyectos.module').then( m => m.ProyectosPageModule)
   },
