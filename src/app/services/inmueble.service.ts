@@ -1,14 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Inmueble } from '../interfaces/inmueble';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Inmueble } from '../interfaces/inmueble';
 
 @Injectable({
   providedIn: 'root',
 })
 export class InmuebleService {
   constructor(private httpClient: HttpClient) {}
+
+  getInmueble(inmobiliaria: string, proyecto: string, titulo: string): Observable<Inmueble>{
+    return this.httpClient.get<Inmueble>(
+      `${environment.api}/inmueble/${inmobiliaria}/${proyecto}/${titulo}`
+    )
+
+  }
 
   getInmueblesProyecto(
     proyecto: string,
@@ -43,4 +50,6 @@ export class InmuebleService {
     console.log(inmueble);
     return this.httpClient.post<any>(`${environment.api}/inmueble`, inmueble);
   }
+
+
 }

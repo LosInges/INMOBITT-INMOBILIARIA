@@ -1,18 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment';
+
+import { Agente } from '../interfaces/agente';
+import { AgenteService } from '../services/agente.service';
+import { EstadosService } from '../services/estados.service';
 import { FotoService } from '../services/foto.service';
 import { Inmobiliaria } from '../interfaces/inmobiliaria';
-import { EstadosService } from '../services/estados.service';
 import { InmobiliariaService } from '../services/inmobiliaria.service';
-import { SessionService } from '../services/session.service';
 import { ModalController } from '@ionic/angular';
-import { RegistroAgenteComponent } from './registro-agente/registro-agente.component';
-import { AgenteService } from '../services/agente.service';
-import { RegistroNotarioComponent } from './registro-notario/registro-notario.component';
-import { Agente } from '../interfaces/agente';
 import { Notario } from '../interfaces/notario';
 import { NotarioService } from '../services/notario.service';
+import { RegistroAgenteComponent } from './registro-agente/registro-agente.component';
+import { RegistroNotarioComponent } from './registro-notario/registro-notario.component';
+import { Router } from '@angular/router';
+import { SessionService } from '../services/session.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-perfil',
@@ -59,6 +60,7 @@ export class PerfilPage implements OnInit {
 
   ngOnInit() {
     this.sessionService.get('correo')?.then((correo) => {
+    console.log(correo)
       if (correo) {
         this.inmobiliariaService
           .getInmobiliaria(correo)

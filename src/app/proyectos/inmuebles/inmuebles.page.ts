@@ -1,18 +1,19 @@
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+
 import { Agente } from 'src/app/interfaces/agente';
-import { Inmueble } from 'src/app/interfaces/inmueble';
-import { Notario } from 'src/app/interfaces/notario';
 import { AgenteService } from 'src/app/services/agente.service';
+import { AgentesNotariosComponent } from './agentes-notarios/agentes-notarios.component';
+import { AltaComponent } from './alta/alta.component';
+import { Inmueble } from 'src/app/interfaces/inmueble';
 import { InmuebleService } from 'src/app/services/inmueble.service';
+import { ModalController } from '@ionic/angular';
+import { Notario } from 'src/app/interfaces/notario';
 import { NotarioService } from 'src/app/services/notario.service';
 import { ProyectosService } from 'src/app/services/proyectos.service';
 import { ServiciosService } from 'src/app/services/servicios.service';
 import { SessionService } from 'src/app/services/session.service';
 import { environment } from 'src/environments/environment';
-import { AltaComponent } from './alta/alta.component';
-import { AgentesNotariosComponent } from './agentes-notarios/agentes-notarios.component';
 
 @Component({
   selector: 'app-inmuebles',
@@ -39,7 +40,8 @@ export class InmueblesPage implements OnInit {
     private inmuebleService: InmuebleService,
     private serviciosService: ServiciosService,
     private modalController: ModalController,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+  private router: Router
   ) {}
 
   ngOnInit() {
@@ -144,5 +146,9 @@ export class InmueblesPage implements OnInit {
             });
         });
       });
+  }
+  verInmueble(titulo: string){
+    this.router.navigate(['./','inmueble',titulo],{relativeTo:this.activatedRoute})
+   
   }
 }

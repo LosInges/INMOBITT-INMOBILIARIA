@@ -31,10 +31,12 @@
 
               <ion-col>
                 <ion-item>
-                  <ion-button>Tomar foto</ion-button>
+                  <ion-button (click)="tomarFotografia()"
+                    >Tomar foto</ion-button
+                  >
                   <ion-img
                     *ngIf="inmueble.foto"
-                    [src]="inmueble.foto"
+                    src="{{ api }}/{{ inmueble.foto }}"
                   ></ion-img>
                 </ion-item>
               </ion-col>
@@ -66,7 +68,10 @@
               <ion-col>
                 <ion-item>
                   <ion-label position="floating"> NOTARIO </ion-label>
-                  <ion-select [(ngModel)]="inmueble.notario" interface="popover">
+                  <ion-select
+                    [(ngModel)]="inmueble.notario"
+                    interface="popover"
+                  >
                     <ion-select-option
                       *ngFor="let notario of notarios"
                       [value]="notario.rfc"
@@ -163,9 +168,22 @@
                   <ion-label>MOSTRAR</ion-label>
                 </ion-item>
               </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-item-group>
+                <ion-item>
+                  <label> VENTA </label>
+                  <ion-checkbox slot="start" [(ngModel)]="venta"></ion-checkbox>
+                </ion-item>
+                <ion-item>
+                  <label> RENTA </label>
+                  <ion-checkbox slot="start" [(ngModel)]="renta"></ion-checkbox>
+                </ion-item>
+              </ion-item-group>
 
               <ion-col>
-                <ion-item>
+                <ion-item *ngIf="renta">
                   <ion-label position="floating"> PRECIO RENTA </ion-label>
                   <ion-input type="number" [(ngModel)]="inmueble.precio_renta">
                   </ion-input>
@@ -173,7 +191,7 @@
               </ion-col>
 
               <ion-col>
-                <ion-item>
+                <ion-item *ngIf="venta">
                   <ion-label position="floating"> PRECIO VENTA </ion-label>
                   <ion-input type="number" [(ngModel)]="inmueble.precio_venta">
                   </ion-input>

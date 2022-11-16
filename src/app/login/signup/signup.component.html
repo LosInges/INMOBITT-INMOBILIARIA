@@ -13,14 +13,14 @@
 
   <ion-item color="dark">
     <ion-icon style="padding: 0 15px" name="map"></ion-icon>
-    <ion-select  placeholder="Estado" [(ngModel)]="inmobiliaria.estado">
+    <ion-select  placeholder="Matriz" [(ngModel)]="inmobiliaria.estado" interface="popover">
       <ion-select-option *ngFor="let estado of estados" [value]="estado.nombre">{{estado.nombre}}</ion-select-option>
     </ion-select>
   </ion-item>
 
   <ion-item color="dark">
     <ion-icon style="padding: 0 15px" name="map"></ion-icon>
-    <ion-select  placeholder="Sedes" [(ngModel)]="inmobiliaria.sedes" [multiple]="true">
+    <ion-select  placeholder="Sedes" [(ngModel)]="inmobiliaria.sedes" [multiple]="true" interface="popover">
       <ion-select-option *ngFor="let sede of estados" [value]="sede.nombre">{{sede.nombre}}</ion-select-option>
     </ion-select>
   </ion-item>
