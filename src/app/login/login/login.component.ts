@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+
 import { LoginService } from 'src/app/services/login.service';
+import { ModalController } from '@ionic/angular';
+import { Router } from '@angular/router';
 import { SessionService } from 'src/app/services/session.service';
 
 @Component({
@@ -29,6 +30,7 @@ export class LoginComponent implements OnInit {
   login() {
     this.loginService.login(this.email, this.password).subscribe(
       (res) => {
+        console.log(res)
         if (res.session.tipo !== 'inmobiliaria') {
           return;
         }
@@ -38,10 +40,12 @@ export class LoginComponent implements OnInit {
           this.sessionService.set('tipo', res.session.tipo),
         ];
 
-        Promise.all(promesas).then(() => {
-          console.log('Bienvenido Guapo');
-          this.router.navigate(['/', 'perfil']);
-        });
+        Promise.all(promesas)
+          .then((a) => {
+            console.log(a);
+            this.router.navigate(['/', 'perfil']);
+          })
+          .catch((error) => console.log(error));
       },
       (err) => console.log(err)
     );

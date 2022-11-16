@@ -1,10 +1,14 @@
-/* eslint-disable @typescript-eslint/naming-convention */
+import { AlertController, ModalController } from '@ionic/angular';
 import { Component, Input, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+
 import { Agente } from 'src/app/interfaces/agente';
+import { FotoService } from 'src/app/services/foto.service';
 import { Inmueble } from 'src/app/interfaces/inmueble';
-import { Notario } from 'src/app/interfaces/notario';
 import { InmuebleService } from 'src/app/services/inmueble.service';
+import { Notario } from 'src/app/interfaces/notario';
+import { environment } from 'src/environments/environment';
+
+/* eslint-disable @typescript-eslint/naming-convention */
 
 @Component({
   selector: 'app-alta',
@@ -18,6 +22,10 @@ export class AltaComponent implements OnInit {
   @Input() agentes: Agente[] = [];
   @Input() notarios: Notario[] = [];
   @Input() servicios: string[] = [];
+
+  venta = false;
+  renta = false;
+  api = environment.api;
 
   inmueble: Inmueble = {
     inmobiliaria: '',
@@ -48,7 +56,9 @@ export class AltaComponent implements OnInit {
 
   constructor(
     private inmuebleService: InmuebleService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private fotoService: FotoService,
+    private alertConttroller: AlertController
   ) {}
 
   ngOnInit() {
@@ -58,10 +68,37 @@ export class AltaComponent implements OnInit {
   }
 
   registrarInmueble() {
-    // this.inmuebleRegistroService.postInmueble(this.inmueble).subscribe((val)=>{
-    //   console.log(val)
-    // });
-    console.log(this.inmueble);
+    this.inmuebleService.postInmueble(this.inmueble).subscribe((val) => {
+      if (val.results) {
+        this.modalController.dismiss({ ok: true });
+        return;
+      }
+      this.alertConttroller.create({
+        header: 'ERROR',
+        message: 'Inmueble  no registrado',
+        buttons: ['CERRAR'],
+      });
+    });
+  }
+
+  tomarFotografia() {
+    this.fotoService.tomarFoto().then((photo) => {
+      const reader = new FileReader();
+      const datos = new FormData();
+      reader.onload = () => {
+        const imgBlob = new Blob([reader.result], {
+          type: `image/${photo.format}`,
+        });
+        datos.append('img', imgBlob, `imagen.${photo.format}`);
+        this.fotoService.subirImgMiniatura(datos).subscribe((res) => {
+          this.inmueble.foto = res.miniatura;
+          console.log(this.api, this.inmueble.foto);
+        });
+      };
+      fetch(photo.webPath).then((v) =>
+        v.blob().then((imagen) => reader.readAsArrayBuffer(imagen))
+      );
+    });
   }
 
   cerrar() {
