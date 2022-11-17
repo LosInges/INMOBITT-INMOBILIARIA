@@ -1,3 +1,4 @@
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 import { Agente } from '../interfaces/agente';
@@ -6,12 +7,14 @@ import { EstadosService } from '../services/estados.service';
 import { FotoService } from '../services/foto.service';
 import { Inmobiliaria } from '../interfaces/inmobiliaria';
 import { InmobiliariaService } from '../services/inmobiliaria.service';
+import { Inmueble } from './../interfaces/inmueble';
+import { InmuebleService } from 'src/app/services/inmueble.service';
 import { ModalController } from '@ionic/angular';
 import { Notario } from '../interfaces/notario';
-import { NotarioService } from '../services/notario.service';
+import { NotarioService } from 'src/app/services/notario.service';
+import { ProyectosService } from './../services/proyectos.service';
 import { RegistroAgenteComponent } from './registro-agente/registro-agente.component';
 import { RegistroNotarioComponent } from './registro-notario/registro-notario.component';
-import { Router } from '@angular/router';
 import { SessionService } from '../services/session.service';
 import { environment } from 'src/environments/environment';
 
@@ -23,11 +26,11 @@ import { environment } from 'src/environments/environment';
 export class PerfilPage implements OnInit {
   agentes: Agente[] = [];
   notarios: Notario[] = [];
-
+  inmuebles: Inmueble;
+  notario: string = this.activatedRoute.snapshot.paramMap.get('notario');
   api = environment.api;
   confirmPassword = '';
   estados = this.estadosService.getEstados();
-
   listaVisible = 'Agentes';
 
   inmobiliaria: Inmobiliaria = {
@@ -55,12 +58,15 @@ export class PerfilPage implements OnInit {
     private agenteService: AgenteService,
     private notarioService: NotarioService,
     private modalController: ModalController,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private proyectoService: ProyectosService,
+    private inmuebleService: InmuebleService
   ) {}
 
   ngOnInit() {
     this.sessionService.get('correo')?.then((correo) => {
-    console.log(correo)
+      console.log(correo);
       if (correo) {
         this.inmobiliariaService
           .getInmobiliaria(correo)
@@ -96,6 +102,19 @@ export class PerfilPage implements OnInit {
 
   eliminarPerfil() {
     if (this.confirmPassword === this.inmobiliaria.password) {
+      this.agentes.forEach((agente) => {
+        this.eliminarAgente(agente);
+      });
+      this.notarios.forEach((notario) => {
+        this.eliminarNotario(notario);
+      });
+      this.proyectoService
+        .getProyectosInmobiliaria(this.inmobiliaria.correo)
+        .subscribe((proyectos) => {
+          proyectos.forEach((proyecto) => {
+            this.proyectoService.deleteProyecto(proyecto);
+          });
+        });
       this.inmobiliariaService
         .deleteInmobiliaria(this.inmobiliaria.correo)
         .subscribe((res) => {
@@ -135,6 +154,7 @@ export class PerfilPage implements OnInit {
         estados: this.estados,
         api: this.api,
       },
+      cssClass: 'modalRegistrar',
     });
     modal.onDidDismiss().then((res) => {
       if (res.data) {
@@ -144,22 +164,11 @@ export class PerfilPage implements OnInit {
     modal.present();
   }
 
-  eliminarAgente(rfc: string) {
-    this.agenteService
-      .deleteAgente(this.inmobiliaria.correo, rfc)
-      .subscribe((res) => {
-        if (res.results) {
-          this.consultarAgentes();
-        } else {
-          console.log(res);
-        }
-      });
-  }
-
   async registroNotario() {
     const modal = await this.modalController.create({
       component: RegistroNotarioComponent,
       componentProps: { api: this.api, inmobiliaria: this.inmobiliaria.correo },
+      cssClass: 'modalRegistrar',
     });
     modal.onDidDismiss().then((res) => {
       if (res.data) {
@@ -169,9 +178,25 @@ export class PerfilPage implements OnInit {
     modal.present();
   }
 
-  eliminarNotario(rfc: string) {
+  eliminarNotario(notario: Notario) {
+    this.notarioService.getProyectos(notario.rfc).subscribe((proyectos) => {
+      proyectos.forEach((proyecto) => {
+        this.notarioService
+          .getInmueblesProyectoNotario(
+            notario.rfc,
+            this.inmobiliaria.correo,
+            proyecto.nombre
+          )
+          .subscribe((inmuebles) => {
+            inmuebles.forEach((inmueble) => {
+              this.eliminarInmueble(inmueble);
+            });
+          });
+        this.eliminarNotarioProyecto(notario.rfc, proyecto.nombre);
+      });
+    });
     this.notarioService
-      .deleteNotario(this.inmobiliaria.correo, rfc)
+      .deleteNotario(this.inmobiliaria.correo, notario.rfc)
       .subscribe((res) => {
         if (res.results) {
           this.consultarNotarios();
@@ -181,12 +206,52 @@ export class PerfilPage implements OnInit {
       });
   }
 
+  eliminarInmueble(inmueble: Inmueble) {
+    this.inmuebleService
+      .getClientesInmueble(
+        inmueble.inmobiliaria,
+        inmueble.proyecto,
+        inmueble.titulo
+      )
+      .subscribe((clientes) => {
+        clientes.forEach((cliente) => {
+          inmueble.cliente = cliente;
+          this.inmuebleService.deleteInmuebleCliente(inmueble);
+        });
+        this.inmuebleService.deleteInmueble(inmueble).subscribe((valor) => {
+          console.log(valor);
+        });
+      });
+  }
+
+  eliminarNotarioProyecto(rfc: string, proyecto: string) {
+    this.proyectoService
+      .deleteNotarioProyecto({
+        inmobiliaria: this.inmobiliaria.correo,
+        nombre: proyecto,
+        notario: rfc,
+      })
+      .subscribe((respuesta) => {
+        console.log(respuesta);
+      });
+  }
+
+  consultarInmuebleDelNotario() {
+    this.notarioService
+      .getInmueblesNotario(this.notario)
+      .subscribe((inmuebles) => {
+        inmuebles.forEach((inmueble) => {
+          this.inmuebles = inmueble;
+          console.log(inmueble);
+        });
+      });
+  }
+
   private consultarAgentes() {
     this.agenteService
       .getAgentes(this.inmobiliaria.correo)
       .subscribe((agentes) => {
         this.agentes = agentes;
-        console.log(this.agentes);
       });
   }
 
@@ -195,7 +260,41 @@ export class PerfilPage implements OnInit {
       .getNotarios(this.inmobiliaria.correo)
       .subscribe((notarios) => {
         this.notarios = notarios;
-        console.log(this.notarios);
+      });
+  }
+
+  eliminarAgenteProyecto(rfc: string, proyecto: string) {
+    this.proyectoService
+      .deleteAgenteProyecto({
+        inmobiliaria: this.inmobiliaria.correo,
+        nombre: proyecto,
+        agente: rfc,
+      })
+      .subscribe((respuesta) => {
+        console.log(respuesta);
+      });
+  }
+  eliminarAgente(agente: Agente) {
+    this.agenteService.getProyectos(agente.rfc).subscribe((proyectos) => {
+      proyectos.forEach((proyecto) => {
+        this.agenteService
+          .getInmueblesProyectoAgente(
+            agente.rfc,
+            this.inmobiliaria.correo,
+            proyecto.nombre
+          )
+          .subscribe((inmuebles) => {});
+        this.eliminarAgenteProyecto(agente.rfc, proyecto.nombre);
+      });
+    });
+    this.agenteService
+      .deleteAgente(this.inmobiliaria.correo, agente.rfc)
+      .subscribe((res) => {
+        if (res.results) {
+          this.consultarAgentes();
+        } else {
+          console.log(res);
+        }
       });
   }
 }

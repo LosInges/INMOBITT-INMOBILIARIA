@@ -41,7 +41,7 @@ export class InmueblesPage implements OnInit {
     private serviciosService: ServiciosService,
     private modalController: ModalController,
     private activatedRoute: ActivatedRoute,
-  private router: Router
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -115,7 +115,9 @@ export class InmueblesPage implements OnInit {
     this.inmuebleService
       .getInmueblesProyecto(this.proyecto, this.inmobiliaria)
       .subscribe((inmuebles) => {
-        this.inmuebles = inmuebles;
+        this.inmuebles = inmuebles.filter(
+          (inmuebleIterable) => !inmuebleIterable.borrado
+        );
       });
   }
 
@@ -147,8 +149,29 @@ export class InmueblesPage implements OnInit {
         });
       });
   }
-  verInmueble(titulo: string){
-    this.router.navigate(['./','inmueble',titulo],{relativeTo:this.activatedRoute})
-   
+  verInmueble(titulo: string) {
+    this.router.navigate(['./', 'inmueble', titulo], {
+      relativeTo: this.activatedRoute,
+    });
+  }
+
+  eliminarInmueble(inmueble: Inmueble) {
+    this.inmuebleService
+      .getClientesInmueble(this.inmobiliaria, this.proyecto, inmueble.titulo)
+      .subscribe((clientes) => {
+        clientes.forEach((cliente) => {
+          inmueble.cliente = cliente;
+          this.inmuebleService.deleteInmuebleCliente(inmueble);
+        });
+        this.inmuebleService.deleteInmueble(inmueble).subscribe((valor) => {
+          if (valor.results) {
+            this.inmuebles = this.inmuebles.filter(
+              (inmuebleIterable) => inmueble !== inmuebleIterable
+            );
+          } else {
+            console.log(valor);
+          }
+        });
+      });
   }
 }

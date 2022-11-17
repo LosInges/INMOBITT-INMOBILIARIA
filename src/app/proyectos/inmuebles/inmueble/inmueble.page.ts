@@ -125,4 +125,6 @@ export class InmueblePage implements OnInit {
       .postInmueble(this.inmueble)
       .subscribe((res) => console.log(res));
   }
+
+
 }
