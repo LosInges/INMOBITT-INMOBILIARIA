@@ -3,6 +3,8 @@ import { ModalController } from '@ionic/angular';
 import { Inmobiliaria } from 'src/app/interfaces/inmobiliaria';
 import { EstadosService } from 'src/app/services/estados.service';
 import { InmobiliariaService } from 'src/app/services/inmobiliaria.service';
+import { AlertController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-signup',
@@ -33,8 +35,21 @@ export class SignupComponent implements OnInit {
   constructor(
     private estadosService: EstadosService,
     private inmobiliariaService: InmobiliariaService,
+    private alertCtrl: AlertController,
     private modalController: ModalController
-  ) {}
+  ) { }
+
+  async mostrarAlerta(titulo: string, subtitulo: string, mensaje: string) {
+    const alert = await this.alertCtrl.create({
+      header: titulo,
+      subHeader: subtitulo,
+      message: mensaje,
+      buttons: ['OK']
+    });
+    await alert.present();
+    const result = await alert.onDidDismiss();
+    console.log(result);
+  }
 
   ngOnInit() {
     console.log(this.estados);
@@ -55,9 +70,15 @@ export class SignupComponent implements OnInit {
               this.modalController.dismiss();
             } else {
               console.log(res);
+              this.mostrarAlerta("Completado", "Creación", "Inmobiliaria creada exitosamente.")
+              this.cerrar()
             }
           });
+      } else {
+        this.mostrarAlerta("Error:", "Confirmación de clave incorrecta", "¿es correcta o esta vacia?")
       }
+    } else {
+      this.mostrarAlerta("Error", "Campos vacios", "No deje espacios en blanco.")
     }
   }
   cerrar() {
