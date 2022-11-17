@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { Inmueble } from '../interfaces/inmueble';
 import { Notario } from '../interfaces/notario';
+import { Observable } from 'rxjs';
+import { Proyecto } from '../interfaces/proyecto';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -27,9 +28,21 @@ export class NotarioService {
     );
   }
 
+  getProyectos(notario: string): Observable<Proyecto[]>{
+    return this.httpClient.get<Proyecto[]>(
+      `${environment.api}/proyectos/notario/${notario}`
+    )
+  }
+
   getInmueblesNotario(notario: string): Observable<Inmueble[]> {
     return this.httpClient.get<Inmueble[]>(
       `${environment.api}/inmuebles/notario/${notario}`
+    );
+  }
+
+  getInmueblesProyectoNotario(notario: string, inmobiliaria:string, proyecto:string): Observable<Inmueble[]> {
+    return this.httpClient.get<Inmueble[]>(
+      `${environment.api}/inmuebles/notario/${notario}/${inmobiliaria}/${proyecto}`
     );
   }
 

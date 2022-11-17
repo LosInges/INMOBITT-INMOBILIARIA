@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-title>PROYECTOS</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="registrarProyecto()">Agregar Proyecto</ion-button>
+      <ion-button (click)="registrarProyecto()" >Agregar Proyecto</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -24,7 +24,7 @@
       </ion-item-options>
       <ion-item-options
         side="end"
-        (ionSwipe)="eliminarProyecto(proyecto.nombre); itemSliding.close()"
+        (ionSwipe)="eliminarProyecto(proyecto); itemSliding.close()"
       >
         <ion-item-option color="danger" expandable>
           <ion-icon name="trash"></ion-icon>

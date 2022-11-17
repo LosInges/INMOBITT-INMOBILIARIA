@@ -14,7 +14,12 @@ export class InmuebleService {
     return this.httpClient.get<Inmueble>(
       `${environment.api}/inmueble/${inmobiliaria}/${proyecto}/${titulo}`
     )
+  }
 
+  getClientesInmueble(inmobiliaria: string, proyecto:string, titulo:string):Observable<string[]>{
+    return this.httpClient.get<string[]>(
+      `${environment.api}/clientes/inmueble/${inmobiliaria}/${proyecto}/${titulo}`
+    )
   }
 
   getInmueblesProyecto(
@@ -51,5 +56,11 @@ export class InmuebleService {
     return this.httpClient.post<any>(`${environment.api}/inmueble`, inmueble);
   }
 
+  deleteInmueble(inmueble:Inmueble): Observable<any>{
+    return this.httpClient.delete<any>(`${environment.api}/inmueble`, {body: inmueble});
+  }
 
+  deleteInmuebleCliente(inmueble:Inmueble): Observable<any>{
+    return this.httpClient.delete<any>(`${environment.api}/inmueble/cliente`, {body: inmueble})
+  }
 }

@@ -1,11 +1,16 @@
-import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
+
 import { Agente } from 'src/app/interfaces/agente';
-import { Notario } from 'src/app/interfaces/notario';
 import { AgenteService } from 'src/app/services/agente.service';
+import { AlertController } from '@ionic/angular';
 import { FotoService } from 'src/app/services/foto.service';
+import { Inmobiliaria } from './../../interfaces/inmobiliaria';
+import { Inmueble } from 'src/app/interfaces/inmueble';
+import { InmuebleService } from 'src/app/services/inmueble.service';
+import { Notario } from 'src/app/interfaces/notario';
 import { NotarioService } from 'src/app/services/notario.service';
+import { ProyectosService } from './../../services/proyectos.service';
 import { SessionService } from 'src/app/services/session.service';
 import { environment } from 'src/environments/environment';
 
@@ -15,6 +20,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./notario.page.scss'],
 })
 export class NotarioPage implements OnInit {
+  inmobiliaria: Inmobiliaria;
   apellidoPat = '';
   apellidoMat = '';
   api = environment.api;
@@ -29,13 +35,16 @@ export class NotarioPage implements OnInit {
   confirmPassword = '';
   mensaje = '';
 
+
   constructor(
     private sessionService: SessionService,
     private notarioService: NotarioService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private fotoService: FotoService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private inmuebleService: InmuebleService,
+    private proyectoService: ProyectosService
   ) {}
 
   ngOnInit() {
@@ -100,6 +109,22 @@ export class NotarioPage implements OnInit {
   }
 
   eliminarPerfil() {
+    this.notarioService.getProyectos(this.notario.rfc).subscribe((proyectos) => {
+      proyectos.forEach((proyecto) => {
+        this.notarioService
+          .getInmueblesProyectoNotario(
+            this.notario.rfc,
+            this.inmobiliaria.correo,
+            proyecto.nombre
+          )
+          .subscribe((inmuebles) => {
+            inmuebles.forEach((inmueble) => {
+              this.eliminarInmueble(inmueble);
+            });
+          });
+        this.eliminarNotarioProyecto(this.notario.rfc, proyecto.nombre);
+      });
+    });
     this.notarioService
       .deleteNotario(this.notario.inmobiliaria, this.notario.rfc)
       .subscribe((res) => {
@@ -110,6 +135,36 @@ export class NotarioPage implements OnInit {
         }
       });
   }
+
+  eliminarNotarioProyecto(rfc: string, proyecto: string) {
+    this.proyectoService
+      .deleteNotarioProyecto({
+        inmobiliaria: this.inmobiliaria.correo,
+        nombre: proyecto,
+        notario: rfc,
+      })
+      .subscribe((respuesta) => {
+        console.log(respuesta);
+      });
+  }
+  eliminarInmueble(inmueble: Inmueble) {
+    this.inmuebleService
+      .getClientesInmueble(
+        inmueble.inmobiliaria,
+        inmueble.proyecto,
+        inmueble.titulo
+      )
+      .subscribe((clientes) => {
+        clientes.forEach((cliente) => {
+          inmueble.cliente = cliente;
+          this.inmuebleService.deleteInmuebleCliente(inmueble);
+        });
+        this.inmuebleService.deleteInmueble(inmueble).subscribe((valor) => {
+          console.log(valor);
+        });
+      });
+  }
+
 
   tomarFotografia() {
     this.fotoService.tomarFoto().then((photo) => {

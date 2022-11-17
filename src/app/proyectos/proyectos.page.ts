@@ -1,11 +1,14 @@
-import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+
+import { AltaComponent } from './alta/alta.component';
+import { InmobiliariaService } from '../services/inmobiliaria.service';
+import { Inmueble } from './../interfaces/inmueble';
+import { InmuebleService } from 'src/app/services/inmueble.service';
 import { ModalController } from '@ionic/angular';
 import { Proyecto } from '../interfaces/proyecto';
-import { InmobiliariaService } from '../services/inmobiliaria.service';
 import { ProyectosService } from '../services/proyectos.service';
 import { SessionService } from '../services/session.service';
-import { AltaComponent } from './alta/alta.component';
 
 @Component({
   selector: 'app-proyectos',
@@ -17,13 +20,16 @@ export class ProyectosPage implements OnInit {
   estados: string[] = [];
   inmobiliaria: string;
 
+
   constructor(
     private sessionService: SessionService,
     private proyectosService: ProyectosService,
     private inmobiliariaService: InmobiliariaService,
     private modalController: ModalController,
     private router: Router,
-    private activedRoute: ActivatedRoute
+    private activedRoute: ActivatedRoute,
+    private inmuebleService: InmuebleService,
+
   ) {}
 
   ngOnInit() {
@@ -62,7 +68,48 @@ export class ProyectosPage implements OnInit {
     });
     return modal.present();
   }
-  eliminarProyecto(nombre: string) {}
+
+  eliminarInmueble(inmueble: Inmueble) {
+    this.inmuebleService
+      .getClientesInmueble(this.inmobiliaria, inmueble.proyecto, inmueble.titulo)
+      .subscribe((clientes) => {
+        clientes.forEach((cliente) => {
+          inmueble.cliente = cliente;
+          this.inmuebleService.deleteInmuebleCliente(inmueble);
+        });
+        this.inmuebleService.deleteInmueble(inmueble).subscribe((valor) => {
+
+        });
+      });
+  }
+
+  eliminarProyecto(proyecto: Proyecto) {
+    this.proyectosService.getAgentesProyecto(proyecto.nombre, this.inmobiliaria ).subscribe((agentes)=>{
+      agentes.forEach((agente)=>{
+        this.proyectosService.deleteAgenteProyecto(agente).subscribe(v=>console.log(v));
+      });
+      this.proyectosService.getNotariosProyecto(proyecto.nombre, this.inmobiliaria).subscribe((notarios)=>{
+        notarios.forEach((notario)=>{
+          this.proyectosService.deleteNotarioProyecto(notario).subscribe(v=>console.log(v))
+        });
+      });
+      this.inmuebleService.getInmueblesProyecto(proyecto.nombre, this.inmobiliaria).subscribe((inmuebles)=>{
+        inmuebles.forEach((inmueble)=>{
+          this.eliminarInmueble(inmueble)
+        })
+        this.proyectosService.deleteProyecto(proyecto).subscribe((valor)=>{
+          if(valor.results){
+            this.proyectos = this.proyectos.filter(
+              proyectoIterable => proyecto !== proyectoIterable
+            );
+          }else{
+            console.log(valor)
+          }
+        })
+      })
+
+    })
+  }
 
   consultarProyectos() {
     this.proyectosService

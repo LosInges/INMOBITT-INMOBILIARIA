@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Agente } from '../interfaces/agente';
-import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Inmueble } from '../interfaces/inmueble';
+import { Observable } from 'rxjs';
+import { Proyecto } from '../interfaces/proyecto';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +25,20 @@ export class AgenteService {
   getAgentes(inmobiliaria: string): Observable<Agente[]> {
     return this.httpClient.get<Agente[]>(
       `${environment.api}/agentes/${inmobiliaria}`
+    );
+  }
+  getProyectos(agente: string): Observable<Proyecto[]> {
+    return this.httpClient.get<Proyecto[]>(
+      `${environment.api}/proyectos/agente/${agente}`
+    );
+  }
+  getInmueblesProyectoAgente(
+    agente: string,
+    inmobiliaria: string,
+    proyecto: string
+  ): Observable<Inmueble[]> {
+    return this.httpClient.get<Inmueble[]>(
+      `${environment.api}/inmuebles/agente/${agente}/${inmobiliaria}/${proyecto}`
     );
   }
 

@@ -33,7 +33,7 @@
           </ion-label>
         </ion-item-option>
       </ion-item-options>
-      <ion-item-options slot="end">
+      <ion-item-options slot="end" (ionSwipe)="eliminarInmueble(inmueble)">
         <ion-item-option expandable color="danger">
           <ion-label>
             <ion-icon name="trash"></ion-icon>
