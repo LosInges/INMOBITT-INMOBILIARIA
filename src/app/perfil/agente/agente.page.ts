@@ -22,6 +22,7 @@ export class AgentePage implements OnInit {
   apellidoPat = '';
   apellidoMat = '';
   api = environment.api;
+  inmuebles: Inmueble[]=[];
   agente: Agente = {
     rfc: '',
     inmobiliaria: '',
@@ -51,6 +52,9 @@ export class AgentePage implements OnInit {
       if (inmobiliaria) {
         this.activatedRoute.params.subscribe((params) => {
           if (params.rfc) {
+            this.agenteService.getInmueblesAgente(params.rfc).subscribe((inmuebles)=>{
+              this.inmuebles = inmuebles.filter(inmueble=> !inmueble.borrado)
+            })
             this.agenteService
               .getAgente(inmobiliaria, params.rfc)
               .subscribe((agente) => {
@@ -63,6 +67,7 @@ export class AgentePage implements OnInit {
         });
       }
     });
+
   }
 
   actualizarPerfil() {
@@ -198,4 +203,9 @@ export class AgentePage implements OnInit {
       );
     });
   }
+
+  verInmueble(inmueble: Inmueble){
+    this.router.navigate(['proyectos',inmueble.proyecto,'inmuebles','inmueble',inmueble.titulo])
+  }
+
 }
