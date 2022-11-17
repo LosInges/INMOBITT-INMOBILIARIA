@@ -19,6 +19,9 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./inmueble.page.scss'],
 })
 export class InmueblePage implements OnInit {
+  proyecto: string = this.activatedRoute.snapshot.paramMap.get('proyecto');
+  inmobiliaria: string;
+  inmuebles: Inmueble[] = [];
   venta = false;
   renta = false;
   api = environment.api;
@@ -79,7 +82,8 @@ export class InmueblePage implements OnInit {
     private notarioService:NotarioService,
     private activeRoute: ActivatedRoute,
     private fotoService: FotoService,
-    private servicio: ServiciosService
+    private servicio: ServiciosService,
+    private activatedRoute: ActivatedRoute,
   ) {}
 
   ngOnInit() {
@@ -127,4 +131,23 @@ export class InmueblePage implements OnInit {
   }
 
 
+  eliminarInmueble(inmueble: Inmueble) {
+    this.inmuebleService
+      .getClientesInmueble(this.inmobiliaria, this.proyecto, inmueble.titulo)
+      .subscribe((clientes) => {
+        clientes.forEach((cliente) => {
+          inmueble.cliente = cliente;
+          this.inmuebleService.deleteInmuebleCliente(inmueble);
+        });
+        this.inmuebleService.deleteInmueble(inmueble).subscribe((valor) => {
+          if (valor.results) {
+            this.inmuebles = this.inmuebles.filter(
+              (inmuebleIterable) => inmueble !== inmuebleIterable
+            );
+          } else {
+            console.log(valor);
+          }
+        });
+      });
+  }
 }

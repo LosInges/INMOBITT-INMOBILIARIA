@@ -26,7 +26,7 @@
                     placeholder="RFC"
                   ></ion-input>
                   <ion-label>
-                    <ion-icon name=""></ion-icon>
+                    <ion-icon name="person"></ion-icon>
                   </ion-label>
                 </ion-item>
               </ion-col>
@@ -192,10 +192,29 @@
       <ion-row>
         <ion-list> INMUEBLES ASIGNADOS </ion-list>
       </ion-row>
-
-
-      <!--<ion-list [(ngModel)]="agenteService.getInmueblesAgente">-->
     </ion-card-content>
   </ion-card>
 
+  <ion-card>
+    <ion-card-content>
+      <ion-list>
+        <ion-item-sliding *ngFor="let inmueble of inmuebles" #itemSliding>
+          <ion-item>
+            <ion-img src="{{ api }}/{{ inmueble.foto }}"></ion-img>
+
+            <ion-label class="centrado">{{ inmueble.titulo }} </ion-label>
+          </ion-item>
+          <ion-item-options
+            side="start"
+            (ionSwipe)="verInmueble(inmueble); itemSliding.close()"
+          >
+            <ion-item-option expandable color="success">
+              <ion-icon name="eye"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
+      <!--<ion-list [(ngModel)]="agenteService.getInmueblesAgente">-->
+    </ion-card-content>
+  </ion-card>
 </ion-content>

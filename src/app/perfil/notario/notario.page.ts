@@ -1,8 +1,6 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
-import { Agente } from 'src/app/interfaces/agente';
-import { AgenteService } from 'src/app/services/agente.service';
 import { AlertController } from '@ionic/angular';
 import { FotoService } from 'src/app/services/foto.service';
 import { Inmobiliaria } from './../../interfaces/inmobiliaria';
@@ -23,6 +21,7 @@ export class NotarioPage implements OnInit {
   inmobiliaria: Inmobiliaria;
   apellidoPat = '';
   apellidoMat = '';
+  inmuebles: Inmueble[]=[];
   api = environment.api;
   notario: Notario = {
     rfc: '',
@@ -52,6 +51,9 @@ export class NotarioPage implements OnInit {
       if (inmobiliaria) {
         this.activatedRoute.params.subscribe((params) => {
           if (params.rfc) {
+            this.notarioService.getInmueblesNotario(params.rfc).subscribe((inmuebles)=>{
+              this.inmuebles = inmuebles.filter(inmueble => !inmueble.borrado)
+            })
             this.notarioService
               .getNotario(inmobiliaria, params.rfc)
               .subscribe((notario) => {
@@ -187,5 +189,9 @@ export class NotarioPage implements OnInit {
         v.blob().then((imagen) => reader.readAsArrayBuffer(imagen))
       );
     });
+  }
+
+  verInmueble(inmueble: Inmueble){
+    this.router.navigate(['proyectos',inmueble.proyecto,'inmuebles','inmueble',inmueble.titulo])
   }
 }

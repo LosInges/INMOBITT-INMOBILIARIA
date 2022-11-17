@@ -61,8 +61,10 @@
                   <ion-label position="floating"> AGENTE </ion-label>
 
                   <ion-img> {{api}}/{{inmueble.foto}} </ion-img>
-                  <ion-input value="{{agente.nombre}} {{agente.apellido}}" disabled>
-
+                  <ion-input
+                    value="{{agente.nombre}} {{agente.apellido}}"
+                    disabled
+                  >
                   </ion-input>
                 </ion-item>
               </ion-col>
@@ -72,7 +74,10 @@
                   <ion-label position="floating"> NOTARIO </ion-label>
 
                   <ion-img> {{api}}/{{inmueble.foto}} </ion-img>
-                  <ion-input value="{{notario.nombre}} {{notario.apellido}}" disabled>
+                  <ion-input
+                    value="{{notario.nombre}} {{notario.apellido}}"
+                    disabled
+                  >
                   </ion-input>
                 </ion-item>
               </ion-col>
@@ -193,8 +198,13 @@
                 </ion-item>
               </ion-col>
 
-              <ion-col>
-                <ion-button (click)="actualizar()"> ACTUALIZAR </ion-button>
+              <ion-col size="2">
+                <ion-row>
+                  <ion-button (click)="actualizar()"> ACTUALIZAR </ion-button>
+                </ion-row>
+                <ion-row>
+                  <ion-button (click)="eliminarInmueble(inmueble)"> ELIINAR </ion-button>
+                </ion-row>
               </ion-col>
             </ion-row>
           </ion-grid>
