@@ -6,8 +6,8 @@ import { SessionService } from './services/session.service';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  public appPages = [
-    { title: 'Iniciar Sesion', url: 'login', icon: 'mail' },
+  public appPages = [ 
+    
     { title: 'Perfil', url: '/perfil', icon: 'paper-plane' },
     { title: 'Proyectos', url: '/proyectos', icon: 'heart' },
     {
