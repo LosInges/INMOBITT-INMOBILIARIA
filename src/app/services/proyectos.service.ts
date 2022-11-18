@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { Inmueble } from '../interfaces/inmueble';
+import { Observable } from 'rxjs';
 import { Proyecto } from '../interfaces/proyecto';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -85,10 +85,14 @@ export interface Agente {
   agente: string;
   inmobiliaria: string;
   nombre: string;
+  ciudad?: string;
+  inicio?: string;
 }
 
 export interface Notario {
   notario: string;
   inmobiliaria: string;
   nombre: string;
+  ciudad?: string;
+  inicio?: string;
 }
