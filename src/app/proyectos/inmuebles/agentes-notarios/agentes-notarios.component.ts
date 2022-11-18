@@ -1,7 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+
 import { Agente } from 'src/app/interfaces/agente';
+import { AgenteService } from 'src/app/services/agente.service';
+import { Inmueble } from './../../../interfaces/inmueble';
+import { InmuebleService } from './../../../services/inmueble.service';
+import { ModalController } from '@ionic/angular';
 import { Notario } from 'src/app/interfaces/notario';
+import { NotarioService } from './../../../services/notario.service';
+import { Proyecto } from './../../../interfaces/proyecto';
 import { ProyectosService } from 'src/app/services/proyectos.service';
 
 @Component({
@@ -17,6 +23,7 @@ export class AgentesNotariosComponent implements OnInit {
   @Input() agentesProyecto: Agente[] = [];
   @Input() notariosProyecto: Notario[] = [];
   @Input() api: string;
+  proyectoG: Proyecto;
   eliminado = false;
 
   agente: Agente;
@@ -24,10 +31,17 @@ export class AgentesNotariosComponent implements OnInit {
   seleccion = 'Agentes';
   constructor(
     private modalController: ModalController,
-    private proyectosService: ProyectosService
+    private proyectosService: ProyectosService,
+    private inmuebleService: InmuebleService,
+    private notarioService: NotarioService,
+    private agenteService: AgenteService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.proyectosService.getProyectoInmobiliaria(this.inmobiliaria, this.proyecto).subscribe((proyecto)=>{
+      this.proyectoG = proyecto
+    })
+  }
 
   agregarAgente(agente: Agente) {
     if (!this.agentesProyecto.find((a) => a.rfc === agente.rfc)) {
@@ -36,6 +50,8 @@ export class AgentesNotariosComponent implements OnInit {
           agente: agente.rfc,
           inmobiliaria: agente.inmobiliaria,
           nombre: this.proyecto,
+          ciudad: this.proyectoG.ciudad,
+          inicio: this.proyectoG.inicio
         })
         .subscribe((val) => {
           if (val.results) {
@@ -48,33 +64,67 @@ export class AgentesNotariosComponent implements OnInit {
   agregarNotario(notario: Notario) {
     if (!this.notariosProyecto.find((a) => a.rfc === notario.rfc)) {
       this.proyectosService
-        .postNotarioProyecto({
-          inmobiliaria: notario.inmobiliaria,
-          nombre: this.proyecto,
-          notario: notario.rfc,
-        })
-        .subscribe((val) => {
-          if (val.results) {
-            this.notariosProyecto.push(notario);
-          }else{
-            console.log(val);
-          }
-        });
+      .postNotarioProyecto({
+        notario: notario.rfc,
+        inmobiliaria: notario.inmobiliaria,
+        nombre: this.proyecto,
+        ciudad: this.proyectoG.ciudad,
+        inicio: this.proyectoG.inicio
+      })
+      .subscribe((val) => {
+        if (val.results) {
+          this.notariosProyecto.push(notario);
+        }
+      });
     }
   }
 
   eliminarAgente(agente: Agente) {
-    this.agentesProyecto = this.agentesProyecto.filter(
-      (a) => a.rfc !== agente.rfc
-    );
-    this.eliminado = true;
+    this.agenteService.getInmueblesProyectoAgente(agente.rfc,agente.inmobiliaria, this.proyectoG.nombre).subscribe((inmuebles)=>{
+      inmuebles.forEach((inmueble)=>{
+        this.eliminarInmueble(inmueble);
+      })
+    })
+    this.proyectosService.deleteAgenteProyecto({inmobiliaria:agente.inmobiliaria,nombre:this.proyectoG.nombre, agente:agente.rfc}).subscribe((res)=>{
+      if(res.results){
+        this.agentesProyecto = this.agentesProyecto.filter(
+          (a) => a.rfc !== agente.rfc
+        );
+        this.eliminado = true;
+      }
+    })
+
   }
 
   eliminarNotario(notario: Notario) {
-    this.agentesProyecto = this.agentesProyecto.filter(
-      (n) => n.rfc !== notario.rfc
-    );
-    this.eliminado = true;
+    this.notarioService.getInmueblesProyectoNotario(notario.rfc, notario.inmobiliaria, this.proyectoG.nombre).subscribe(inmuebles=>{
+      inmuebles.forEach((inmueble)=>{
+        this.eliminarInmueble(inmueble);
+      })
+    })
+    this.proyectosService.deleteNotarioProyecto({inmobiliaria:notario.inmobiliaria, nombre:this.proyectoG.nombre, notario:notario.rfc}).subscribe((res)=>{
+      console.log(res)
+      if(res.results){
+        this.notariosProyecto = this.notariosProyecto.filter(
+          (n) => n.rfc !== notario.rfc
+        );
+        this.eliminado = true;
+      }
+    })
+
+  }
+
+  eliminarInmueble(inmueble: Inmueble) {
+    this.inmuebleService
+      .getClientesInmueble(this.inmobiliaria, this.proyecto, inmueble.titulo)
+      .subscribe((clientes) => {
+        clientes.forEach((cliente) => {
+          inmueble.cliente = cliente;
+          this.inmuebleService.deleteInmuebleCliente(inmueble);
+        });
+        this.inmuebleService.deleteInmueble(inmueble).subscribe((valor) => {
+        });
+      });
   }
 
   cerrar() {

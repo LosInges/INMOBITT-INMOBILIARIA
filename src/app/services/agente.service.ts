@@ -27,11 +27,11 @@ export class AgenteService {
       `${environment.api}/agentes/${inmobiliaria}`
     );
   }
-  getProyectos(agente: string): Observable<Proyecto[]> {
-    return this.httpClient.get<Proyecto[]>(
-      `${environment.api}/proyectos/agente/${agente}`
-    );
-  }
+      getProyectos(agente: string): Observable<Proyecto[]> {
+        return this.httpClient.get<Proyecto[]>(
+          `${environment.api}/proyectos/agente/${agente}`
+        );
+      }
   getInmueblesProyectoAgente(
     agente: string,
     inmobiliaria: string,
