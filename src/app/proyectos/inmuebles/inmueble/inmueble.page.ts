@@ -127,16 +127,34 @@ export class InmueblePage implements OnInit {
   }
 
   actualizar() {
+    if (!this.venta) {
+      this.inmueble.precio_venta = 0;
+    }
+    if (!this.renta) {
+      this.inmueble.precio_renta = 0;
+    }
     this.inmuebleService.postInmueble(this.inmueble).subscribe((res) => {
-      this.alertConttroller
-        .create({
-          header: 'ÉXITOSAME',
-          message: 'SE ACTUALIZÓ EL INMUEBLE',
-          buttons: ['CERRAR'],
-        })
-        .then((alert) => {
-          alert.present();
-        });
+      if (res.results) {
+        this.alertConttroller
+          .create({
+            header: 'ÉXITOSAME',
+            message: 'SE ACTUALIZÓ EL INMUEBLE',
+            buttons: ['CERRAR'],
+          })
+          .then((alert) => {
+            alert.present();
+          });
+      } else {
+        this.alertConttroller
+          .create({
+            header: 'ERROR',
+            message: 'HUBO UN ERROR EN EL SERVIDOR',
+            buttons: ['CERRAR'],
+          })
+          .then((alert) => {
+            alert.present();
+          });
+      }
     });
   }
 
