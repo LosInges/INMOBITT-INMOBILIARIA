@@ -70,20 +70,29 @@ export class AltaComponent implements OnInit {
   registrarInmueble() {
     this.inmuebleService.postInmueble(this.inmueble).subscribe((val) => {
       if (val.results) {
-        this.alertConttroller.create({
-          header: 'ÉXITOSAME',
-          message: 'Se registró INMUEBLE',
-          buttons: ['CERRAR'],
-        });
+        this.alertConttroller
+          .create({
+            header: 'ÉXITOSAME',
+            message: 'Se registró INMUEBLE',
+            buttons: ['CERRAR'],
+          })
+          .then((alert) => {
+            alert.present();
+          });
+
         this.modalController.dismiss({ ok: true });
 
         return;
       }
-      this.alertConttroller.create({
-        header: 'ERROR',
-        message: 'Inmueble  no registrado',
-        buttons: ['CERRAR'],
-      });
+      this.alertConttroller
+        .create({
+          header: 'ERROR',
+          message: 'Inmueble  NO registrado',
+          buttons: ['CERRAR'],
+        })
+        .then((alert) => {
+          alert.present();
+        });
     });
   }
 

@@ -1,13 +1,14 @@
 import { ActivatedRoute, Router } from '@angular/router';
+import { AlertController, ModalController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 
 import { Agente } from 'src/app/interfaces/agente';
 import { AgenteService } from 'src/app/services/agente.service';
 import { AgentesNotariosComponent } from './agentes-notarios/agentes-notarios.component';
+import { Alert } from 'selenium-webdriver';
 import { AltaComponent } from './alta/alta.component';
 import { Inmueble } from 'src/app/interfaces/inmueble';
 import { InmuebleService } from 'src/app/services/inmueble.service';
-import { ModalController } from '@ionic/angular';
 import { Notario } from 'src/app/interfaces/notario';
 import { NotarioService } from 'src/app/services/notario.service';
 import { ProyectosService } from 'src/app/services/proyectos.service';
@@ -41,6 +42,8 @@ export class InmueblesPage implements OnInit {
     private serviciosService: ServiciosService,
     private modalController: ModalController,
     private activatedRoute: ActivatedRoute,
+    private alertConttroller: AlertController,
+    private activeRoute: ActivatedRoute,
     private router: Router
   ) {}
 
@@ -168,7 +171,33 @@ export class InmueblesPage implements OnInit {
             this.inmuebles = this.inmuebles.filter(
               (inmuebleIterable) => inmueble !== inmuebleIterable
             );
+            this.alertConttroller
+              .create({
+                header: 'ÉXITOSAME',
+                message: 'Se eliminó el INMUEBLE',
+                buttons: ['CERRAR'],
+              })
+              .then((a) => {
+                a.present();
+              });
           } else {
+            this.inmuebles = this.inmuebles.filter(
+              (inmuebleIterable) => inmueble !== inmuebleIterable
+            );
+            this.alertConttroller
+              .create({
+                header: 'ERROR',
+                message: 'NO se eliminó el INMUEBLE',
+                buttons: ['CERRAR'],
+              })
+              .then((a) => {
+                a.onDidDismiss().then((data) =>
+                  this.router.navigate(['../'], {
+                    relativeTo: this.activeRoute,
+                  })
+                );
+                a.present();
+              });
             console.log(valor);
           }
         });
