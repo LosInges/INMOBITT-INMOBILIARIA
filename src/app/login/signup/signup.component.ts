@@ -4,9 +4,9 @@ import { AlertController } from '@ionic/angular';
 import { EstadosService } from 'src/app/services/estados.service';
 import { Inmobiliaria } from 'src/app/interfaces/inmobiliaria';
 import { InmobiliariaService } from 'src/app/services/inmobiliaria.service';
-import { ModalController } from '@ionic/angular';
-import { MapsComponent } from 'src/app/maps/maps.component';
 import { LoginService } from 'src/app/services/login.service';
+import { MapsComponent } from 'src/app/maps/maps.component';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-signup',
@@ -54,6 +54,7 @@ export class SignupComponent implements OnInit {
           .solicitarRegistro(this.inmobiliaria.correo)
           .subscribe((solicitud) => {
             if (solicitud.permiso) {
+
               this.inmobiliariaService
                 .postInmobiliaria(this.inmobiliaria)
                 .subscribe((res) => {

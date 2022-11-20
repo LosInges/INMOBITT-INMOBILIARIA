@@ -21,4 +21,10 @@ export class LoginService {
       `${environment.api}/solicitar/registro/${correo}`
     );
   }
+
+  solicitarRegistroNotario(inmobiliaria: string, rfc: string): Observable<any> {
+    return this.httpClient.get<any>(
+      `${environment.api}/solicitar/registro/notario/${inmobiliaria}/${rfc}`
+    );
+  }
 }
