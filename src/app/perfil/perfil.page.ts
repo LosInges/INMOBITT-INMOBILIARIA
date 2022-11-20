@@ -17,6 +17,7 @@ import { RegistroAgenteComponent } from './registro-agente/registro-agente.compo
 import { RegistroNotarioComponent } from './registro-notario/registro-notario.component';
 import { SessionService } from '../services/session.service';
 import { environment } from 'src/environments/environment';
+import { MapsComponent } from '../maps/maps.component';
 
 @Component({
   selector: 'app-perfil',
@@ -41,7 +42,7 @@ export class PerfilPage implements OnInit {
     estado: '',
     direccion: {
       lat: 0,
-      lng: 0
+      lng: 0,
     },
     sedes: [],
   };
@@ -243,7 +244,7 @@ export class PerfilPage implements OnInit {
       });
   }
 
-  private consultarAgentes() {
+  consultarAgentes() {
     this.agenteService
       .getAgentes(this.inmobiliaria.correo)
       .subscribe((agentes) => {
@@ -251,7 +252,7 @@ export class PerfilPage implements OnInit {
       });
   }
 
-  private consultarNotarios() {
+  consultarNotarios() {
     this.notarioService
       .getNotarios(this.inmobiliaria.correo)
       .subscribe((notarios) => {
@@ -292,5 +293,29 @@ export class PerfilPage implements OnInit {
           console.log(res);
         }
       });
+  }
+
+  async verDireccion() {
+    const modal = await this.modalController.create({
+      component: MapsComponent,
+      componentProps: { position: this.inmobiliaria.direccion },
+      cssClass: 'modalGeneral',
+    });
+
+    modal.present();
+  }
+  async guardarDireccion() {
+    const modal = await this.modalController.create({
+      component: MapsComponent,
+      componentProps: { position: this.inmobiliaria.direccion },
+      cssClass: 'modalGeneral',
+    });
+
+    modal.onDidDismiss().then((res) => {
+      if (res.data?.pos) {
+        this.inmobiliaria.direccion = res.data.pos;
+      }
+    });
+    modal.present();
   }
 }

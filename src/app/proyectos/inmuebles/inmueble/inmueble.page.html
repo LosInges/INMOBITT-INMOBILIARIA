@@ -103,7 +103,10 @@
               <ion-col class="ion-margin-top ion-margin-bottom">
                 <ion-item>
                   <ion-button (click)="verPosicion(inmueble.direccion)"
-                    >Ver Origen</ion-button
+                    >Ver Direccion</ion-button
+                  >
+                  <ion-button (click)="guardarPosicion(inmueble.direccion)"
+                    >Actualizar Direccion</ion-button
                   >
                 </ion-item>
               </ion-col>
@@ -210,7 +213,9 @@
                   <ion-button (click)="actualizar()"> ACTUALIZAR </ion-button>
                 </ion-row>
                 <ion-row>
-                  <ion-button (click)="eliminarInmueble(inmueble)"> ELIINAR </ion-button>
+                  <ion-button (click)="eliminarInmueble(inmueble)">
+                    ELIMINAR
+                  </ion-button>
                 </ion-row>
               </ion-col>
             </ion-row>

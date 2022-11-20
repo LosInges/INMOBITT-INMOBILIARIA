@@ -7,7 +7,6 @@ import { Agente } from 'src/app/interfaces/agente';
 import { AgenteService } from 'src/app/services/agente.service';
 import { Direccion } from 'src/app/interfaces/direccion';
 import { FotoService } from 'src/app/services/foto.service';
-import { InmobiliariaService } from 'src/app/services/inmobiliaria.service';
 import { Inmueble } from 'src/app/interfaces/inmueble';
 import { InmuebleService } from 'src/app/services/inmueble.service';
 import { MapsComponent } from 'src/app/maps/maps.component';
@@ -76,7 +75,6 @@ export class InmueblePage implements OnInit {
   constructor(
     private inmuebleService: InmuebleService,
     private sessionService: SessionService,
-    private inmobiliariaService: InmobiliariaService,
     private agenteService: AgenteService,
     private notarioService: NotarioService,
     private activeRoute: ActivatedRoute,
@@ -185,6 +183,19 @@ export class InmueblePage implements OnInit {
       component: MapsComponent,
       componentProps: { position },
       cssClass: 'modalGeneral',
+    });
+    return modal.present();
+  }
+  async guardarPosicion(position: Direccion) {
+    const modal = await this.modalController.create({
+      component: MapsComponent,
+      componentProps: { position },
+      cssClass: 'modalGeneral',
+    });
+    modal.onDidDismiss().then((res) => {
+      if (res.data.pos) {
+        this.inmueble.direccion = res.data.pos;
+      }
     });
     return modal.present();
   }
