@@ -58,7 +58,7 @@ export class InmueblePage implements OnInit {
     descripcion: '',
     direccion: {
       lat: 0,
-      lng: 0,
+      lng: 0
     },
     estado: '',
     foto: '',
