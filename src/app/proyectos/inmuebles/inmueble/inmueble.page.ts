@@ -1,13 +1,15 @@
+import { AlertController, ModalController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
 import { Agente } from 'src/app/interfaces/agente';
 import { AgenteService } from 'src/app/services/agente.service';
-import { AlertController } from '@ionic/angular';
+import { Direccion } from 'src/app/interfaces/direccion';
 import { FotoService } from 'src/app/services/foto.service';
 import { InmobiliariaService } from 'src/app/services/inmobiliaria.service';
 import { Inmueble } from 'src/app/interfaces/inmueble';
 import { InmuebleService } from 'src/app/services/inmueble.service';
+import { MapsComponent } from 'src/app/maps/maps.component';
 import { Notario } from 'src/app/interfaces/notario';
 import { NotarioService } from 'src/app/services/notario.service';
 import { ServiciosService } from 'src/app/services/servicios.service';
@@ -55,12 +57,8 @@ export class InmueblePage implements OnInit {
     cuartos: 1,
     descripcion: '',
     direccion: {
-      calle: '',
-      codigopostal: '',
-      colonia: '',
-      numeroexterior: '',
-      numerointerior: '',
-      estado: '',
+      lat: 0,
+      lng: 0,
     },
     estado: '',
     foto: '',
@@ -84,7 +82,8 @@ export class InmueblePage implements OnInit {
     private fotoService: FotoService,
     private servicio: ServiciosService,
     private activatedRoute: ActivatedRoute,
-    private alertConttroller: AlertController
+    private alertConttroller: AlertController,
+    private modalController: ModalController
   ) {}
 
   ngOnInit() {
@@ -178,5 +177,13 @@ export class InmueblePage implements OnInit {
           }
         });
       });
+  }
+
+  async verPosicion(position: Direccion) {
+    const modal = await this.modalController.create({
+      component: MapsComponent,
+      componentProps: { position },
+      cssClass: 'modalGeneral',
+    });
   }
 }

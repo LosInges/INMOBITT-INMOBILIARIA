@@ -1,8 +1,10 @@
+import { AlertController, ModalController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 
-import { AlertController } from '@ionic/angular';
+import { Direccion } from 'src/app/interfaces/direccion';
 import { Inmueble } from 'src/app/interfaces/inmueble';
 import { InmuebleService } from 'src/app/services/inmueble.service';
+import { MapsComponent } from 'src/app/maps/maps.component';
 import { SessionService } from 'src/app/services/session.service';
 
 /* eslint-disable @typescript-eslint/naming-convention */
@@ -22,12 +24,8 @@ export class DetallePage implements OnInit {
     cuartos: 0,
     descripcion: '',
     direccion: {
-      calle: '',
-      codigopostal: '',
-      colonia: '',
-      numeroexterior: '',
-      numerointerior: '',
-      estado: '',
+     lat:0,
+     lng:0
     },
     notario: '',
     foto: '',
@@ -43,7 +41,8 @@ export class DetallePage implements OnInit {
   constructor(
     private inmuebleService: InmuebleService,
     private sessionService: SessionService,
-    private alertConttroller: AlertController
+    private alertConttroller: AlertController,
+    private modalController: ModalController
   ) {}
 
   ngOnInit() {
@@ -63,6 +62,13 @@ export class DetallePage implements OnInit {
         .then((alert) => {
           alert.present();
         });
+    });
+  }
+  async verPosicion(position: Direccion) {
+    const modal = await this.modalController.create({
+      component: MapsComponent,
+      componentProps: { position },
+      cssClass: 'modalGeneral'
     });
   }
 }

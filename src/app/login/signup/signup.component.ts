@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
-import { Inmobiliaria } from 'src/app/interfaces/inmobiliaria';
-import { EstadosService } from 'src/app/services/estados.service';
-import { InmobiliariaService } from 'src/app/services/inmobiliaria.service';
-import { AlertController } from '@ionic/angular';
 
+import { AlertController } from '@ionic/angular';
+import { EstadosService } from 'src/app/services/estados.service';
+import { Inmobiliaria } from 'src/app/interfaces/inmobiliaria';
+import { InmobiliariaService } from 'src/app/services/inmobiliaria.service';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-signup',
@@ -19,12 +19,8 @@ export class SignupComponent implements OnInit {
     estado: '',
     foto: '',
     direccion: {
-      calle: '',
-      codigopostal: '',
-      colonia: '',
-      numeroexterior: '',
-      numerointerior: '',
-      estado: '',
+      lat: 0,
+      lng: 0
     },
     sedes: [],
   };
