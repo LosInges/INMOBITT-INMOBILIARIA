@@ -19,12 +19,8 @@ export class SignupComponent implements OnInit {
     estado: '',
     foto: '',
     direccion: {
-      calle: '',
-      codigopostal: '',
-      colonia: '',
-      numeroexterior: '',
-      numerointerior: '',
-      estado: '',
+      lat: 0,
+      lng: 0
     },
     sedes: [],
   };

@@ -35,12 +35,8 @@ export class AltaComponent implements OnInit {
     cuartos: 1,
     descripcion: '',
     direccion: {
-      calle: '',
-      codigopostal: '',
-      colonia: '',
-      numeroexterior: '',
-      numerointerior: '',
-      estado: '',
+      lat: 0,
+      lng: 0
     },
     foto: '',
     metros_cuadrados: 0,
