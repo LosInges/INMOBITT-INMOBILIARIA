@@ -1,8 +1,11 @@
+import { AlertController, ModalController } from '@ionic/angular';
 import { Component, Input, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
-import { Notario } from 'src/app/interfaces/notario';
+
 import { FotoService } from 'src/app/services/foto.service';
+import { LoginService } from 'src/app/services/login.service';
+import { Notario } from 'src/app/interfaces/notario';
 import { NotarioService } from 'src/app/services/notario.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registro-notario',
@@ -28,7 +31,10 @@ export class RegistroNotarioComponent implements OnInit {
   constructor(
     private fotoService: FotoService,
     private notarioService: NotarioService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private loginService: LoginService,
+    private alertCtrl: AlertController,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -37,13 +43,50 @@ export class RegistroNotarioComponent implements OnInit {
 
   onSubmit() {
     this.notario.apellido = this.apellidoPat + ' ' + this.apellidoMat;
-    this.notarioService.postNotario(this.notario).subscribe((res) => {
-      if (res.results) {
-        this.modalController.dismiss({ registrado: true });
-      } else {
-        console.log(res);
-      }
+    if (
+      this.notario.nombre.trim().length > 0 &&
+      this.notario.correo.trim().length > 0 &&
+      this.notario.rfc.trim().length > 0 &&
+      this.notario.apellido.trim().length > 0
+    ) {
+      this.loginService
+        .solicitarRegistroNotario(this.notario.inmobiliaria, this.notario.rfc)
+        .subscribe((solicitud) => {
+          if (solicitud.permiso) {
+            this.notarioService.postNotario(this.notario).subscribe((res) => {
+              if (res.results) {
+                this.modalController.dismiss({ registrado: true });
+              } else {
+                console.log(res);
+              }
+            });
+          } else {
+            this.mostrarAlerta(
+              'Error:',
+              'RFC ya registrado',
+              'Favor de introducir otro RFC.'
+            );
+          }
+        });
+    } else {
+      this.mostrarAlerta(
+        'Error',
+        'Campos vacios',
+        'No deje espacios en blanco.'
+      );
+    }
+  }
+  async mostrarAlerta(titulo: string, subtitulo: string, mensaje: string) {
+    const alert = await this.alertCtrl.create({
+      header: titulo,
+      subHeader: subtitulo,
+      message: mensaje,
+      buttons: ['OK'],
     });
+    await alert.present();
+    const result = await alert.onDidDismiss();
+    console.log(result);
+    this.router.navigate(['/', 'login']);
   }
 
   cerrar() {

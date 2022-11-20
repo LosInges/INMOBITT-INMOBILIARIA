@@ -1,9 +1,12 @@
+import { AlertController, ModalController } from '@ionic/angular';
 import { Component, Input, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+
 import { Agente } from 'src/app/interfaces/agente';
-import { Estado } from 'src/app/interfaces/estado';
 import { AgenteService } from 'src/app/services/agente.service';
+import { Estado } from 'src/app/interfaces/estado';
 import { FotoService } from 'src/app/services/foto.service';
+import { LoginService } from 'src/app/services/login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registro-agente',
@@ -33,7 +36,10 @@ export class RegistroAgenteComponent implements OnInit {
   constructor(
     private agenteService: AgenteService,
     private fotoService: FotoService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private loginService: LoginService,
+    private alertCtrl: AlertController,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -41,29 +47,69 @@ export class RegistroAgenteComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.confirmPassword === this.agente.password) {
-      this.agente.apellido = this.apellidoPat + ' ' + this.apellidoMat;
-      this.agenteService.postAgente(this.agente).subscribe((res) => {
-        console.log(res);
-        if (res.results) {
-          this.modalController.dismiss({ registrado: true });
-        } else {
-          console.log(res);
-        }
-      });
+    this.agente.apellido = this.apellidoPat + ' ' + this.apellidoMat;
+    if (
+      this.agente.nombre.trim().length > 0 &&
+      this.agente.correo.trim().length > 0 &&
+      this.agente.password.trim().length > 0 &&
+      this.agente.telefono.trim().length > 0 &&
+      this.agente.rfc.trim().length > 0 &&
+      this.agente.apellido.trim().length > 0
+    ) {
+
+      if (this.confirmPassword === this.agente.password) {
+        this.loginService
+          .solicitarRegistro(this.agente.rfc)
+          .subscribe((solicitud) => {
+            if (solicitud.permiso) {
+              this.agenteService.postAgente(this.agente).subscribe((res) => {
+                if (res.results) {
+                  this.modalController.dismiss();
+                } else {
+                  console.log(res);
+                  this.mostrarAlerta(
+                    'Completado',
+                    'Creación',
+                    'Agente creado exitosamente.'
+                  );
+                  this.cerrar();
+                }
+              });
+            } else {
+              this.mostrarAlerta(
+                'Error:',
+                'RFC ya registrado',
+                'Favor de introducir otro RFC.'
+              );
+            }
+          });
+      } else {
+        this.mostrarAlerta(
+          'Error:',
+          'Confirmación de clave incorrecta',
+          '¿es correcta o esta vacia?'
+        );
+      }
+    } else {
+      this.mostrarAlerta(
+        'Error',
+        'Campos vacios',
+        'No deje espacios en blanco.'
+      );
     }
-    // if (
-    //   this.agente.rfc.trim() &&
-    //   this.agente.inmobiliaria.trim() &&
-    //   this.agente.nombre.trim() &&
-    //   this.agente.correo.trim() &&
-    //   this.agente.password.trim() &&
-    //   this.agente.apellido.trim() &&
-    //   this.agente.foto.trim() &&
-    //   this.agente.telefono.trim() &&
-    //   this.confirmPassword.trim()
-    // ) {
-    // }
+  }
+
+  async mostrarAlerta(titulo: string, subtitulo: string, mensaje: string) {
+    const alert = await this.alertCtrl.create({
+      header: titulo,
+      subHeader: subtitulo,
+      message: mensaje,
+      buttons: ['OK'],
+    });
+    await alert.present();
+    const result = await alert.onDidDismiss();
+    console.log(result);
+    this.router.navigate(['/', 'login']);
   }
   cerrar() {
     this.modalController.dismiss(this.agente);
