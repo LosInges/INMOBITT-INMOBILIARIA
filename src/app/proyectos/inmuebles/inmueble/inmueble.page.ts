@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Agente } from 'src/app/interfaces/agente';
 import { AgenteService } from 'src/app/services/agente.service';
+import { AlertController } from '@ionic/angular';
 import { FotoService } from 'src/app/services/foto.service';
 import { InmobiliariaService } from 'src/app/services/inmobiliaria.service';
 import { Inmueble } from 'src/app/interfaces/inmueble';
@@ -26,25 +27,24 @@ export class InmueblePage implements OnInit {
   renta = false;
   api = environment.api;
   servicios = this.servicio.getServicios();
-  notario: Notario={
-    inmobiliaria:"",
-    rfc:"",
-    nombre:"",
-    apellido:"",
-    correo:"",
-    foto:"",
-
+  notario: Notario = {
+    inmobiliaria: '',
+    rfc: '',
+    nombre: '',
+    apellido: '',
+    correo: '',
+    foto: '',
   };
 
-  agente: Agente ={
-    rfc:"",
-    inmobiliaria:"",
-    correo:"",
-    password:"",
-    nombre:"",
-    apellido:"",
-    telefono:"",
-    foto:"",
+  agente: Agente = {
+    rfc: '',
+    inmobiliaria: '',
+    correo: '',
+    password: '',
+    nombre: '',
+    apellido: '',
+    telefono: '',
+    foto: '',
   };
 
   inmueble: Inmueble = {
@@ -79,11 +79,12 @@ export class InmueblePage implements OnInit {
     private sessionService: SessionService,
     private inmobiliariaService: InmobiliariaService,
     private agenteService: AgenteService,
-    private notarioService:NotarioService,
+    private notarioService: NotarioService,
     private activeRoute: ActivatedRoute,
     private fotoService: FotoService,
     private servicio: ServiciosService,
     private activatedRoute: ActivatedRoute,
+    private alertConttroller: AlertController
   ) {}
 
   ngOnInit() {
@@ -96,10 +97,13 @@ export class InmueblePage implements OnInit {
             this.venta = inmueble.precio_venta > 0;
             this.renta = inmueble.precio_renta > 0;
             console.log(inmueble);
-            this.agenteService.getAgente(inmobiliaria, inmueble.agente).subscribe(agente=>(this.agente = agente));
-            this.notarioService.getNotario(inmobiliaria, inmueble.notario).subscribe(notario=>(this.notario = notario));
+            this.agenteService
+              .getAgente(inmobiliaria, inmueble.agente)
+              .subscribe((agente) => (this.agente = agente));
+            this.notarioService
+              .getNotario(inmobiliaria, inmueble.notario)
+              .subscribe((notario) => (this.notario = notario));
           });
-
       });
     });
   }
@@ -125,11 +129,18 @@ export class InmueblePage implements OnInit {
   }
 
   actualizar() {
-    this.inmuebleService
-      .postInmueble(this.inmueble)
-      .subscribe((res) => console.log(res));
+    this.inmuebleService.postInmueble(this.inmueble).subscribe((res) => {
+      this.alertConttroller
+        .create({
+          header: 'ÉXITOSAME',
+          message: 'SE ACTUALIZÓ EL INMUEBLE',
+          buttons: ['CERRAR'],
+        })
+        .then((alert) => {
+          alert.present();
+        });
+    });
   }
-
 
   eliminarInmueble(inmueble: Inmueble) {
     this.inmuebleService
@@ -144,7 +155,25 @@ export class InmueblePage implements OnInit {
             this.inmuebles = this.inmuebles.filter(
               (inmuebleIterable) => inmueble !== inmuebleIterable
             );
+            this.alertConttroller
+              .create({
+                header: 'ÉXITOSAME',
+                message: 'Se ELIMINÓ INMUEBLE',
+                buttons: ['CERRAR'],
+              })
+              .then((alert) => {
+                alert.present();
+              });
           } else {
+            this.alertConttroller
+              .create({
+                header: 'ERROR',
+                message: 'NO se ELIMINÓ el INMUEBLE',
+                buttons: ['CERRAR'],
+              })
+              .then((alert) => {
+                alert.present();
+              });
             console.log(valor);
           }
         });

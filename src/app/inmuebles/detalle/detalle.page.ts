@@ -1,8 +1,11 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { Component, OnInit } from '@angular/core';
+
+import { AlertController } from '@ionic/angular';
 import { Inmueble } from 'src/app/interfaces/inmueble';
 import { InmuebleService } from 'src/app/services/inmueble.service';
 import { SessionService } from 'src/app/services/session.service';
+
+/* eslint-disable @typescript-eslint/naming-convention */
 
 @Component({
   selector: 'app-detalle',
@@ -12,6 +15,8 @@ import { SessionService } from 'src/app/services/session.service';
 export class DetallePage implements OnInit {
   correo = '';
   inmueble: Inmueble = {
+    inmobiliaria: '',
+    proyecto: '',
     titulo: '',
     estado: '',
     cuartos: 0,
@@ -26,7 +31,7 @@ export class DetallePage implements OnInit {
     },
     notario: '',
     foto: '',
-    metros_cuadrados: '',
+    metros_cuadrados: 0,
     pisos: 0,
     precio_renta: 0,
     precio_venta: 0,
@@ -37,7 +42,8 @@ export class DetallePage implements OnInit {
   };
   constructor(
     private inmuebleService: InmuebleService,
-    private sessionService: SessionService
+    private sessionService: SessionService,
+    private alertConttroller: AlertController
   ) {}
 
   ngOnInit() {
@@ -47,8 +53,16 @@ export class DetallePage implements OnInit {
   }
 
   actualizarInmueble() {
-    this.inmuebleService
-      .postInmueble(this.inmueble)
-      .subscribe((res) => console.log(res));
+    this.inmuebleService.postInmueble(this.inmueble).subscribe((res) => {
+      this.alertConttroller
+        .create({
+          header: 'ÉXITOSAME',
+          message: 'Se ACTUALIZÓ el INMUEBLE',
+          buttons: ['CERRAR'],
+        })
+        .then((alert) => {
+          alert.present();
+        });
+    });
   }
 }

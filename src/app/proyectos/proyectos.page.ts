@@ -1,11 +1,11 @@
 import { ActivatedRoute, Router } from '@angular/router';
+import { AlertController, ModalController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 
 import { AltaComponent } from './alta/alta.component';
 import { InmobiliariaService } from '../services/inmobiliaria.service';
 import { Inmueble } from './../interfaces/inmueble';
 import { InmuebleService } from 'src/app/services/inmueble.service';
-import { ModalController } from '@ionic/angular';
 import { Proyecto } from '../interfaces/proyecto';
 import { ProyectosService } from '../services/proyectos.service';
 import { SessionService } from '../services/session.service';
@@ -29,6 +29,7 @@ export class ProyectosPage implements OnInit {
     private router: Router,
     private activedRoute: ActivatedRoute,
     private inmuebleService: InmuebleService,
+    private alertConttroller: AlertController
 
   ) {}
 
@@ -63,6 +64,15 @@ export class ProyectosPage implements OnInit {
     });
     modal.onDidDismiss().then((datos) => {
       if (datos.data?.ok) {
+        this.alertConttroller
+        .create({
+          header: 'ÉXITOSAME',
+          message: 'Se registró el Proyecto',
+          buttons: ['CERRAR'],
+        })
+        .then((a) => {
+          a.present();
+        });
         this.consultarProyectos();
       }
     });
