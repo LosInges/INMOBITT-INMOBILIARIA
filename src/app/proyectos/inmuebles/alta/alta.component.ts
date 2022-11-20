@@ -7,6 +7,8 @@ import { Inmueble } from 'src/app/interfaces/inmueble';
 import { InmuebleService } from 'src/app/services/inmueble.service';
 import { Notario } from 'src/app/interfaces/notario';
 import { environment } from 'src/environments/environment';
+import { MapsComponent } from 'src/app/maps/maps.component';
+import { Direccion } from 'src/app/interfaces/direccion';
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
@@ -36,7 +38,7 @@ export class AltaComponent implements OnInit {
     descripcion: '',
     direccion: {
       lat: 0,
-      lng: 0
+      lng: 0,
     },
     foto: '',
     metros_cuadrados: 0,
@@ -110,6 +112,19 @@ export class AltaComponent implements OnInit {
         v.blob().then((imagen) => reader.readAsArrayBuffer(imagen))
       );
     });
+  }
+
+  async guardarDireccion() {
+    const modal = await this.modalController.create({
+      component: MapsComponent,
+      cssClass: 'modalGeneral',
+    });
+    modal.onDidDismiss().then((res) => {
+      if (res.data) {
+        this.inmueble.direccion = res.data.pos;
+      }
+    });
+    return modal.present();
   }
 
   cerrar() {

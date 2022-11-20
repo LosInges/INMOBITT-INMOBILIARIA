@@ -1,4 +1,3 @@
-import { Inmueble } from './../interfaces/inmueble';
 import {
   Component,
   ElementRef,

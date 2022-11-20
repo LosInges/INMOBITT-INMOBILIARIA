@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { AlertController, ModalController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 
@@ -58,7 +59,7 @@ export class InmueblePage implements OnInit {
     descripcion: '',
     direccion: {
       lat: 0,
-      lng: 0
+      lng: 0,
     },
     estado: '',
     foto: '',
@@ -185,5 +186,6 @@ export class InmueblePage implements OnInit {
       componentProps: { position },
       cssClass: 'modalGeneral',
     });
+    return modal.present();
   }
 }
