@@ -9,7 +9,7 @@ import { Inmobiliaria } from '../interfaces/inmobiliaria';
 import { InmobiliariaService } from '../services/inmobiliaria.service';
 import { Inmueble } from './../interfaces/inmueble';
 import { InmuebleService } from 'src/app/services/inmueble.service';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { Notario } from '../interfaces/notario';
 import { NotarioService } from 'src/app/services/notario.service';
 import { ProyectosService } from './../services/proyectos.service';
@@ -58,7 +58,8 @@ export class PerfilPage implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private proyectoService: ProyectosService,
-    private inmuebleService: InmuebleService
+    private inmuebleService: InmuebleService,
+    private alertConttroller: AlertController
   ) {}
 
   ngOnInit() {
@@ -109,7 +110,7 @@ export class PerfilPage implements OnInit {
         .getProyectosInmobiliaria(this.inmobiliaria.correo)
         .subscribe((proyectos) => {
           proyectos.forEach((proyecto) => {
-            this.proyectoService.deleteProyecto(proyecto);
+            this.proyectoService.deleteProyecto(proyecto).subscribe(val => console.log(val));
           });
         });
       this.inmobiliariaService
@@ -211,9 +212,15 @@ export class PerfilPage implements OnInit {
         inmueble.titulo
       )
       .subscribe((clientes) => {
+        console.log(clientes);
+
         clientes.forEach((cliente) => {
-          inmueble.cliente = cliente;
-          this.inmuebleService.deleteInmuebleCliente(inmueble);
+          inmueble.cliente = cliente.cliente;
+          this.inmuebleService
+            .deleteInmuebleCliente(inmueble)
+            .subscribe((val) => {
+              console.log(val);
+            });
         });
         this.inmuebleService.deleteInmueble(inmueble).subscribe((valor) => {
           console.log(valor);
@@ -280,7 +287,11 @@ export class PerfilPage implements OnInit {
             this.inmobiliaria.correo,
             proyecto.nombre
           )
-          .subscribe((inmuebles) => {});
+          .subscribe((inmuebles) => {
+            inmuebles.forEach((inmueble) => {
+              this.eliminarInmueble(inmueble);
+            });
+          });
         this.eliminarAgenteProyecto(agente.rfc, proyecto.nombre);
       });
     });

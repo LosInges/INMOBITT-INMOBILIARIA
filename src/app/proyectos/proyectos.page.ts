@@ -20,7 +20,6 @@ export class ProyectosPage implements OnInit {
   estados: string[] = [];
   inmobiliaria: string;
 
-
   constructor(
     private sessionService: SessionService,
     private proyectosService: ProyectosService,
@@ -30,7 +29,6 @@ export class ProyectosPage implements OnInit {
     private activedRoute: ActivatedRoute,
     private inmuebleService: InmuebleService,
     private alertConttroller: AlertController
-
   ) {}
 
   ngOnInit() {
@@ -65,14 +63,14 @@ export class ProyectosPage implements OnInit {
     modal.onDidDismiss().then((datos) => {
       if (datos.data?.ok) {
         this.alertConttroller
-        .create({
-          header: 'ÉXITOSAME',
-          message: 'Se registró el Proyecto',
-          buttons: ['CERRAR'],
-        })
-        .then((a) => {
-          a.present();
-        });
+          .create({
+            header: 'ÉXITOSAME',
+            message: 'Se registró el Proyecto',
+            buttons: ['CERRAR'],
+          })
+          .then((a) => {
+            a.present();
+          });
         this.consultarProyectos();
       }
     });
@@ -81,44 +79,57 @@ export class ProyectosPage implements OnInit {
 
   eliminarInmueble(inmueble: Inmueble) {
     this.inmuebleService
-      .getClientesInmueble(this.inmobiliaria, inmueble.proyecto, inmueble.titulo)
+      .getClientesInmueble(
+        this.inmobiliaria,
+        inmueble.proyecto,
+        inmueble.titulo
+      )
       .subscribe((clientes) => {
         clientes.forEach((cliente) => {
-          inmueble.cliente = cliente;
+          inmueble.cliente = cliente.cliente;
           this.inmuebleService.deleteInmuebleCliente(inmueble);
         });
-        this.inmuebleService.deleteInmueble(inmueble).subscribe((valor) => {
-
-        });
+        this.inmuebleService.deleteInmueble(inmueble).subscribe((valor) => {});
       });
   }
 
   eliminarProyecto(proyecto: Proyecto) {
-    this.proyectosService.getAgentesProyecto(proyecto.nombre, this.inmobiliaria ).subscribe((agentes)=>{
-      agentes.forEach((agente)=>{
-        this.proyectosService.deleteAgenteProyecto(agente).subscribe(v=>console.log(v));
-      });
-      this.proyectosService.getNotariosProyecto(proyecto.nombre, this.inmobiliaria).subscribe((notarios)=>{
-        notarios.forEach((notario)=>{
-          this.proyectosService.deleteNotarioProyecto(notario).subscribe(v=>console.log(v))
+    this.proyectosService
+      .getAgentesProyecto(proyecto.nombre, this.inmobiliaria)
+      .subscribe((agentes) => {
+        agentes.forEach((agente) => {
+          this.proyectosService
+            .deleteAgenteProyecto(agente)
+            .subscribe((v) => console.log(v));
         });
+        this.proyectosService
+          .getNotariosProyecto(proyecto.nombre, this.inmobiliaria)
+          .subscribe((notarios) => {
+            notarios.forEach((notario) => {
+              this.proyectosService
+                .deleteNotarioProyecto(notario)
+                .subscribe((v) => console.log(v));
+            });
+          });
+        this.inmuebleService
+          .getInmueblesProyecto(proyecto.nombre, this.inmobiliaria)
+          .subscribe((inmuebles) => {
+            inmuebles.forEach((inmueble) => {
+              this.eliminarInmueble(inmueble);
+            });
+            this.proyectosService
+              .deleteProyecto(proyecto)
+              .subscribe((valor) => {
+                if (valor.results) {
+                  this.proyectos = this.proyectos.filter(
+                    (proyectoIterable) => proyecto !== proyectoIterable
+                  );
+                } else {
+                  console.log(valor);
+                }
+              });
+          });
       });
-      this.inmuebleService.getInmueblesProyecto(proyecto.nombre, this.inmobiliaria).subscribe((inmuebles)=>{
-        inmuebles.forEach((inmueble)=>{
-          this.eliminarInmueble(inmueble)
-        })
-        this.proyectosService.deleteProyecto(proyecto).subscribe((valor)=>{
-          if(valor.results){
-            this.proyectos = this.proyectos.filter(
-              proyectoIterable => proyecto !== proyectoIterable
-            );
-          }else{
-            console.log(valor)
-          }
-        })
-      })
-
-    })
   }
 
   consultarProyectos() {
