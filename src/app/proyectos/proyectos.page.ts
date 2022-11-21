@@ -85,9 +85,10 @@ export class ProyectosPage implements OnInit {
         inmueble.titulo
       )
       .subscribe((clientes) => {
+        
         clientes.forEach((cliente) => {
           inmueble.cliente = cliente.cliente;
-          this.inmuebleService.deleteInmuebleCliente(inmueble);
+          this.inmuebleService.deleteInmuebleCliente(inmueble).subscribe(()=>{});
         });
         this.inmuebleService.deleteInmueble(inmueble).subscribe((valor) => {});
       });
