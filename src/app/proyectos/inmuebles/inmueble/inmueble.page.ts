@@ -215,9 +215,11 @@ export class InmueblePage implements OnInit {
       .getClientesInmueble(this.inmobiliaria, this.proyecto, inmueble.titulo)
       .subscribe((clientes) => {
         clientes.forEach((cliente) => {
-          inmueble.cliente = cliente;
-          this.inmuebleService.deleteInmuebleCliente(inmueble);
+          inmueble.cliente = cliente.cliente;
+          this.inmuebleService.deleteInmuebleCliente(inmueble).subscribe(()=>{
+          });
         });
+        this.imagenes.forEach(imagen => this.inmuebleService.deleteImagen(imagen).subscribe(() => {}))
         this.inmuebleService.deleteInmueble(inmueble).subscribe((valor) => {
           if (valor.results) {
             this.inmuebles = this.inmuebles.filter(
