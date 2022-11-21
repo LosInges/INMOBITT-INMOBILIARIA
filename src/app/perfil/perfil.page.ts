@@ -1,4 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
+import { AlertController, ModalController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 
 import { Agente } from '../interfaces/agente';
@@ -9,7 +10,7 @@ import { Inmobiliaria } from '../interfaces/inmobiliaria';
 import { InmobiliariaService } from '../services/inmobiliaria.service';
 import { Inmueble } from './../interfaces/inmueble';
 import { InmuebleService } from 'src/app/services/inmueble.service';
-import { AlertController, ModalController } from '@ionic/angular';
+import { MapsComponent } from '../maps/maps.component';
 import { Notario } from '../interfaces/notario';
 import { NotarioService } from 'src/app/services/notario.service';
 import { ProyectosService } from './../services/proyectos.service';
@@ -17,7 +18,6 @@ import { RegistroAgenteComponent } from './registro-agente/registro-agente.compo
 import { RegistroNotarioComponent } from './registro-notario/registro-notario.component';
 import { SessionService } from '../services/session.service';
 import { environment } from 'src/environments/environment';
-import { MapsComponent } from '../maps/maps.component';
 
 @Component({
   selector: 'app-perfil',
@@ -110,7 +110,9 @@ export class PerfilPage implements OnInit {
         .getProyectosInmobiliaria(this.inmobiliaria.correo)
         .subscribe((proyectos) => {
           proyectos.forEach((proyecto) => {
-            this.proyectoService.deleteProyecto(proyecto).subscribe(val => console.log(val));
+            this.proyectoService
+              .deleteProyecto(proyecto)
+              .subscribe((val) => console.log(val));
           });
         });
       this.inmobiliariaService
@@ -212,19 +214,18 @@ export class PerfilPage implements OnInit {
         inmueble.titulo
       )
       .subscribe((clientes) => {
-        console.log(clientes);
-
         clientes.forEach((cliente) => {
           inmueble.cliente = cliente.cliente;
-          this.inmuebleService
-            .deleteInmuebleCliente(inmueble)
-            .subscribe((val) => {
-              console.log(val);
-            });
+          this.inmuebleService.deleteInmuebleCliente(inmueble);
         });
-        this.inmuebleService.deleteInmueble(inmueble).subscribe((valor) => {
-          console.log(valor);
-        });
+        this.inmuebleService
+          .getFotos(inmueble.inmobiliaria, inmueble.proyecto, inmueble.titulo)
+          .subscribe((imagenes) => {
+            imagenes.forEach((imagen) =>
+              this.inmuebleService.deleteImagen(imagen).subscribe(() => {})
+            );
+          });
+        this.inmuebleService.deleteInmueble(inmueble).subscribe(() => {});
       });
   }
 

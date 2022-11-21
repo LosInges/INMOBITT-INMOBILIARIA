@@ -1,4 +1,5 @@
 import { HttpClient } from '@angular/common/http';
+import { Imagen } from '../interfaces/imagen';
 import { Injectable } from '@angular/core';
 import { Inmueble } from '../interfaces/inmueble';
 import { Observable } from 'rxjs';
@@ -17,6 +18,15 @@ export class InmuebleService {
   ): Observable<Inmueble> {
     return this.httpClient.get<Inmueble>(
       `${environment.api}/inmueble/${inmobiliaria}/${proyecto}/${titulo}`
+    );
+  }
+  getFotos(
+    inmobiliaria: string,
+    proyecto: string,
+    titulo: string
+  ): Observable<Imagen[]> {
+    return this.httpClient.get<Imagen[]>(
+      `${environment.api}/imagenes/inmueble/${inmobiliaria}/${proyecto}/${titulo}`
     );
   }
 
@@ -63,7 +73,9 @@ export class InmuebleService {
     console.log(inmueble);
     return this.httpClient.post<any>(`${environment.api}/inmueble`, inmueble);
   }
-
+  postFotos(imagen: Imagen): Observable<any> {
+    return this.httpClient.post<any>(`${environment.api}/img/inmueble`, imagen);
+  }
   deleteInmueble(inmueble: Inmueble): Observable<any> {
     return this.httpClient.delete<any>(`${environment.api}/inmueble`, {
       body: inmueble,
@@ -73,6 +85,12 @@ export class InmuebleService {
   deleteInmuebleCliente(inmueble: Inmueble): Observable<any> {
     return this.httpClient.delete<any>(`${environment.api}/inmueble/cliente`, {
       body: inmueble,
+    });
+  }
+
+  deleteImagen(imagen: Imagen): Observable<any> {
+    return this.httpClient.delete<any>(`${environment.api}/img/inmueble`, {
+      body: imagen,
     });
   }
 }
