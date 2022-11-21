@@ -8,8 +8,8 @@ import { SessionService } from './services/session.service';
 export class AppComponent {
   public appPages = [ 
     
-    { title: 'Perfil', url: '/perfil', icon: 'paper-plane' },
-    { title: 'Proyectos', url: '/proyectos', icon: 'heart' },
+    { title: 'Perfil', url: '/perfil', icon: 'person' },
+    { title: 'Proyectos', url: '/proyectos', icon: 'folder' },
     {
       title: 'Cerrar Sesion',
       url: '',

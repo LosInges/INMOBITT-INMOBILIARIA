@@ -3,10 +3,12 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="proyectos"></ion-back-button>
     </ion-buttons>
-    <ion-title>INMUEBLES</ion-title>
+    <ion-title color="secondary">INMUEBLES</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="agregarInmueble()">Agregar Inmueble</ion-button>
-      <ion-button (click)="gestionarNotariosAgentes()"
+      <ion-button (click)="agregarInmueble()" color="secondary"
+        >Agregar Inmueble</ion-button
+      >
+      <ion-button (click)="gestionarNotariosAgentes()" color="secondary"
         >Agentes y Notarios</ion-button
       >
     </ion-buttons>
@@ -26,8 +28,8 @@
           >{{inmueble.precio_renta}}
         </ion-label>
       </ion-item>
-      <ion-item-options side="start"  (ionSwipe)="verInmueble(inmueble.titulo)">
-        <ion-item-option expandable color="success" >
+      <ion-item-options side="start" (ionSwipe)="verInmueble(inmueble.titulo)">
+        <ion-item-option expandable color="success">
           <ion-label>
             <ion-icon name="eye"></ion-icon>
           </ion-label>
