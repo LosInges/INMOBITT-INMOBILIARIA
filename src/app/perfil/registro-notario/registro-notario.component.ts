@@ -49,25 +49,32 @@ export class RegistroNotarioComponent implements OnInit {
       this.notario.rfc.trim().length > 0 &&
       this.notario.apellido.trim().length > 0
     ) {
-      this.loginService
-        .solicitarRegistroNotario(this.notario.inmobiliaria, this.notario.rfc)
-        .subscribe((solicitud) => {
-          if (solicitud.permiso) {
-            this.notarioService.postNotario(this.notario).subscribe((res) => {
-              if (res.results) {
-                this.modalController.dismiss({ registrado: true });
-              } else {
-                console.log(res);
-              }
-            });
-          } else {
-            this.mostrarAlerta(
-              'Error:',
-              'RFC ya registrado',
-              'Favor de introducir otro RFC.'
-            );
-          }
-        });
+      // if (this.confirmPassword === this.notario.password) {
+      if (
+        this.notario.correo.match(
+          '^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@' +
+            '[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$'
+        )
+      )
+        this.loginService
+          .solicitarRegistroNotario(this.notario.inmobiliaria, this.notario.rfc)
+          .subscribe((solicitud) => {
+            if (solicitud.permiso) {
+              this.notarioService.postNotario(this.notario).subscribe((res) => {
+                if (res.results) {
+                  this.modalController.dismiss({ registrado: true });
+                } else {
+                  console.log(res);
+                }
+              });
+            } else {
+              this.mostrarAlerta(
+                'Error:',
+                'RFC ya registrado',
+                'Favor de introducir otro RFC.'
+              );
+            }
+          });
     } else {
       this.mostrarAlerta(
         'Error',

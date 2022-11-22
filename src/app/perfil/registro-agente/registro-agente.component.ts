@@ -50,39 +50,43 @@ export class RegistroAgenteComponent implements OnInit {
     this.agente.apellido = this.apellidoPat + ' ' + this.apellidoMat;
     if (
       this.agente.nombre.trim().length > 0 &&
-      this.agente.correo.trim().length > 0 &&
       this.agente.password.trim().length > 0 &&
       this.agente.telefono.trim().length > 0 &&
       this.agente.rfc.trim().length > 0 &&
       this.agente.apellido.trim().length > 0
     ) {
-
       if (this.confirmPassword === this.agente.password) {
-        this.loginService
-          .solicitarRegistro(this.agente.rfc)
-          .subscribe((solicitud) => {
-            if (solicitud.permiso) {
-              this.agenteService.postAgente(this.agente).subscribe((res) => {
-                if (res.results) {
-                  this.modalController.dismiss();
-                } else {
-                  console.log(res);
-                  this.mostrarAlerta(
-                    'Completado',
-                    'Creación',
-                    'Agente creado exitosamente.'
-                  );
-                  this.cerrar();
-                }
-              });
-            } else {
-              this.mostrarAlerta(
-                'Error:',
-                'RFC ya registrado',
-                'Favor de introducir otro RFC.'
-              );
-            }
-          });
+        if (
+          this.agente.correo.match(
+            '^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@' +
+              '[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$'
+          )
+        )
+          this.loginService
+            .solicitarRegistro(this.agente.rfc)
+            .subscribe((solicitud) => {
+              if (solicitud.permiso) {
+                this.agenteService.postAgente(this.agente).subscribe((res) => {
+                  if (res.results) {
+                    this.modalController.dismiss();
+                  } else {
+                    console.log(res);
+                    this.mostrarAlerta(
+                      'Completado',
+                      'Creación',
+                      'Agente creado exitosamente.'
+                    );
+                    this.cerrar();
+                  }
+                });
+              } else {
+                this.mostrarAlerta(
+                  'Error:',
+                  'RFC ya registrado',
+                  'Favor de introducir otro RFC.'
+                );
+              }
+            });
       } else {
         this.mostrarAlerta(
           'Error:',

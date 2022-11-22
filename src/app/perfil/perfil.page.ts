@@ -1,4 +1,4 @@
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 import { Agente } from '../interfaces/agente';
@@ -78,18 +78,6 @@ export class PerfilPage implements OnInit {
   }
 
   actualizarPerfil() {
-    // if (
-    //   this.agente.rfc.trim() !== "" &&
-    //   this.agente.inmobiliaria.trim() !== "" &&
-    //   this.agente.nombre.trim() !== "" &&
-    //   this.agente.correo.trim() !== "" &&
-    //   this.agente.password.trim() !== "" &&
-    //   this.agente.apellido.trim() !== "" &&
-    //   this.agente.foto.trim() !== "" &&
-    //   this.agente.telefono.trim() !== "" &&
-    //   this.confirmPassword.trim() !== ""
-    // )
-    //{
     if (this.confirmPassword === this.inmobiliaria.password) {
       this.inmobiliariaService
         .postInmobiliaria(this.inmobiliaria)
@@ -110,7 +98,9 @@ export class PerfilPage implements OnInit {
         .getProyectosInmobiliaria(this.inmobiliaria.correo)
         .subscribe((proyectos) => {
           proyectos.forEach((proyecto) => {
-            this.proyectoService.deleteProyecto(proyecto).subscribe(val => console.log(val));
+            this.proyectoService
+              .deleteProyecto(proyecto)
+              .subscribe((val) => console.log(val));
           });
         });
       this.inmobiliariaService
