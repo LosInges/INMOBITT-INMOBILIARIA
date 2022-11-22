@@ -1,3 +1,4 @@
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, ModalController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
@@ -78,18 +79,6 @@ export class PerfilPage implements OnInit {
   }
 
   actualizarPerfil() {
-    // if (
-    //   this.agente.rfc.trim() !== "" &&
-    //   this.agente.inmobiliaria.trim() !== "" &&
-    //   this.agente.nombre.trim() !== "" &&
-    //   this.agente.correo.trim() !== "" &&
-    //   this.agente.password.trim() !== "" &&
-    //   this.agente.apellido.trim() !== "" &&
-    //   this.agente.foto.trim() !== "" &&
-    //   this.agente.telefono.trim() !== "" &&
-    //   this.confirmPassword.trim() !== ""
-    // )
-    //{
     if (this.confirmPassword === this.inmobiliaria.password) {
       this.inmobiliariaService
         .postInmobiliaria(this.inmobiliaria)
