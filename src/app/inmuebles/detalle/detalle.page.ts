@@ -1,6 +1,7 @@
 import { AlertController, ModalController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 
+import { Cliente } from 'src/app/interfaces/cliente';
 import { Direccion } from 'src/app/interfaces/direccion';
 import { Inmueble } from 'src/app/interfaces/inmueble';
 import { InmuebleService } from 'src/app/services/inmueble.service';
@@ -15,6 +16,7 @@ import { SessionService } from 'src/app/services/session.service';
   styleUrls: ['./detalle.page.scss'],
 })
 export class DetallePage implements OnInit {
+  clientes: Cliente[] = []
   correo = '';
   inmueble: Inmueble = {
     inmobiliaria: '',

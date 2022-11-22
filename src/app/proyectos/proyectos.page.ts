@@ -79,18 +79,20 @@ export class ProyectosPage implements OnInit {
 
   eliminarInmueble(inmueble: Inmueble) {
     this.inmuebleService
-      .getClientesInmueble(
-        this.inmobiliaria,
-        inmueble.proyecto,
-        inmueble.titulo
-      )
+      .getClientesInmueble(inmueble.inmobiliaria, inmueble.proyecto, inmueble.titulo)
       .subscribe((clientes) => {
-        
         clientes.forEach((cliente) => {
           inmueble.cliente = cliente.cliente;
-          this.inmuebleService.deleteInmuebleCliente(inmueble).subscribe(()=>{});
+          this.inmuebleService.deleteInmuebleCliente(inmueble);
         });
-        this.inmuebleService.deleteInmueble(inmueble).subscribe((valor) => {});
+        this.inmuebleService
+          .getFotos(inmueble.inmobiliaria, inmueble.proyecto, inmueble.titulo)
+          .subscribe((imagenes) => {
+            imagenes.forEach((imagen) =>
+              this.inmuebleService.deleteImagen(imagen).subscribe(() => {})
+            );
+          });
+        this.inmuebleService.deleteInmueble(inmueble).subscribe(()=>{});
       });
   }
 
