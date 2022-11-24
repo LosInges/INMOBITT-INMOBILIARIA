@@ -22,7 +22,7 @@
   </ion-radio-group>
   <ion-grid *ngIf="seleccion === 'Agentes'">
     <ion-row>
-      <ion-col size="10">
+      <ion-col size-xs="12" size-xl="6">
         <ion-item>
           <ion-label position="floating">Agentes</ion-label>
           <ion-select [(ngModel)]="agente" interface="popover">
@@ -32,14 +32,12 @@
           </ion-select>
         </ion-item>
       </ion-col>
-      <ion-col>
-        <ion-button (click)="agregarAgente(agente)" expand="full"
-          >Agregar</ion-button
-        >
+      <ion-col size-xs="12" size-xl="6">
+        <ion-button (click)="agregarAgente(agente)" expand="full">Agregar</ion-button>
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col>
+      <ion-col size-xs="12" size-xl="auto">
         <ion-list>
           <ion-item-sliding *ngFor="let agente of agentesProyecto" #itemSliding>
             <ion-item>
@@ -48,10 +46,7 @@
               </ion-avatar>
               <ion-label>{{ agente.nombre }} {{ agente.apellido }}</ion-label>
             </ion-item>
-            <ion-item-options
-              side="end"
-              (ionSwipe)="eliminarAgente(agente); itemSliding.close()"
-            >
+            <ion-item-options side="end" (ionSwipe)="eliminarAgente(agente); itemSliding.close()">
               <ion-item-option color="danger">
                 <ion-icon name="trash"></ion-icon>
               </ion-item-option>
@@ -63,27 +58,22 @@
   </ion-grid>
   <ion-grid *ngIf="seleccion === 'Notarios'">
     <ion-row>
-      <ion-col size="10">
+      <ion-col size-xs="12" size-xl="6">
         <ion-item>
           <ion-label position="floating">Notarios</ion-label>
           <ion-select [(ngModel)]="notario" interface="popover">
-            <ion-select-option
-              *ngFor="let notario of notarios"
-              [value]="notario"
-            >
+            <ion-select-option *ngFor="let notario of notarios" [value]="notario">
               {{ notario.nombre }} {{ notario.apellido }}
             </ion-select-option>
           </ion-select>
         </ion-item>
       </ion-col>
-      <ion-col>
-        <ion-button (click)="agregarNotario(notario)" expand="full"
-          >Agregar</ion-button
-        >
+      <ion-col size-xs="12" size-xl="6">
+        <ion-button (click)="agregarNotario(notario)" expand="full">Agregar</ion-button>
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col>
+      <ion-col size-xs="12" size-xl="auto">
         <ion-list>
           <ion-item-sliding *ngFor="let notario of notariosProyecto" #itemSliding>
             <ion-item>
@@ -92,10 +82,7 @@
               </ion-avatar>
               <ion-label>{{ notario.nombre }} {{ notario.apellido }}</ion-label>
             </ion-item>
-            <ion-item-options
-              side="end"
-              (ionSwipe)="eliminarNotario(notario); itemSliding.close()"
-            >
+            <ion-item-options side="end" (ionSwipe)="eliminarNotario(notario); itemSliding.close()">
               <ion-item-option color="danger">
                 <ion-icon name="trash"></ion-icon>
               </ion-item-option>

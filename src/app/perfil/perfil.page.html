@@ -2,12 +2,8 @@
   <ion-toolbar>
     <ion-title color="secondary">INMOBILIARIA</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="registroAgente()" color="secondary"
-        >Agregar Agente</ion-button
-      >
-      <ion-button (click)="registroNotario()" color="secondary"
-        >Agregar Notario</ion-button
-      >
+      <ion-button (click)="registroAgente()" color="secondary">Agregar Agente</ion-button>
+      <ion-button (click)="registroNotario()" color="secondary">Agregar Notario</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -22,21 +18,21 @@
         <ion-card-content>
           <ion-grid>
             <ion-row>
-              <ion-col class="ion-margin-top ion-margin-bottom">
+              <ion-col size-xs="12" size-xl="4" class="ion-margin-top ion-margin-bottom">
                 <ion-item>
                   <ion-label position="floating"> CORREO </ion-label>
                   <ion-input [(ngModel)]="inmobiliaria.correo"> </ion-input>
                 </ion-item>
               </ion-col>
 
-              <ion-col class="ion-margin-top ion-margin-bottom">
+              <ion-col size-xs="12" size-xl="4" class="ion-margin-top ion-margin-bottom">
                 <ion-item>
                   <ion-label position="floating"> CONTRASEÑA </ion-label>
                   <ion-input [(ngModel)]="inmobiliaria.password"> </ion-input>
                 </ion-item>
               </ion-col>
 
-              <ion-col class="ion-margin-top ion-margin-bottom">
+              <ion-col size-xs="12" size-xl="4" class="ion-margin-top ion-margin-bottom">
                 <ion-item>
                   <ion-label position="floating">
                     CONFIRMAR CONTRASEÑA
@@ -56,50 +52,33 @@
         <ion-card-content>
           <ion-grid>
             <ion-row>
-              <ion-col>
+              <ion-col size-xs="12" size-xl="4">
                 <ion-item>
                   <ion-label position="floating"> NOMBRE </ion-label>
                   <ion-input [(ngModel)]="inmobiliaria.nombre"> </ion-input>
                 </ion-item>
               </ion-col>
 
-              <ion-col>
+              <ion-col size-xs="12" size-xl="4">
                 <ion-item>
-                  <ion-button (click)="guardarDireccion()"
-                    >GUARDAR DIRECCION</ion-button
-                  >
-                  <ion-button (click)="verDireccion()"
-                    >VER DIRECCION</ion-button
-                  >
+                  <ion-button (click)="guardarDireccion()">GUARDAR DIRECCION</ion-button>
+                  <ion-button (click)="verDireccion()">VER DIRECCION</ion-button>
                 </ion-item>
               </ion-col>
 
-              <ion-col class="ion-margin-top ion-margin-bottom">
+              <ion-col size-xs="12" size-xl="4" class="ion-margin-top ion-margin-bottom">
                 <ion-item>
-                  <ion-select
-                    placeholder="ESTADO"
-                    [(ngModel)]="inmobiliaria.estado"
-                  >
-                    <ion-select-option
-                      *ngFor="let estado of estados"
-                      [value]="estado.nombre"
-                      >{{estado.nombre}}
+                  <ion-select placeholder="ESTADO" [(ngModel)]="inmobiliaria.estado">
+                    <ion-select-option *ngFor="let estado of estados" [value]="estado.nombre">{{estado.nombre}}
                     </ion-select-option>
                   </ion-select>
                 </ion-item>
               </ion-col>
 
               <ion-item class="ion-margin-top ion-margin-bottom">
-                <ion-select
-                  placeholder="Sedes"
-                  [(ngModel)]="inmobiliaria.sedes"
-                  [multiple]="true"
-                >
-                  <ion-select-option
-                    *ngFor="let sede of estados"
-                    [value]="sede.nombre"
-                    >{{sede.nombre}}</ion-select-option
-                  >
+                <ion-select placeholder="Sedes" [(ngModel)]="inmobiliaria.sedes" [multiple]="true">
+                  <ion-select-option *ngFor="let sede of estados" [value]="sede.nombre">{{sede.nombre}}
+                  </ion-select-option>
                 </ion-select>
               </ion-item>
             </ion-row>
@@ -107,13 +86,10 @@
 
           <ion-grid>
             <ion-row>
-              <ion-col>
+              <ion-col size-xs="12" size-xl="auto">
                 <ion-item>
                   <ion-row>
-                    <img
-                      *ngIf="inmobiliaria.foto"
-                      src="{{ api }}/{{ inmobiliaria.foto }}"
-                    />
+                    <img *ngIf="inmobiliaria.foto" src="{{ api }}/{{ inmobiliaria.foto }}" />
                     <ion-buttons>
                       <ion-button (click)="tomarFotografia()">
                         TOMAR FOTO
@@ -127,20 +103,13 @@
         </ion-card-content>
 
         <ion-card-content>
-          <ion-button
-            class="ion-float-right ion-margin-top ion-margin-bottom"
-            fill="solid"
-            (click)="actualizarPerfil()"
-          >
+          <ion-button class="ion-float-right ion-margin-top ion-margin-bottom" fill="solid"
+            (click)="actualizarPerfil()">
             ACTUALIZAR
           </ion-button>
 
-          <ion-button
-            class="ion-float-left ion-margin-top ion-margin-bottom"
-            fill="solid"
-            color="danger"
-            (click)="eliminarPerfil()"
-          >
+          <ion-button class="ion-float-left ion-margin-top ion-margin-bottom" fill="solid" color="danger"
+            (click)="eliminarPerfil()">
             ELIMINAR
           </ion-button>
         </ion-card-content>
@@ -170,11 +139,7 @@
       <ion-card-title color="secondary"> AGENTES </ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <app-agentes
-        [agentes]="agentes"
-        [api]="api"
-        [eliminarAgente]="eliminarAgente.bind(this)"
-      ></app-agentes>
+      <app-agentes [agentes]="agentes" [api]="api" [eliminarAgente]="eliminarAgente.bind(this)"></app-agentes>
     </ion-card-content>
   </ion-card>
   <ion-card *ngIf="listaVisible === 'Notarios'">
@@ -182,11 +147,7 @@
       <ion-card-title color="secondary"> NOTARIOS </ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <app-notarios
-        [notarios]="notarios"
-        [api]="api"
-        [eliminarNotario]="eliminarNotario.bind(this)"
-      ></app-notarios>
+      <app-notarios [notarios]="notarios" [api]="api" [eliminarNotario]="eliminarNotario.bind(this)"></app-notarios>
     </ion-card-content>
   </ion-card>
 </ion-content>
