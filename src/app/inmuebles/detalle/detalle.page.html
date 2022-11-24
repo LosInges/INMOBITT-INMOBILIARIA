@@ -150,17 +150,23 @@
           </ion-grid>
         </ion-card-content>
 
-
         <ion-card-content>
-          <ion-button class="ion-float-right ion-margin-top ion-margin-bottom" fill="solid"
-            (click)=" actualizarInmueble()">
+          <ion-button
+            class="ion-float-right ion-margin-top ion-margin-bottom"
+            fill="solid"
+            (click)="actualizarInmueble()"
+          >
             ACTUALIZAR
           </ion-button>
 
-          <ion-button class="ion-float-left ion-margin-top ion-margin-bottom" fill="solid" color="danger">
+          <ion-button
+            class="ion-float-left ion-margin-top ion-margin-bottom"
+            fill="solid"
+            color="danger"
+            (click)="eliminarPerfil()"
+          >
             ELIMINAR
-          </ion-button>
-
+          </ion-button> 
         </ion-card-content>
       </ion-card>
     </ion-card-content>
