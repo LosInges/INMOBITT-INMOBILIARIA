@@ -28,7 +28,7 @@
               <ion-col size-xs="12" size-xl="4" class="ion-margin-top ion-margin-bottom">
                 <ion-item>
                   <ion-label position="floating"> CONTRASEÑA </ion-label>
-                  <ion-input [(ngModel)]="inmobiliaria.password"> </ion-input>
+                  <ion-input type="password" [(ngModel)]="inmobiliaria.password"> </ion-input>
                 </ion-item>
               </ion-col>
 
@@ -37,7 +37,7 @@
                   <ion-label position="floating">
                     CONFIRMAR CONTRASEÑA
                   </ion-label>
-                  <ion-input [(ngModel)]="confirmPassword"> </ion-input>
+                  <ion-input type="password"  [(ngModel)]="confirmPassword"> </ion-input>
                 </ion-item>
               </ion-col>
             </ion-row>
@@ -60,10 +60,8 @@
               </ion-col>
 
               <ion-col size-xs="12" size-xl="4">
-                <ion-item>
-                  <ion-button (click)="guardarDireccion()">GUARDAR DIRECCION</ion-button>
-                  <ion-button (click)="verDireccion()">VER DIRECCION</ion-button>
-                </ion-item>
+                <ion-button expand="full" (click)="guardarDireccion()">GUARDAR DIRECCION</ion-button>
+                <ion-button expand="full" (click)="verDireccion()">VER DIRECCION</ion-button>
               </ion-col>
 
               <ion-col size-xs="12" size-xl="4" class="ion-margin-top ion-margin-bottom">
