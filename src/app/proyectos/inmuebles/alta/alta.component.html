@@ -94,13 +94,13 @@
         <ion-card-content>
           <ion-grid>
             <ion-row>
-              <ion-col>
+              <ion-col size-xs="12" size-xl="4">
                 <ion-item>
                   <ion-button (click)="guardarDireccion()" expand="block">Guardar Direccion</ion-button>
                 </ion-item>
               </ion-col>
 
-              <ion-col>
+              <ion-col size-xs="12" size-xl="4">
                 <ion-item>
                   <ion-label position="floating"> PISOS </ion-label>
                   <ion-input type="number" [(ngModel)]="inmueble.pisos">
@@ -108,7 +108,7 @@
                 </ion-item>
               </ion-col>
 
-              <ion-col>
+              <ion-col size-xs="12" size-xl="4">
                 <ion-item>
                   <ion-label position="floating"> CUARTOS </ion-label>
                   <ion-input type="number" [(ngModel)]="inmueble.cuartos">
@@ -118,7 +118,7 @@
             </ion-row>
 
             <ion-row>
-              <ion-col>
+              <ion-col size-xs="12" size-xl="4">
                 <ion-item>
                   <ion-label position="floating"> METROS CUADRADOS </ion-label>
                   <ion-input
@@ -129,7 +129,7 @@
                 </ion-item>
               </ion-col>
 
-              <ion-col>
+              <ion-col size-xs="12" size-xl="4">
                 <ion-item>
                   <ion-label position="floating"> DESCRIPCION </ion-label>
                   <ion-textarea
@@ -140,7 +140,7 @@
                 </ion-item>
               </ion-col>
 
-              <ion-col>
+              <ion-col size-xs="12" size-xl="4">
                 <ion-item>
                   <ion-label position="floating"> SERVICIOS </ion-label>
                   <ion-select
@@ -158,7 +158,7 @@
             </ion-row>
 
             <ion-row>
-              <ion-col class="ion-margin-top ion-margin-bottom">
+              <ion-col size-xs="12" size-xl="auto" class="ion-margin-top ion-margin-bottom">
                 <ion-item>
                   <ion-checkbox
                     slot="start"
@@ -181,7 +181,7 @@
                 </ion-item>
               </ion-item-group>
 
-              <ion-col>
+              <ion-col size-xs="12" size-xl="6">
                 <ion-item *ngIf="renta">
                   <ion-label position="floating"> PRECIO RENTA </ion-label>
                   <ion-input type="number" [(ngModel)]="inmueble.precio_renta">
@@ -189,7 +189,7 @@
                 </ion-item>
               </ion-col>
 
-              <ion-col>
+              <ion-col size-xs="12" size-xl="6">
                 <ion-item *ngIf="venta">
                   <ion-label position="floating"> PRECIO VENTA </ion-label>
                   <ion-input type="number" [(ngModel)]="inmueble.precio_venta">

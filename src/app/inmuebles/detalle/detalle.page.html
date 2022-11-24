@@ -19,139 +19,126 @@
         <ion-card-content>
           <ion-grid>
             <ion-row>
-              <ion-col class="ion-margin-top ion-margin-bottom">
+              <ion-col size-xs="12" size-xl="3" class="ion-margin-top ion-margin-bottom">
                 <ion-item>
                   <ion-label position="floating"> TITULO </ion-label>
-                  <ion-input disabled >
-                </ion-input>
-                </ion-item>
-              </ion-col>
-
-              <ion-col class="ion-margin-top ion-margin-bottom">
-                <ion-item>
-                  <ion-label position="floating"> ESTADO </ion-label>
-                  <ion-input disabled >
-                </ion-input>
-                </ion-item>
-              </ion-col>
-
-              <ion-col class="ion-margin-top ion-margin-bottom">
-                <ion-item>
-                  <ion-label position="floating"> FOTO </ion-label>
-                  <ion-input > </ion-input>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-
-              <ion-col class="ion-margin-top ion-margin-bottom">
-                <ion-item>
-                  <ion-label position="floating"> INMOBILIARIA </ion-label>
-                  <ion-input
-                   [(ngModel)]="correo"
-                   disabled
-                   >
+                  <ion-input disabled>
                   </ion-input>
                 </ion-item>
               </ion-col>
 
-              <ion-col class="ion-margin-top ion-margin-bottom">
+              <ion-col size-xs="12" size-xl="3" class="ion-margin-top ion-margin-bottom">
                 <ion-item>
-                  <ion-label position="floating"> AGENTE </ion-label>
-                  <ion-input > </ion-input>
+                  <ion-label position="floating"> ESTADO </ion-label>
+                  <ion-input disabled>
+                  </ion-input>
                 </ion-item>
               </ion-col>
 
-              <ion-col class="ion-margin-top ion-margin-bottom">
+              <ion-col size-xs="12" size-xl="3" class="ion-margin-top ion-margin-bottom">
                 <ion-item>
-                  <ion-label position="floating"> NOTARIOS </ion-label>
+                  <ion-label position="floating"> FOTO </ion-label>
+                  <ion-input> </ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
+            <ion-row> 
+              <ion-col size-xs="12" size-xl="auto" class="ion-margin-top ion-margin-bottom">
+                <ion-item>
+                  <ion-label position="floating"> INMOBILIARIA </ion-label>
+                  <ion-input [(ngModel)]="correo" disabled>
+                  </ion-input>
+                </ion-item>
+              </ion-col>
+
+              <ion-col size-xs="12" size-xl="auto" class="ion-margin-top ion-margin-bottom">
+                <ion-item>
+                  <ion-label position="floating"> AGENTE </ion-label>
                   <ion-input> </ion-input>
                 </ion-item>
               </ion-col>
 
-            </ion-row>
-
+              <ion-col size-xs="12" size-xl="auto" class="ion-margin-top ion-margin-bottom">
+                <ion-item>
+                  <ion-label position="floating"> NOTARIOS </ion-label>
+                  <ion-input> </ion-input>
+                </ion-item>
+              </ion-col> 
+            </ion-row> 
           </ion-grid>
         </ion-card-content>
-      </ion-card>
-
+      </ion-card> 
       <ion-card>
         <ion-card-header>
           <ion-card-title color="secondary"> DETALLES </ion-card-title>
         </ion-card-header>
 
         <ion-card-content>
-          <ion-grid>
-
-            <ion-row>
-
-              <ion-col>
+          <ion-grid> 
+            <ion-row> 
+              <ion-col size-xs="12" size-xl="4">
                 <ion-item>
                   <ion-label position="floating"> DIRECCIÓN </ion-label>
                   <ion-input> </ion-input>
                 </ion-item>
               </ion-col>
 
-              <ion-col>
+              <ion-col size-xs="12" size-xl="4">
                 <ion-item>
                   <ion-label position="floating"> PISOS </ion-label>
-                  <ion-input > </ion-input>
-                </ion-item>
-              </ion-col>
-
-              <ion-col>
-                <ion-item>
-                  <ion-label position="floating"> CUARTOS </ion-label>
                   <ion-input> </ion-input>
                 </ion-item>
               </ion-col>
 
+              <ion-col size-xs="12" size-xl="4">
+                <ion-item>
+                  <ion-label position="floating"> CUARTOS </ion-label>
+                  <ion-input> </ion-input>
+                </ion-item>
+              </ion-col> 
             </ion-row>
 
-            <ion-row>
-
-              <ion-col>
+            <ion-row> 
+              <ion-col size-xs="12" size-xl="4">
                 <ion-item>
                   <ion-label position="floating"> METROS CUADRADOS </ion-label>
                   <ion-input> </ion-input>
                 </ion-item>
               </ion-col>
 
-              <ion-col>
+              <ion-col size-xs="12" size-xl="4">
                 <ion-item>
                   <ion-label position="floating"> DESCRIPCION </ion-label>
                   <ion-input> </ion-input>
                 </ion-item>
               </ion-col>
 
-              <ion-col>
+              <ion-col size-xs="12" size-xl="4">
                 <ion-item>
                   <ion-label position="floating"> SERVICIOS </ion-label>
                   <ion-input> </ion-input>
                 </ion-item>
-              </ion-col>
-
+              </ion-col> 
             </ion-row>
 
 
-            <ion-row>
-
-              <ion-col>
+            <ion-row> 
+              <ion-col size-xs="12" size-xl="4">
                 <ion-item>
                   <ion-label position="floating"> VISTA </ion-label>
                   <ion-input type="checkbox"> </ion-input>
                 </ion-item>
               </ion-col>
 
-              <ion-col>
+              <ion-col size-xs="12" size-xl="4">
                 <ion-item>
                   <ion-label position="floating"> PRECIO RENTA </ion-label>
                   <ion-input> </ion-input>
                 </ion-item>
               </ion-col>
 
-              <ion-col>
+              <ion-col size-xs="12" size-xl="4">
                 <ion-item>
                   <ion-label position="floating"> PRECIO VENTA </ion-label>
                   <ion-input> </ion-input>
@@ -165,7 +152,8 @@
 
 
         <ion-card-content>
-          <ion-button class="ion-float-right ion-margin-top ion-margin-bottom" fill="solid" (click)=" actualizarInmueble()">
+          <ion-button class="ion-float-right ion-margin-top ion-margin-bottom" fill="solid"
+            (click)=" actualizarInmueble()">
             ACTUALIZAR
           </ion-button>
 
@@ -177,5 +165,5 @@
       </ion-card>
     </ion-card-content>
   </ion-card>
-  
+
 </ion-content>

@@ -19,7 +19,7 @@
         <ion-card-content>
           <ion-grid>
             <ion-row>
-              <ion-col>
+              <ion-col size-xs="12" size-xl="4">
                 <ion-item>
                   <ion-label position="floating"> TITULO </ion-label>
                   <ion-input [(ngModel)]="inmueble.titulo" disabled>
@@ -27,14 +27,14 @@
                 </ion-item>
               </ion-col>
 
-              <ion-col>
+              <ion-col size-xs="12" size-xl="4">
                 <ion-item class="ion-margin-top ion-margin-bottom">
                   <ion-label position="floating">Estado</ion-label>
                   <ion-input [(ngModel)]="inmueble.estado" disabled></ion-input>
                 </ion-item>
               </ion-col>
 
-              <ion-col>
+              <ion-col size-xs="12" size-xl="4">
                 <ion-item>
                   <ion-button (click)="tomarFotografia()"
                     >Tomar foto</ion-button
@@ -48,7 +48,7 @@
             </ion-row>
 
             <ion-row>
-              <ion-col>
+              <ion-col size-xs="12" size-xl="4">
                 <ion-item>
                   <ion-label position="floating"> INMOBILIARIA </ion-label>
                   <ion-input [(ngModel)]="inmueble.inmobiliaria" disabled>
@@ -56,7 +56,7 @@
                 </ion-item>
               </ion-col>
 
-              <ion-col>
+              <ion-col size-xs="12" size-xl="4">
                 <ion-item>
                   <ion-label position="floating"> AGENTE </ion-label>
 
@@ -69,7 +69,7 @@
                 </ion-item>
               </ion-col>
 
-              <ion-col>
+              <ion-col size-xs="12" size-xl="4">
                 <ion-item>
                   <ion-label position="floating"> NOTARIO </ion-label>
 
@@ -94,13 +94,13 @@
         <ion-card-content>
           <ion-grid>
             <ion-row>
-              <ion-col>
+              <ion-col size-xs="12" size-xl="3">
                 <ion-item>
                   <ion-label position="floating"> DIRECCIÓN </ion-label>
                   <ion-input> </ion-input>
                 </ion-item>
               </ion-col>
-              <ion-col class="ion-margin-top ion-margin-bottom">
+              <ion-col size-xs="12" size-xl="3" class="ion-margin-top ion-margin-bottom">
                 <ion-item>
                   <ion-button (click)="verPosicion(inmueble.direccion)"
                     >Ver Direccion</ion-button
@@ -111,7 +111,7 @@
                 </ion-item>
               </ion-col>
 
-              <ion-col>
+              <ion-col size-xs="12" size-xl="3">
                 <ion-item>
                   <ion-label position="floating"> PISOS </ion-label>
                   <ion-input type="number" [(ngModel)]="inmueble.pisos">
@@ -119,7 +119,7 @@
                 </ion-item>
               </ion-col>
 
-              <ion-col>
+              <ion-col size-xs="12" size-xl="3">
                 <ion-item>
                   <ion-label position="floating"> CUARTOS </ion-label>
                   <ion-input type="number" [(ngModel)]="inmueble.cuartos">
@@ -129,7 +129,7 @@
             </ion-row>
 
             <ion-row>
-              <ion-col>
+              <ion-col size-xs="12" size-xl="4">
                 <ion-item>
                   <ion-label position="floating"> METROS CUADRADOS </ion-label>
                   <ion-input
@@ -140,7 +140,7 @@
                 </ion-item>
               </ion-col>
 
-              <ion-col>
+              <ion-col size-xs="12" size-xl="4">
                 <ion-item>
                   <ion-label position="floating"> DESCRIPCION </ion-label>
                   <ion-textarea
@@ -151,7 +151,7 @@
                 </ion-item>
               </ion-col>
 
-              <ion-col>
+              <ion-col size-xs="12" size-xl="4">
                 <ion-item>
                   <ion-label position="floating"> SERVICIOS </ion-label>
                   <ion-select
@@ -169,7 +169,7 @@
             </ion-row>
 
             <ion-row>
-              <ion-col class="ion-margin-top ion-margin-bottom">
+              <ion-col size-xs="12" size-xl="auto" class="ion-margin-top ion-margin-bottom">
                 <ion-item>
                   <ion-checkbox
                     slot="start"
@@ -192,7 +192,7 @@
                 </ion-item>
               </ion-item-group>
 
-              <ion-col>
+              <ion-col size-xs="12" size-xl="43">
                 <ion-item *ngIf="renta">
                   <ion-label position="floating"> PRECIO RENTA </ion-label>
                   <ion-input type="number" [(ngModel)]="inmueble.precio_renta">
@@ -200,7 +200,7 @@
                 </ion-item>
               </ion-col>
 
-              <ion-col>
+              <ion-col size-xs="12" size-xl="4">
                 <ion-item *ngIf="venta">
                   <ion-label position="floating"> PRECIO VENTA </ion-label>
                   <ion-input type="number" [(ngModel)]="inmueble.precio_venta">
@@ -208,7 +208,7 @@
                 </ion-item>
               </ion-col>
 
-              <ion-col size="2">
+              <ion-col size-xs="12" size-xl="4">
                 <ion-row>
                   <ion-button (click)="actualizar()"> ACTUALIZAR </ion-button>
                 </ion-row>
@@ -226,7 +226,7 @@
     <ion-button (click)="agregarFotoGaleria()">AGREGAR FOTO</ion-button>
     <ion-grid>
       <ion-row>
-        <ion-col size="3" *ngFor="let imagen of imagenes">
+        <ion-col size="4" *ngFor="let imagen of imagenes">
           <ion-img src="{{api}}/{{imagen.ruta}}" (click)="eliminar(imagen)"></ion-img>
         </ion-col>
       </ion-row>
