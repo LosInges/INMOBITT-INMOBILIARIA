@@ -188,14 +188,17 @@
         </ion-card-content>
       </ion-card>
     </ion-card-content>
-    <ion-button (click)="agregarFotoGaleria()">AGREGAR FOTO</ion-button>
-    <ion-grid>
-      <ion-row>
-        <ion-col size="4" *ngFor="let imagen of imagenes">
-          <ion-img src="{{api}}/{{imagen.ruta}}" (click)="eliminar(imagen)"></ion-img>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+    <ion-card-content>
+      <ion-button (click)="agregarFotoGaleria()">AGREGAR FOTO</ion-button>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="4" *ngFor="let imagen of imagenes">
+            <ion-img src="{{api}}/{{imagen.ruta}}" (click)="eliminar(imagen)"></ion-img>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+    
   </ion-card>
   <ion-label>CLIENTES</ion-label>
   <ion-list>
