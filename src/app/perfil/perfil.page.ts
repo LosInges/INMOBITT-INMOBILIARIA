@@ -1,6 +1,6 @@
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router'; 
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AlertController, ModalController } from '@ionic/angular';
-import { Component, OnInit } from '@angular/core'; 
+import { Component, OnInit } from '@angular/core';
 import { Agente } from '../interfaces/agente';
 import { AgenteService } from '../services/agente.service';
 import { EstadosService } from '../services/estados.service';
