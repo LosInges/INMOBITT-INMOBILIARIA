@@ -61,7 +61,7 @@ export class RegistroAgenteComponent implements OnInit {
             '^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@' +
               '[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$'
           )
-        )
+        ) {
           this.loginService
             .solicitarRegistro(this.agente.rfc)
             .subscribe((solicitud) => {
@@ -76,7 +76,7 @@ export class RegistroAgenteComponent implements OnInit {
                       'Creación',
                       'Agente creado exitosamente.'
                     );
-                    this.cerrar();
+                    this.modalController.dismiss({ registrado: true });
                   }
                 });
               } else {
@@ -87,6 +87,7 @@ export class RegistroAgenteComponent implements OnInit {
                 );
               }
             });
+        }
       } else {
         this.mostrarAlerta(
           'Error:',

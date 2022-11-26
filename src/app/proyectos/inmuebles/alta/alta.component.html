@@ -15,35 +15,33 @@
         <ion-card-content>
           <ion-grid>
             <ion-row>
-              <ion-col>
+              <ion-col size-xs="12" size-xl="4">
                 <ion-item>
                   <ion-label position="floating"> TITULO </ion-label>
                   <ion-input [(ngModel)]="inmueble.titulo"> </ion-input>
                 </ion-item>
               </ion-col>
 
-              <ion-col>
+              <ion-col size-xs="12" size-xl="4">
                 <ion-item class="ion-margin-top ion-margin-bottom">
                   <ion-label position="floating">Estado</ion-label>
                   <ion-input [(ngModel)]="inmueble.estado" disabled></ion-input>
                 </ion-item>
               </ion-col>
 
-              <ion-col>
+              <ion-col size-xs="12" size-xl="4" class="ion-text-center">
                 <ion-item>
-                  <ion-button (click)="tomarFotografia()"
-                    >Tomar foto</ion-button
-                  >
                   <ion-img
                     *ngIf="inmueble.foto"
-                    src="{{ api }}/{{ inmueble.foto }}"
+                    src="{{ api }}/img/{{ inmueble.foto.split('/').pop() }}"
                   ></ion-img>
                 </ion-item>
+                <ion-button (click)="tomarFotografia()">Tomar foto</ion-button>
               </ion-col>
             </ion-row>
 
             <ion-row>
-              <ion-col>
+              <ion-col size-xs="12" size-xl="4">
                 <ion-item>
                   <ion-label position="floating"> INMOBILIARIA </ion-label>
                   <ion-input [(ngModel)]="inmueble.inmobiliaria" disabled>
@@ -51,7 +49,7 @@
                 </ion-item>
               </ion-col>
 
-              <ion-col>
+              <ion-col size-xs="12" size-xl="4">
                 <ion-item>
                   <ion-label position="floating"> AGENTE </ion-label>
                   <ion-select [(ngModel)]="inmueble.agente" interface="popover">
@@ -65,7 +63,7 @@
                 </ion-item>
               </ion-col>
 
-              <ion-col>
+              <ion-col size-xs="12" size-xl="4">
                 <ion-item>
                   <ion-label position="floating"> NOTARIO </ion-label>
                   <ion-select
@@ -96,7 +94,9 @@
             <ion-row>
               <ion-col size-xs="12" size-xl="4">
                 <ion-item>
-                  <ion-button (click)="guardarDireccion()" expand="block">Guardar Direccion</ion-button>
+                  <ion-button (click)="guardarDireccion()" expand="block"
+                    >Guardar Direccion</ion-button
+                  >
                 </ion-item>
               </ion-col>
 
@@ -158,7 +158,11 @@
             </ion-row>
 
             <ion-row>
-              <ion-col size-xs="12" size-xl="auto" class="ion-margin-top ion-margin-bottom">
+              <ion-col
+                size-xs="12"
+                size-xl="auto"
+                class="ion-margin-top ion-margin-bottom"
+              >
                 <ion-item>
                   <ion-checkbox
                     slot="start"
@@ -170,31 +174,43 @@
             </ion-row>
 
             <ion-row>
-              <ion-item-group>
-                <ion-item>
-                  <label> VENTA </label>
-                  <ion-checkbox slot="start" [(ngModel)]="venta"></ion-checkbox>
-                </ion-item>
-                <ion-item>
-                  <label> RENTA </label>
-                  <ion-checkbox slot="start" [(ngModel)]="renta"></ion-checkbox>
-                </ion-item>
-              </ion-item-group>
-
               <ion-col size-xs="12" size-xl="6">
-                <ion-item *ngIf="renta">
-                  <ion-label position="floating"> PRECIO RENTA </ion-label>
-                  <ion-input type="number" [(ngModel)]="inmueble.precio_renta">
-                  </ion-input>
-                </ion-item>
+                <ion-item-group>
+                  <ion-item>
+                    <label> VENTA </label>
+                    <ion-checkbox
+                      slot="start"
+                      [(ngModel)]="venta"
+                    ></ion-checkbox>
+                  </ion-item>
+                  <ion-item *ngIf="venta">
+                    <ion-label position="floating"> PRECIO VENTA </ion-label>
+                    <ion-input
+                      type="number"
+                      [(ngModel)]="inmueble.precio_venta"
+                    >
+                    </ion-input>
+                  </ion-item>
+                </ion-item-group>
               </ion-col>
-
               <ion-col size-xs="12" size-xl="6">
-                <ion-item *ngIf="venta">
-                  <ion-label position="floating"> PRECIO VENTA </ion-label>
-                  <ion-input type="number" [(ngModel)]="inmueble.precio_venta">
-                  </ion-input>
-                </ion-item>
+                <ion-item-group>
+                  <ion-item>
+                    <label> RENTA </label>
+                    <ion-checkbox
+                      slot="start"
+                      [(ngModel)]="renta"
+                    ></ion-checkbox>
+                  </ion-item>
+                  <ion-item *ngIf="renta">
+                    <ion-label position="floating"> PRECIO RENTA </ion-label>
+                    <ion-input
+                      type="number"
+                      [(ngModel)]="inmueble.precio_renta"
+                    >
+                    </ion-input>
+                  </ion-item>
+                </ion-item-group>
               </ion-col>
             </ion-row>
           </ion-grid>

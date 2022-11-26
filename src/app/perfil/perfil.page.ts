@@ -1,4 +1,4 @@
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, ModalController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { Agente } from '../interfaces/agente';
@@ -81,6 +81,14 @@ export class PerfilPage implements OnInit {
       this.inmobiliariaService
         .postInmobiliaria(this.inmobiliaria)
         .subscribe((res) => console.log(res));
+    } else {
+      this.alertConttroller
+        .create({
+          header: 'Error',
+          message: 'Las contraseñas no coinciden',
+          buttons: ['OK'],
+        })
+        .then((alert) => alert.present());
     }
     //}
   }

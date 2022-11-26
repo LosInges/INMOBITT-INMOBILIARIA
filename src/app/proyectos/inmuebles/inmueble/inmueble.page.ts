@@ -216,10 +216,13 @@ export class InmueblePage implements OnInit {
       .subscribe((clientes) => {
         clientes.forEach((cliente) => {
           inmueble.cliente = cliente.cliente;
-          this.inmuebleService.deleteInmuebleCliente(inmueble).subscribe(()=>{
-          });
+          this.inmuebleService
+            .deleteInmuebleCliente(inmueble)
+            .subscribe(() => {});
         });
-        this.imagenes.forEach(imagen => this.inmuebleService.deleteImagen(imagen).subscribe(() => {}))
+        this.imagenes.forEach((imagen) =>
+          this.inmuebleService.deleteImagen(imagen).subscribe(() => {})
+        );
         this.inmuebleService.deleteInmueble(inmueble).subscribe((valor) => {
           if (valor.results) {
             this.inmuebles = this.inmuebles.filter(
@@ -276,7 +279,7 @@ export class InmueblePage implements OnInit {
     this.alertConttroller
       .create({
         header: 'ALTO',
-        subHeader:'¿Está seguro? ',
+        subHeader: '¿Está seguro? ',
         message: '¿Desea eliminar la imagen?',
         buttons: [
           'NO',
@@ -285,13 +288,13 @@ export class InmueblePage implements OnInit {
             handler: () => {
               this.inmuebleService.deleteImagen(imagen).subscribe((val) => {
                 if (val.results) {
-                  this.imagenes = this.imagenes.filter((img) => img != imagen);
-                }else{console.log(val);
+                  this.imagenes = this.imagenes.filter((img) => img !== imagen);
+                } else {
+                  console.log(val);
                 }
               });
             },
           },
-
         ],
       })
       .then((alert) => {

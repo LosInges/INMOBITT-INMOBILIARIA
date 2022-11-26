@@ -38,7 +38,12 @@ export class ProyectosPage implements OnInit {
         .getInmobiliaria(inmobiliaria)
         .subscribe((datos) => {
           this.estados = datos.sedes;
-          this.estados.push(datos.estado);
+          if (
+            this.estados.filter((estado) => estado === datos.estado).length ===
+            0
+          ) {
+            this.estados.push(datos.estado);
+          }
           this.estados.sort();
         });
       this.consultarProyectos();
@@ -79,7 +84,11 @@ export class ProyectosPage implements OnInit {
 
   eliminarInmueble(inmueble: Inmueble) {
     this.inmuebleService
-      .getClientesInmueble(inmueble.inmobiliaria, inmueble.proyecto, inmueble.titulo)
+      .getClientesInmueble(
+        inmueble.inmobiliaria,
+        inmueble.proyecto,
+        inmueble.titulo
+      )
       .subscribe((clientes) => {
         clientes.forEach((cliente) => {
           inmueble.cliente = cliente.cliente;
@@ -92,7 +101,7 @@ export class ProyectosPage implements OnInit {
               this.inmuebleService.deleteImagen(imagen).subscribe(() => {})
             );
           });
-        this.inmuebleService.deleteInmueble(inmueble).subscribe(()=>{});
+        this.inmuebleService.deleteInmueble(inmueble).subscribe(() => {});
       });
   }
 

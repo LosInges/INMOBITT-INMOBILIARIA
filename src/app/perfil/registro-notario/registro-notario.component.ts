@@ -55,7 +55,7 @@ export class RegistroNotarioComponent implements OnInit {
           '^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@' +
             '[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$'
         )
-      )
+      ) {
         this.loginService
           .solicitarRegistroNotario(this.notario.inmobiliaria, this.notario.rfc)
           .subscribe((solicitud) => {
@@ -75,6 +75,7 @@ export class RegistroNotarioComponent implements OnInit {
               );
             }
           });
+      }
     } else {
       this.mostrarAlerta(
         'Error',
