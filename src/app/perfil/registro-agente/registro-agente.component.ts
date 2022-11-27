@@ -68,15 +68,19 @@ export class RegistroAgenteComponent implements OnInit {
               if (solicitud.permiso) {
                 this.agenteService.postAgente(this.agente).subscribe((res) => {
                   if (res.results) {
-                    this.modalController.dismiss();
-                  } else {
-                    console.log(res);
                     this.mostrarAlerta(
                       'Completado',
                       'Creación',
-                      'Agente creado exitosamente.'
+                      'Agente registrado exitosamente.'
                     );
                     this.modalController.dismiss({ registrado: true });
+                  } else {
+                    console.log(res);
+                    this.mostrarAlerta(
+                      'Error',
+                      'Creación',
+                      'Agente no registrado, intente de nuevo.'
+                    );
                   }
                 });
               } else {
@@ -87,6 +91,12 @@ export class RegistroAgenteComponent implements OnInit {
                 );
               }
             });
+        } else {
+          this.mostrarAlerta(
+            'Error:',
+            'Formato correo inválido',
+            'Favor de introducir un correo válido.'
+          );
         }
       } else {
         this.mostrarAlerta(
@@ -111,10 +121,7 @@ export class RegistroAgenteComponent implements OnInit {
       message: mensaje,
       buttons: ['OK'],
     });
-    await alert.present();
-    const result = await alert.onDidDismiss();
-    console.log(result);
-    this.router.navigate(['/', 'login']);
+    return alert.present();
   }
   cerrar() {
     this.modalController.dismiss(this.agente);

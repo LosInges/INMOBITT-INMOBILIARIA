@@ -80,7 +80,29 @@ export class PerfilPage implements OnInit {
     if (this.confirmPassword === this.inmobiliaria.password) {
       this.inmobiliariaService
         .postInmobiliaria(this.inmobiliaria)
-        .subscribe((res) => console.log(res));
+        .subscribe((res) => {
+          if (res.results) {
+            this.alertConttroller
+              .create({
+                header: 'Exito',
+                message: 'Perfil actualizado',
+                buttons: ['OK'],
+              })
+              .then((alert) => {
+                alert.present();
+              });
+          } else {
+            this.alertConttroller
+              .create({
+                header: 'Error',
+                message: 'No se pudo actualizar el perfil',
+                buttons: ['OK'],
+              })
+              .then((alert) => {
+                alert.present();
+              });
+          }
+        });
     } else {
       this.alertConttroller
         .create({
@@ -105,9 +127,7 @@ export class PerfilPage implements OnInit {
         .getProyectosInmobiliaria(this.inmobiliaria.correo)
         .subscribe((proyectos) => {
           proyectos.forEach((proyecto) => {
-            this.proyectoService
-              .deleteProyecto(proyecto)
-              .subscribe((val) => console.log(val));
+            this.proyectoService.deleteProyecto(proyecto).subscribe(() => {});
           });
         });
       this.inmobiliariaService
@@ -119,6 +139,14 @@ export class PerfilPage implements OnInit {
             console.log(res);
           }
         });
+    } else {
+      this.alertConttroller
+        .create({
+          header: 'Error',
+          message: 'Las contraseñas no coinciden',
+          buttons: ['OK'],
+        })
+        .then((alert) => alert.present());
     }
   }
 
@@ -211,7 +239,9 @@ export class PerfilPage implements OnInit {
       .subscribe((clientes) => {
         clientes.forEach((cliente) => {
           inmueble.cliente = cliente.cliente;
-          this.inmuebleService.deleteInmuebleCliente(inmueble);
+          this.inmuebleService
+            .deleteInmuebleCliente(inmueble)
+            .subscribe(() => {});
         });
         this.inmuebleService
           .getFotos(inmueble.inmobiliaria, inmueble.proyecto, inmueble.titulo)

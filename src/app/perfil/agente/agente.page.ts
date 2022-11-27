@@ -22,7 +22,7 @@ export class AgentePage implements OnInit {
   apellidoPat = '';
   apellidoMat = '';
   api = environment.api;
-  inmuebles: Inmueble[]=[];
+  inmuebles: Inmueble[] = [];
   agente: Agente = {
     rfc: '',
     inmobiliaria: '',
@@ -43,8 +43,8 @@ export class AgentePage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private fotoService: FotoService,
     private alertController: AlertController,
-    private proyectoService:ProyectosService,
-    private inmuebleService: InmuebleService,
+    private proyectoService: ProyectosService,
+    private inmuebleService: InmuebleService
   ) {}
 
   ngOnInit() {
@@ -52,9 +52,13 @@ export class AgentePage implements OnInit {
       if (inmobiliaria) {
         this.activatedRoute.params.subscribe((params) => {
           if (params.rfc) {
-            this.agenteService.getInmueblesAgente(params.rfc).subscribe((inmuebles)=>{
-              this.inmuebles = inmuebles.filter(inmueble=> !inmueble.borrado)
-            })
+            this.agenteService
+              .getInmueblesAgente(params.rfc)
+              .subscribe((inmuebles) => {
+                this.inmuebles = inmuebles.filter(
+                  (inmueble) => !inmueble.borrado
+                );
+              });
             this.agenteService
               .getAgente(inmobiliaria, params.rfc)
               .subscribe((agente) => {
@@ -67,7 +71,6 @@ export class AgentePage implements OnInit {
         });
       }
     });
-
   }
 
   actualizarPerfil() {
@@ -149,16 +152,13 @@ export class AgentePage implements OnInit {
             this.inmobiliaria.correo,
             proyecto.nombre
           )
-          .subscribe((inmuebles) => {
-          });
+          .subscribe((inmuebles) => {});
         this.eliminarAgenteProyecto(agente.rfc, proyecto.nombre);
       });
     });
     this.agenteService
       .deleteAgente(this.inmobiliaria.correo, agente.rfc)
-      .subscribe((res) => {
-
-      });
+      .subscribe((res) => {});
   }
 
   eliminarInmueble(inmueble: Inmueble) {
@@ -171,15 +171,15 @@ export class AgentePage implements OnInit {
       .subscribe((clientes) => {
         clientes.forEach((cliente) => {
           inmueble.cliente = cliente;
-          this.inmuebleService.deleteInmuebleCliente(inmueble);
+          this.inmuebleService
+            .deleteInmuebleCliente(inmueble)
+            .subscribe(() => {});
         });
         this.inmuebleService.deleteInmueble(inmueble).subscribe((valor) => {
           console.log(valor);
         });
       });
   }
-
-
 
   tomarFotografia() {
     this.fotoService.tomarFoto().then((photo) => {
@@ -204,8 +204,13 @@ export class AgentePage implements OnInit {
     });
   }
 
-  verInmueble(inmueble: Inmueble){
-    this.router.navigate(['proyectos',inmueble.proyecto,'inmuebles','inmueble',inmueble.titulo])
+  verInmueble(inmueble: Inmueble) {
+    this.router.navigate([
+      'proyectos',
+      inmueble.proyecto,
+      'inmuebles',
+      'inmueble',
+      inmueble.titulo,
+    ]);
   }
-
 }

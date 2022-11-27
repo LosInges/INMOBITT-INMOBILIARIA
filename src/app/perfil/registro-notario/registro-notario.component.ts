@@ -2,10 +2,8 @@ import { AlertController, ModalController } from '@ionic/angular';
 import { Component, Input, OnInit } from '@angular/core';
 
 import { FotoService } from 'src/app/services/foto.service';
-import { LoginService } from 'src/app/services/login.service';
 import { Notario } from 'src/app/interfaces/notario';
 import { NotarioService } from 'src/app/services/notario.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registro-notario',
@@ -32,9 +30,7 @@ export class RegistroNotarioComponent implements OnInit {
     private fotoService: FotoService,
     private notarioService: NotarioService,
     private modalController: ModalController,
-    private loginService: LoginService,
     private alertCtrl: AlertController,
-    private router: Router
   ) {}
 
   ngOnInit() {
@@ -56,25 +52,29 @@ export class RegistroNotarioComponent implements OnInit {
             '[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$'
         )
       ) {
-        this.loginService
-          .solicitarRegistroNotario(this.notario.inmobiliaria, this.notario.rfc)
-          .subscribe((solicitud) => {
-            if (solicitud.permiso) {
-              this.notarioService.postNotario(this.notario).subscribe((res) => {
-                if (res.results) {
-                  this.modalController.dismiss({ registrado: true });
-                } else {
-                  console.log(res);
-                }
-              });
-            } else {
-              this.mostrarAlerta(
-                'Error:',
-                'RFC ya registrado',
-                'Favor de introducir otro RFC.'
-              );
-            }
-          });
+        this.notarioService.postNotario(this.notario).subscribe((res) => {
+          if (res.results) {
+            this.mostrarAlerta(
+              'Registro exitoso',
+              'Notario registrado',
+              'El notario se ha registrado correctamente'
+            );
+            this.modalController.dismiss({ registrado: true });
+          } else {
+            console.log(res);
+            this.mostrarAlerta(
+              'Error',
+              'No se pudo registrar',
+              'El notario no se pudo registrar'
+            );
+          }
+        });
+      } else {
+        this.mostrarAlerta(
+          'Error:',
+          'Formato correo no válido',
+          'Favor de introducir un correo válido.'
+        );
       }
     } else {
       this.mostrarAlerta(
@@ -91,10 +91,7 @@ export class RegistroNotarioComponent implements OnInit {
       message: mensaje,
       buttons: ['OK'],
     });
-    await alert.present();
-    const result = await alert.onDidDismiss();
-    console.log(result);
-    this.router.navigate(['/', 'login']);
+    return alert.present();
   }
 
   cerrar() {

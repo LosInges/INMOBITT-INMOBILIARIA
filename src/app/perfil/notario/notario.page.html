@@ -129,14 +129,9 @@
   </ion-card>
 
   <ion-card>
-    <ion-card-content>
-      <ion-row>
-        <ion-list> INMUEBLES ASIGNADOS </ion-list>
-      </ion-row>
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card>
+    <ion-card-header>
+      <ion-card-title>INMUEBLES ASIGNADOS</ion-card-title>
+    </ion-card-header>
     <ion-card-content>
       <ion-list>
         <ion-item-sliding *ngFor="let inmueble of inmuebles" #itemSliding>

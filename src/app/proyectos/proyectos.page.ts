@@ -37,12 +37,16 @@ export class ProyectosPage implements OnInit {
       this.inmobiliariaService
         .getInmobiliaria(inmobiliaria)
         .subscribe((datos) => {
-          this.estados = datos.sedes;
-          if (
-            this.estados.filter((estado) => estado === datos.estado).length ===
-            0
-          ) {
-            this.estados.push(datos.estado);
+          if (datos.sedes) {
+            this.estados = datos.sedes;
+            if (
+              this.estados.filter((estado) => estado === datos.estado)
+                .length === 0
+            ) {
+              this.estados.push(datos.estado);
+            }
+          } else {
+            this.estados = [datos.estado];
           }
           this.estados.sort();
         });

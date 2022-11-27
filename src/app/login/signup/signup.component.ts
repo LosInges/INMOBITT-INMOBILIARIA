@@ -54,13 +54,18 @@ export class SignupComponent implements OnInit {
               .postInmobiliaria(this.inmobiliaria)
               .subscribe((res) => {
                 if (res.results) {
-                  this.modalController.dismiss();
-                } else {
-                  console.log(res);
                   this.mostrarAlerta(
                     'Completado',
                     'Creación',
                     'Inmobiliaria creada exitosamente.'
+                  );
+                  this.modalController.dismiss();
+                } else {
+                  console.log(res);
+                  this.mostrarAlerta(
+                    'Error',
+                    '',
+                    'Inmobiliaria no creada, intente de nuevo.'
                   );
                 }
               });
@@ -82,8 +87,7 @@ export class SignupComponent implements OnInit {
       this.inmobiliaria.correo.trim().length <= 0 ||
       this.inmobiliaria.estado.trim().length <= 0 ||
       this.inmobiliaria.nombre.trim().length <= 0 ||
-      this.inmobiliaria.password.trim().length <= 0 ||
-      this.inmobiliaria.sedes.length <= 0
+      this.inmobiliaria.password.trim().length <= 0
     ) {
       this.mostrarAlerta(
         'Error',

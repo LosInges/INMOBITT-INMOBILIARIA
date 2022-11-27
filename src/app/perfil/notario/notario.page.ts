@@ -21,7 +21,7 @@ export class NotarioPage implements OnInit {
   inmobiliaria: Inmobiliaria;
   apellidoPat = '';
   apellidoMat = '';
-  inmuebles: Inmueble[]=[];
+  inmuebles: Inmueble[] = [];
   api = environment.api;
   notario: Notario = {
     rfc: '',
@@ -33,7 +33,6 @@ export class NotarioPage implements OnInit {
   };
   confirmPassword = '';
   mensaje = '';
-
 
   constructor(
     private sessionService: SessionService,
@@ -51,9 +50,13 @@ export class NotarioPage implements OnInit {
       if (inmobiliaria) {
         this.activatedRoute.params.subscribe((params) => {
           if (params.rfc) {
-            this.notarioService.getInmueblesNotario(params.rfc).subscribe((inmuebles)=>{
-              this.inmuebles = inmuebles.filter(inmueble => !inmueble.borrado)
-            })
+            this.notarioService
+              .getInmueblesNotario(params.rfc)
+              .subscribe((inmuebles) => {
+                this.inmuebles = inmuebles.filter(
+                  (inmueble) => !inmueble.borrado
+                );
+              });
             this.notarioService
               .getNotario(inmobiliaria, params.rfc)
               .subscribe((notario) => {
@@ -111,22 +114,24 @@ export class NotarioPage implements OnInit {
   }
 
   eliminarPerfil() {
-    this.notarioService.getProyectos(this.notario.rfc).subscribe((proyectos) => {
-      proyectos.forEach((proyecto) => {
-        this.notarioService
-          .getInmueblesProyectoNotario(
-            this.notario.rfc,
-            this.inmobiliaria.correo,
-            proyecto.nombre
-          )
-          .subscribe((inmuebles) => {
-            inmuebles.forEach((inmueble) => {
-              this.eliminarInmueble(inmueble);
+    this.notarioService
+      .getProyectos(this.notario.rfc)
+      .subscribe((proyectos) => {
+        proyectos.forEach((proyecto) => {
+          this.notarioService
+            .getInmueblesProyectoNotario(
+              this.notario.rfc,
+              this.inmobiliaria.correo,
+              proyecto.nombre
+            )
+            .subscribe((inmuebles) => {
+              inmuebles.forEach((inmueble) => {
+                this.eliminarInmueble(inmueble);
+              });
             });
-          });
-        this.eliminarNotarioProyecto(this.notario.rfc, proyecto.nombre);
+          this.eliminarNotarioProyecto(this.notario.rfc, proyecto.nombre);
+        });
       });
-    });
     this.notarioService
       .deleteNotario(this.notario.inmobiliaria, this.notario.rfc)
       .subscribe((res) => {
@@ -159,14 +164,15 @@ export class NotarioPage implements OnInit {
       .subscribe((clientes) => {
         clientes.forEach((cliente) => {
           inmueble.cliente = cliente;
-          this.inmuebleService.deleteInmuebleCliente(inmueble);
+          this.inmuebleService
+            .deleteInmuebleCliente(inmueble)
+            .subscribe(() => {});
         });
         this.inmuebleService.deleteInmueble(inmueble).subscribe((valor) => {
           console.log(valor);
         });
       });
   }
-
 
   tomarFotografia() {
     this.fotoService.tomarFoto().then((photo) => {
@@ -191,7 +197,13 @@ export class NotarioPage implements OnInit {
     });
   }
 
-  verInmueble(inmueble: Inmueble){
-    this.router.navigate(['proyectos',inmueble.proyecto,'inmuebles','inmueble',inmueble.titulo])
+  verInmueble(inmueble: Inmueble) {
+    this.router.navigate([
+      'proyectos',
+      inmueble.proyecto,
+      'inmuebles',
+      'inmueble',
+      inmueble.titulo,
+    ]);
   }
 }

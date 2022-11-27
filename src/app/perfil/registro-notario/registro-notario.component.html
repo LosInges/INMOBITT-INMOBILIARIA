@@ -65,7 +65,10 @@
     <ion-button (click)="tomarFotografia()"
       ><ion-icon name="camera-outline" style="padding: 0 15px"></ion-icon
     ></ion-button>
-    <ion-img *ngIf="notario.foto" src="{{ api }}/{{ notario.foto }}"></ion-img>
+    <ion-img
+      *ngIf="notario.foto"
+      src="{{ api }}/img/{{ notario.foto.split('/').pop() }}"
+    ></ion-img>
   </ion-item>
 
   <ion-button

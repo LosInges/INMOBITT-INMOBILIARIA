@@ -164,7 +164,9 @@ export class InmueblesPage implements OnInit {
       .subscribe((clientes) => {
         clientes.forEach((cliente) => {
           inmueble.cliente = cliente.cliente;
-          this.inmuebleService.deleteInmuebleCliente(inmueble);
+          this.inmuebleService
+            .deleteInmuebleCliente(inmueble)
+            .subscribe(() => {});
         });
         this.inmuebleService
           .getFotos(inmueble.inmobiliaria, inmueble.proyecto, inmueble.titulo)
