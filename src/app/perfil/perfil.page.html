@@ -87,6 +87,7 @@
                     placeholder="Sedes"
                     [(ngModel)]="inmobiliaria.sedes"
                     [multiple]="true"
+                    interface="popover"
                   >
                     <ion-select-option
                       *ngFor="let sede of estados"
@@ -106,6 +107,7 @@
                   <ion-select
                     placeholder="ESTADO"
                     [(ngModel)]="inmobiliaria.estado"
+                    interface="popover"
                   >
                     <ion-select-option
                       *ngFor="let estado of estados"
